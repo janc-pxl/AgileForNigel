@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agile &amp; Scrum · Hogeschool PXL</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='5' fill='%23030203'/><polygon points='16,4 28,16 16,28 4,16' fill='%23AE9A64'/></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --primary: #030203;
+  --gold: #AE9A64;
+  --gold-bg: rgba(174,154,100,0.12);
+  --accent: #e63946;
+  --green: #2a9d8f;
+  --bg: #f8f7f5;
+  --card: #ffffff;
+  --border: #e0ddd6;
+  --text: #1a1a1a;
+  --muted: #666;
+  --sprint-blue: #5b7fa6;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: Arial, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+/* NAV */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--primary); color: white;
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 2rem; height: 54px;
+}
+.nav img { width: 34px; height: 34px; object-fit: contain; }
+.nav-brand { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: .06em; color: var(--gold); }
+.nav-sep { color: #555; margin: 0 2px; }
+.nav-page { font-family: 'Raleway', sans-serif; font-weight: 600; font-size: .92rem; color: #bbb; }
+.nav-links { margin-left: auto; display: flex; gap: 1.5rem; }
+.nav-links a { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; letter-spacing: .04em; color: #bbb; text-decoration: none; text-transform: uppercase; transition: color .15s; }
+.nav-links a:hover { color: var(--gold); }
+
+/* LAYOUT */
+main { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+section { padding: 4rem 0; }
+section + section { border-top: 1px solid var(--border); }
+
+/* TYPOGRAPHY */
+.badge {
+  display: inline-block;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .7rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  background: var(--gold); color: var(--primary);
+  padding: 3px 10px; border-radius: 2px; margin-bottom: .75rem;
+}
+h2 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
+p { color: var(--text); margin-bottom: 1rem; }
+.lead { font-size: 1.08rem; color: var(--muted); margin-bottom: 1.25rem; }
+.callout {
+  border-left: 4px solid var(--gold); background: var(--gold-bg);
+  padding: .9rem 1.2rem; margin: 1.5rem 0; border-radius: 0 4px 4px 0;
+}
+.callout p { margin: 0; font-style: italic; color: var(--primary); }
+
+/* FOOTER */
+footer { background: var(--primary); padding: 1.25rem 2rem; }
+footer .f-inner { display: flex; align-items: center; gap: 14px; max-width: 1100px; margin: 0 auto; }
+footer .f-inner img { width: 36px; height: 36px; object-fit: contain; flex-shrink: 0; }
+footer .f-inner span { font-family: 'Raleway', sans-serif; font-weight: 600; font-size: .88rem; color: #999; }
+footer .f-inner a { color: #999; text-decoration: none; }
+footer .f-inner a:hover { color: var(--gold); }
+
+/* ── SPRINT TIMELINE ───────────────────────────────────────────────────────── */
+
+/* Progress bar */
+.sprint-progress { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0 2rem; }
+.sprint-progress-track { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.sprint-progress-fill { height: 100%; background: var(--gold); border-radius: 3px; transition: width .5s ease; width: 0%; }
+.sprint-progress-label { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: var(--muted); white-space: nowrap; }
+
+/* Layout: calendar + detail */
+.sprint-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1rem; align-items: start; }
+
+/* Calendar grid */
+.sprint-calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.sprint-cal-header {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .72rem;
+  letter-spacing: .06em; text-transform: uppercase;
+  text-align: center; padding: .35rem 0; color: var(--muted);
+}
+.sprint-cal-header.weekend { color: #bbb; }
+.sprint-week-label {
+  grid-column: 1 / -1;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .62rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gold); padding: .5rem 0 .15rem;
+}
+
+/* Day cells */
+.sprint-day {
+  background: var(--card); border: 1.5px solid var(--border);
+  border-radius: 7px; padding: .5rem .35rem .4rem;
+  text-align: center; cursor: pointer;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+  min-height: 68px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+}
+.sprint-day:hover:not(.weekend) { border-color: #bbb; background: #fafaf8; }
+.sprint-day .day-num { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .92rem; color: var(--primary); line-height: 1.1; }
+.sprint-day .day-name { font-size: .68rem; color: var(--muted); font-weight: 600; }
+.sprint-day .day-dots { display: flex; gap: 3px; margin-top: 3px; justify-content: center; }
+.sprint-day .day-dot { width: 7px; height: 7px; border-radius: 50%; }
+.dot-planning { background: var(--sprint-blue); }
+.dot-daily { background: var(--green); }
+.dot-review { background: var(--gold); }
+.dot-retro { background: var(--accent); }
+
+/* Weekend */
+.sprint-day.weekend {
+  background: var(--bg); border-style: dashed; border-color: #ddd; cursor: pointer;
+}
+.sprint-day.weekend .day-num { color: #bbb; font-weight: 700; }
+.sprint-day.weekend .day-name { color: #ccc; }
+
+/* Active & visited */
+.sprint-day.visited { border-color: var(--gold); background: rgba(174,154,100,.06); }
+.sprint-day.visited .day-num::after { content: ' \2713'; font-size: .6rem; color: var(--gold); }
+.sprint-day.active { border-color: var(--gold); background: rgba(174,154,100,.18); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.sprint-day.active .day-num { color: var(--primary); }
+.sprint-day.weekend.visited { border-color: #ccc; background: rgba(174,154,100,.04); }
+.sprint-day.weekend.active { border-color: var(--gold); background: rgba(174,154,100,.12); }
+
+/* Detail panel */
+.sprint-detail { min-height: 300px; position: sticky; top: 70px; }
+.sprint-placeholder {
+  height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem;
+  color: var(--muted); font-size: .92rem; border: 2px dashed var(--border); border-radius: 10px;
+  background: white; text-align: center; padding: 2rem;
+}
+.sprint-placeholder-icon { font-size: 2rem; opacity: .35; }
+
+/* Event cards */
+@keyframes sprintIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.sprint-event-card {
+  background: white; border: 1.5px solid var(--border); border-radius: 10px;
+  overflow: hidden; margin-bottom: .75rem; animation: sprintIn .25s ease;
+}
+.sprint-event-header { padding: .85rem 1.1rem .7rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+.sprint-event-tag {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .67rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  display: inline-block; padding: 2px 8px; border-radius: 3px;
+}
+.sprint-tag-planning { background: rgba(91,127,166,.12); color: #3d5f85; }
+.sprint-tag-daily { background: rgba(42,157,143,.12); color: #1e7a6e; }
+.sprint-tag-review { background: var(--gold-bg); color: #7a6535; }
+.sprint-tag-retro { background: rgba(230,57,70,.08); color: #b03040; }
+.sprint-event-time {
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .78rem;
+  color: var(--muted); margin-left: auto;
+}
+.sprint-event-duration {
+  font-size: .7rem; color: #aaa; font-style: italic;
+}
+.sprint-event-body { padding: .9rem 1.1rem; }
+.sprint-event-desc { font-size: .9rem; line-height: 1.55; color: var(--text); margin-bottom: .6rem; }
+.sprint-event-details { list-style: none; padding: 0; margin: 0; }
+.sprint-event-details li {
+  font-size: .85rem; color: var(--text); padding: .3rem 0 .3rem 1.1rem;
+  position: relative; line-height: 1.45;
+}
+.sprint-event-details li::before { content: ''; position: absolute; left: 0; top: .55rem; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+.sprint-event-border-planning { border-left: 4px solid var(--sprint-blue); }
+.sprint-event-border-daily { border-left: 4px solid var(--green); }
+.sprint-event-border-review { border-left: 4px solid var(--gold); }
+.sprint-event-border-retro { border-left: 4px solid var(--accent); }
+
+/* Narrative */
+.sprint-narrative {
+  border-left: 3px solid var(--gold); background: var(--gold-bg);
+  padding: .6rem 1rem; font-size: .87rem; font-style: italic;
+  color: var(--primary); border-radius: 0 4px 4px 0; margin-top: .25rem;
+  animation: sprintIn .3s ease;
+}
+
+/* Weekend panel */
+.sprint-weekend-card {
+  background: white; border: 2px dashed var(--border); border-radius: 10px;
+  padding: 2rem; text-align: center; animation: sprintIn .25s ease;
+}
+.sprint-weekend-icon { font-size: 2rem; margin-bottom: .5rem; opacity: .5; }
+.sprint-weekend-text { font-size: .92rem; color: var(--muted); }
+
+/* Nav row */
+.sprint-nav-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 1.5rem; gap: 1rem;
+}
+.sprint-counter { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: var(--muted); }
+.sprint-btn {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem;
+  padding: .45rem 1.2rem; background: var(--primary); color: white;
+  border: 2px solid var(--primary); border-radius: 5px;
+  cursor: pointer; transition: background .12s;
+}
+.sprint-btn:hover:not(:disabled) { background: #333; border-color: #333; }
+.sprint-btn:disabled { opacity: .28; cursor: default; }
+.sprint-btn.outline { background: transparent; color: var(--primary); }
+.sprint-btn.outline:hover:not(:disabled) { background: var(--primary); color: white; }
+
+/* Summary */
+.sprint-summary {
+  background: var(--primary); color: white; border-radius: 10px;
+  padding: 1.4rem 1.75rem; margin-top: 1.5rem; display: none;
+}
+.sprint-summary.visible { display: block; animation: sprintIn .4s ease; }
+.sprint-summary h3 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.05rem; color: var(--gold); margin-bottom: .75rem; }
+.sprint-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem .75rem; }
+.sprint-summary-item { display: flex; align-items: flex-start; gap: .5rem; padding: .4rem 0; }
+.sprint-summary-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.sprint-summary-name { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: #eee; }
+.sprint-summary-time { font-size: .75rem; color: #999; display: block; }
+
+/* Legend */
+.sprint-legend { display: flex; gap: 1.25rem; flex-wrap: wrap; margin: 1rem 0 .25rem; }
+.sprint-legend-item { display: flex; align-items: center; gap: .35rem; font-size: .75rem; color: var(--muted); }
+.sprint-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* Responsive */
+@media (max-width: 820px) {
+  .sprint-layout { grid-template-columns: 1fr; }
+  .sprint-detail { position: static; }
+}
+@media (max-width: 620px) {
+  h2 { font-size: 1.5rem; }
+  .nav-links { display: none; }
+  .sprint-day { min-height: 56px; padding: .35rem .2rem .3rem; }
+  .sprint-day .day-num { font-size: .8rem; }
+  .sprint-summary-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <img src="pxl-logo-64.png" alt="PXL" />
+  <span class="nav-brand">Projectmanagement</span>
+  <span class="nav-sep">/</span>
+  <span class="nav-page">Agile &amp; Scrum</span>
+  <div class="nav-links">
+    <a href="#sprint-events">Sprint Events</a>
+  </div>
+</nav>
+
+<main>
+
+<section id="sprint-events">
+  <div class="badge">De 5 Scrum Events</div>
+  <h2>Een typische Sprint van 2 weken</h2>
+  <p class="lead">Sprints zijn de hartslag van Scrum, waarin idee&euml;n worden omgezet in waarde. Doorloop dag per dag hoe de vijf Scrum Events zich in een typische Sprint van twee weken afspelen.</p>
+  <div class="callout"><p>Klik op een dag in de kalender of gebruik de navigatieknoppen om door de Sprint te wandelen.</p></div>
+
+  <!-- Legend -->
+  <div class="sprint-legend">
+    <div class="sprint-legend-item"><div class="sprint-legend-dot dot-planning"></div> Sprint Planning</div>
+    <div class="sprint-legend-item"><div class="sprint-legend-dot dot-daily"></div> Daily Scrum</div>
+    <div class="sprint-legend-item"><div class="sprint-legend-dot dot-review"></div> Sprint Review</div>
+    <div class="sprint-legend-item"><div class="sprint-legend-dot dot-retro"></div> Sprint Retrospective</div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="sprint-progress">
+    <div class="sprint-progress-track"><div class="sprint-progress-fill" id="sprint-fill"></div></div>
+    <span class="sprint-progress-label" id="sprint-progress-label">Dag 0 / 14</span>
+  </div>
+
+  <!-- Calendar + Detail -->
+  <div class="sprint-layout">
+    <div class="sprint-calendar" id="sprint-calendar">
+      <!-- Headers -->
+      <div class="sprint-cal-header">Ma</div>
+      <div class="sprint-cal-header">Di</div>
+      <div class="sprint-cal-header">Wo</div>
+      <div class="sprint-cal-header">Do</div>
+      <div class="sprint-cal-header">Vr</div>
+      <div class="sprint-cal-header weekend">Za</div>
+      <div class="sprint-cal-header weekend">Zo</div>
+      <!-- Week 1 label -->
+      <div class="sprint-week-label">Week 1</div>
+      <!-- Day cells rendered by JS -->
+    </div>
+    <div class="sprint-detail" id="sprint-detail"></div>
+  </div>
+
+  <!-- Navigation row -->
+  <div class="sprint-nav-row">
+    <button class="sprint-btn outline" id="sprint-prev" onclick="sprintPrev()" disabled>&larr; Vorige dag</button>
+    <span class="sprint-counter" id="sprint-counter">0 / 14 dagen bekeken</span>
+    <button class="sprint-btn" id="sprint-next" onclick="sprintNext()">Start de Sprint &rarr;</button>
+  </div>
+
+  <!-- Summary -->
+  <div class="sprint-summary" id="sprint-summary">
+    <h3>Overzicht: de 5 Scrum Events</h3>
+    <div class="sprint-summary-grid" id="sprint-summary-grid"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="f-inner">
+    <img src="pxl-logo-64.png" alt="PXL" />
+    <span>Hogeschool PXL &bull; Elfde-Liniestraat 24 &bull; B-3500 HASSELT &bull; <a href="https://www.pxl.be">www.pxl.be</a></span>
+  </div>
+</footer>
+
+<script>
+// ── Sprint Days Data ──────────────────────────────────────────────────────────
+
+var SPRINT_DAYS = [
+  {
+    day: 1, weekday: 'Maandag', week: 1, isWeekend: false,
+    events: [
+      {
+        name: 'Sprint Planning',
+        time: '10:00',
+        duration: 'max. 8 uur',
+        icon: '\u{1F4CB}',
+        color: 'planning',
+        description: 'Bij de start van de Sprint komt het volledige Scrum Team samen voor de Sprint Planning. Het team beslist welke Product Backlog items ze deze Sprint zullen aanpakken.',
+        details: [
+          'Items selecteren uit de Product Backlog op basis van prioriteit en capaciteit',
+          'Een duidelijk Sprint Doel vastleggen (wat willen we bereiken?)',
+          'De Sprint Backlog opstellen met concrete taken',
+          'Deelnemers: Product Owner, Scrum Master en Developers'
+        ]
+      }
+    ],
+    narrative: 'De Sprint begint! Vandaag draait alles om plannen. Het team bepaalt samen het Sprint Doel en selecteert de belangrijkste items uit de Product Backlog. Na de Sprint Planning weet iedereen wat er deze twee weken moet gebeuren.'
+  },
+  {
+    day: 2, weekday: 'Dinsdag', week: 1, isWeekend: false,
+    events: [
+      {
+        name: 'Daily Scrum',
+        time: '09:00',
+        duration: 'max. 15 min',
+        icon: '\u{1F9CD}',
+        color: 'daily',
+        description: 'De eerste Daily Scrum van de Sprint. Het team staat recht en bespreekt kort de voortgang.',
+        details: [
+          'Wat heb ik gisteren bereikt?',
+          'Wat ga ik vandaag doen?',
+          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+        ]
+      }
+    ],
+    narrative: 'De eerste echte werkdag na de planning. Het team start met een korte Daily Scrum om af te stemmen. Iedereen pakt de taken op die tijdens de Sprint Planning zijn afgesproken.'
+  },
+  {
+    day: 3, weekday: 'Woensdag', week: 1, isWeekend: false,
+    events: [
+      {
+        name: 'Daily Scrum',
+        time: '09:00',
+        duration: 'max. 15 min',
+        icon: '\u{1F9CD}',
+        color: 'daily',
+        description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
+        details: [
+          'Wat heb ik gisteren bereikt?',
+          'Wat ga ik vandaag doen?',
+          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+        ]
+      }
+    ],
+    narrative: 'Het werk begint op gang te komen. Tijdens de Daily Scrum worden de eerste resultaten zichtbaar en kan het team eventuele blokkades snel signaleren.'
+  },
+  {
+    day: 4, weekday: 'Donderdag', week: 1, isWeekend: false,
+    events: [
+      {
+        name: 'Daily Scrum',
+        time: '09:00',
+        duration: 'max. 15 min',
+        icon: '\u{1F9CD}',
+        color: 'daily',
+        description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
+        details: [
+          'Wat heb ik gisteren bereikt?',
+          'Wat ga ik vandaag doen?',
+          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+        ]
+      }
+    ],
+    narrative: 'Het team zit in een goed ritme. De Daily Scrum helpt om focus te houden op het Sprint Doel. Obstakels worden snel gedeeld zodat de Scrum Master ze kan helpen oplossen.'
+  },
+  {
+    day: 5, weekday: 'Vrijdag', week: 1, isWeekend: false,
+    events: [
+      {
+        name: 'Daily Scrum',
+        time: '09:00',
+        duration: 'max. 15 min',
+        icon: '\u{1F9CD}',
+        color: 'daily',
+        description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
+        details: [
+          'Wat heb ik gisteren bereikt?',
+          'Wat ga ik vandaag doen?',
+          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+        ]
+      }
+    ],
+    narrative: 'Einde van de eerste week! Tijdens de Daily Scrum bekijkt het team hoever ze staan ten opzichte van het Sprint Doel. Zijn er taken die achterlopen?'
+  },
+  {
+    day: 6, weekday: 'Zaterdag', week: 1, isWeekend: true,
+    events: [],
+    narrative: ''
+  },
+  {
+    day: 7, weekday: 'Zondag', week: 1, isWeekend: true,
+    events: [],
+    narrative: ''
+  },
+  {
+    day: 8, weekday: 'Maandag', week: 2, isWeekend: false,
+    events: [
+      {
+        name: 'Daily Scrum',
+        time: '09:00',
+        duration: 'max. 15 min',
+        icon: '\u{1F9CD}',
+        color: 'daily',
+        description: 'Start van week 2. Het team bespreekt wat er vorige week is bereikt en wat er deze week moet gebeuren.',
+        details: [
+          'Wat heb ik gisteren bereikt?',
+          'Wat ga ik vandaag doen?',
+          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+        ]
+      }
+    ],
+    narrative: 'Week twee begint. Het team bekijkt de voortgang: liggen we op schema? Zijn er nieuwe obstakels bijgekomen na het weekend? De focus verschuift naar het afwerken van items.'
+  },
+  {
+    day: 9, weekday: 'Dinsdag', week: 2, isWeekend: false,
+    events: [
+      {
+        name: 'Daily Scrum',
+        time: '09:00',
+        duration: 'max. 15 min',
+        icon: '\u{1F9CD}',
+        color: 'daily',
+        description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
+        details: [
+          'Wat heb ik gisteren bereikt?',
+          'Wat ga ik vandaag doen?',
+          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+        ]
+      }
+    ],
+    narrative: 'De druk neemt toe naarmate het einde van de Sprint nadert. Het team werkt hard om alle Sprint Backlog items af te ronden.'
+  },
+  {
+    day: 10, weekday: 'Woensdag', week: 2, isWeekend: false,
+    events: [
+      {
+        name: 'Daily Scrum',
+        time: '09:00',
+        duration: 'max. 15 min',
+        icon: '\u{1F9CD}',
+        color: 'daily',
+        description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
+        details: [
+          'Wat heb ik gisteren bereikt?',
+          'Wat ga ik vandaag doen?',
+          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+        ]
+      }
+    ],
+    narrative: 'Halverwege de tweede week. Het team controleert welke items al \u201cDone\u201d zijn volgens de Definition of Done. Nog niet afgeronde items krijgen extra aandacht.'
+  },
+  {
+    day: 11, weekday: 'Donderdag', week: 2, isWeekend: false,
+    events: [
+      {
+        name: 'Daily Scrum',
+        time: '09:00',
+        duration: 'max. 15 min',
+        icon: '\u{1F9CD}',
+        color: 'daily',
+        description: 'Dagelijkse standup: het team bespreekt de voortgang en laatste obstakels voor het einde van de Sprint.',
+        details: [
+          'Wat heb ik gisteren bereikt?',
+          'Wat ga ik vandaag doen?',
+          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+        ]
+      }
+    ],
+    narrative: 'De voorlaatste dag! Het team rondt de laatste taken af en bereidt zich voor op de Sprint Review van morgen. Alleen volledig afgewerkte items worden getoond aan de stakeholders.'
+  },
+  {
+    day: 12, weekday: 'Vrijdag', week: 2, isWeekend: false,
+    events: [
+      {
+        name: 'Daily Scrum',
+        time: '09:00',
+        duration: 'max. 15 min',
+        icon: '\u{1F9CD}',
+        color: 'daily',
+        description: 'De laatste Daily Scrum van deze Sprint. Een kort moment om de dag in te delen.',
+        details: [
+          'Wat heb ik gisteren bereikt?',
+          'Wat ga ik vandaag doen?',
+          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+        ]
+      },
+      {
+        name: 'Sprint Review',
+        time: '10:00',
+        duration: 'max. 4 uur',
+        icon: '\u{1F3AC}',
+        color: 'review',
+        description: 'Het Scrum Team toont het opgeleverde (deel)product aan de stakeholders. Alleen volledig afgeronde User Stories worden gedemonstreerd.',
+        details: [
+          'Demo van het werkende product-increment aan stakeholders',
+          'Stakeholders geven feedback op wat ze zien',
+          'Product Owner bespreekt de actuele Product Backlog',
+          'Resultaat: een bijgewerkte Product Backlog met nieuwe inzichten'
+        ]
+      },
+      {
+        name: 'Sprint Retrospective',
+        time: '13:00',
+        duration: 'max. 3 uur',
+        icon: '\u{1F50D}',
+        color: 'retro',
+        description: 'Het team blikt terug op de voorbije Sprint en bepaalt verbeteringen voor de volgende Sprint.',
+        details: [
+          'Wat waren onze succesvolle acties deze Sprint?',
+          'Wat leerden we en wat kan beter?',
+          'Welke verbeteringen nemen we mee naar de volgende Sprint?',
+          'Traden er problemen of fouten op? Hoe lossen we die op?'
+        ]
+      }
+    ],
+    narrative: 'De laatste dag van de Sprint! Na een korte Daily Scrum presenteert het team het werk aan de stakeholders in de Sprint Review. Daarna reflecteert het team in de Sprint Retrospective: wat ging goed, wat kan beter? En dan \u2026 begint de volgende Sprint!'
+  },
+  {
+    day: 13, weekday: 'Zaterdag', week: 2, isWeekend: true,
+    events: [],
+    narrative: ''
+  },
+  {
+    day: 14, weekday: 'Zondag', week: 2, isWeekend: true,
+    events: [],
+    narrative: ''
+  }
+];
+
+var SPRINT_TOTAL = SPRINT_DAYS.length;
+var sprintActive = null;
+var sprintVisited = new Set();
+
+// ── Build calendar cells ──────────────────────────────────────────────────────
+
+(function sprintInit() {
+  var cal = document.getElementById('sprint-calendar');
+
+  // Render day cells for week 1 (indices 0–6)
+  for (var i = 0; i < 7; i++) { buildDayCell(cal, i); }
+
+  // Week 2 label
+  var w2 = document.createElement('div');
+  w2.className = 'sprint-week-label';
+  w2.textContent = 'Week 2';
+  cal.appendChild(w2);
+
+  // Render day cells for week 2 (indices 7–13)
+  for (var i = 7; i < 14; i++) { buildDayCell(cal, i); }
+
+  // Initial detail
+  renderPlaceholder();
+})();
+
+function buildDayCell(container, idx) {
+  var d = SPRINT_DAYS[idx];
+  var cell = document.createElement('div');
+  cell.id = 'sprint-day-' + idx;
+  cell.className = 'sprint-day' + (d.isWeekend ? ' weekend' : '');
+  cell.onclick = function() { sprintClick(idx); };
+
+  var num = document.createElement('div');
+  num.className = 'day-num';
+  num.textContent = d.day;
+  cell.appendChild(num);
+
+  var name = document.createElement('div');
+  name.className = 'day-name';
+  name.textContent = d.weekday.substring(0, 2);
+  cell.appendChild(name);
+
+  if (d.events.length > 0) {
+    var dots = document.createElement('div');
+    dots.className = 'day-dots';
+    d.events.forEach(function(ev) {
+      var dot = document.createElement('div');
+      dot.className = 'day-dot dot-' + ev.color;
+      dots.appendChild(dot);
+    });
+    cell.appendChild(dots);
+  }
+
+  container.appendChild(cell);
+}
+
+// ── Interaction ───────────────────────────────────────────────────────────────
+
+function sprintClick(idx) {
+  sprintActive = idx;
+  sprintVisited.add(idx);
+
+  // Update cell classes
+  SPRINT_DAYS.forEach(function(d, i) {
+    var cell = document.getElementById('sprint-day-' + i);
+    if (!cell) return;
+    var cls = 'sprint-day';
+    if (d.isWeekend) cls += ' weekend';
+    if (sprintVisited.has(i)) cls += ' visited';
+    if (i === idx) cls += ' active';
+    cell.className = cls;
+  });
+
+  // Progress
+  document.getElementById('sprint-fill').style.width = (sprintVisited.size / SPRINT_TOTAL * 100) + '%';
+  document.getElementById('sprint-progress-label').textContent = 'Dag ' + (idx + 1) + ' / ' + SPRINT_TOTAL;
+
+  // Detail
+  var day = SPRINT_DAYS[idx];
+  var detail = document.getElementById('sprint-detail');
+
+  if (day.isWeekend) {
+    detail.innerHTML =
+      '<div class="sprint-weekend-card">' +
+        '<div class="sprint-weekend-icon">\u{1F6CC}</div>' +
+        '<div class="sprint-weekend-text">Geen Scrum Events gepland \u2014 het team rust uit.</div>' +
+      '</div>';
+  } else {
+    var html = '';
+    day.events.forEach(function(ev) {
+      html += buildEventCard(ev);
+    });
+    if (day.narrative) {
+      html += '<div class="sprint-narrative">' + day.narrative + '</div>';
+    }
+    detail.innerHTML = html;
+  }
+
+  // Counter & buttons
+  document.getElementById('sprint-counter').textContent = sprintVisited.size + ' / ' + SPRINT_TOTAL + ' dagen bekeken';
+  updateNavButtons();
+
+  // Summary
+  if (sprintVisited.size === SPRINT_TOTAL) {
+    document.getElementById('sprint-summary').classList.add('visible');
+    renderSummary();
+  }
+}
+
+function buildEventCard(ev) {
+  var detailsHtml = '';
+  if (ev.details && ev.details.length) {
+    detailsHtml = '<ul class="sprint-event-details">';
+    ev.details.forEach(function(d) {
+      detailsHtml += '<li>' + d + '</li>';
+    });
+    detailsHtml += '</ul>';
+  }
+  return '<div class="sprint-event-card sprint-event-border-' + ev.color + '">' +
+    '<div class="sprint-event-header">' +
+      '<span class="sprint-event-tag sprint-tag-' + ev.color + '">' + ev.icon + ' ' + ev.name + '</span>' +
+      '<span class="sprint-event-duration">' + ev.duration + '</span>' +
+      '<span class="sprint-event-time">' + ev.time + '</span>' +
+    '</div>' +
+    '<div class="sprint-event-body">' +
+      '<p class="sprint-event-desc">' + ev.description + '</p>' +
+      detailsHtml +
+    '</div>' +
+  '</div>';
+}
+
+function renderPlaceholder() {
+  document.getElementById('sprint-detail').innerHTML =
+    '<div class="sprint-placeholder">' +
+      '<div class="sprint-placeholder-icon">\u{1F4C5}</div>' +
+      '<div>Klik op een dag in de kalender of gebruik <strong>\u201cStart de Sprint\u201d</strong> om te beginnen.</div>' +
+    '</div>';
+}
+
+function updateNavButtons() {
+  var prev = document.getElementById('sprint-prev');
+  var next = document.getElementById('sprint-next');
+
+  prev.disabled = sprintActive === null || sprintActive <= 0;
+
+  if (sprintActive === SPRINT_TOTAL - 1) {
+    next.textContent = 'Klaar \u2713';
+    next.disabled = true;
+  } else {
+    next.innerHTML = 'Volgende dag &rarr;';
+    next.disabled = false;
+  }
+}
+
+function sprintNext() {
+  var next = sprintActive === null ? 0 : Math.min(sprintActive + 1, SPRINT_TOTAL - 1);
+  sprintClick(next);
+}
+
+function sprintPrev() {
+  if (sprintActive === null || sprintActive <= 0) return;
+  sprintClick(sprintActive - 1);
+}
+
+function renderSummary() {
+  var events = [
+    { name: 'De Sprint', color: 'var(--primary)', timebox: '1, 2 of 4 weken', desc: 'De vaste periode waarin het team werkt aan het Sprint Doel' },
+    { name: 'Sprint Planning', color: 'var(--sprint-blue)', timebox: 'Max. 8 uur', desc: 'Het team plant wat er deze Sprint wordt opgeleverd' },
+    { name: 'Daily Scrum', color: 'var(--green)', timebox: 'Max. 15 minuten', desc: 'Dagelijkse standup om voortgang en obstakels te bespreken' },
+    { name: 'Sprint Review', color: 'var(--gold)', timebox: 'Max. 4 uur', desc: 'Demo van het increment aan stakeholders' },
+    { name: 'Sprint Retrospective', color: 'var(--accent)', timebox: 'Max. 3 uur', desc: 'Het team reflecteert en bepaalt verbeteringen' }
+  ];
+  var html = '';
+  events.forEach(function(e) {
+    html += '<div class="sprint-summary-item">' +
+      '<div class="sprint-summary-dot" style="background:' + e.color + '"></div>' +
+      '<div><span class="sprint-summary-name">' + e.name + '</span>' +
+      '<span class="sprint-summary-time">' + e.timebox + ' \u2014 ' + e.desc + '</span></div>' +
+    '</div>';
+  });
+  document.getElementById('sprint-summary-grid').innerHTML = html;
+}
+</script>
+
+</body>
+</html>
