@@ -82,6 +82,22 @@ footer .f-inner a:hover { color: var(--gold); }
 /* Layout: calendar + detail */
 .sprint-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1rem; align-items: start; }
 
+/* Sprint container — shows "De Sprint" as the overarching 5th event */
+.sprint-container {
+  border: 2.5px solid var(--primary); border-radius: 12px;
+  padding: 2rem 1rem 1rem; position: relative; margin-top: .5rem;
+}
+.sprint-container-label {
+  position: absolute; top: -11px; left: 1.25rem;
+  background: var(--primary); color: white;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .72rem;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 2px 12px; border-radius: 3px;
+}
+.sprint-container-sub {
+  font-weight: 600; color: #bbb; letter-spacing: .04em; margin-left: 4px;
+}
+
 /* Calendar grid */
 .sprint-calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 .sprint-cal-header {
@@ -215,7 +231,7 @@ footer .f-inner a:hover { color: var(--gold); }
 }
 .sprint-summary.visible { display: block; animation: sprintIn .4s ease; }
 .sprint-summary h3 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.05rem; color: var(--gold); margin-bottom: .75rem; }
-.sprint-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem .75rem; }
+.sprint-summary-grid { display: grid; grid-template-columns: 1fr; gap: .5rem; }
 .sprint-summary-item { display: flex; align-items: flex-start; gap: .5rem; padding: .4rem 0; }
 .sprint-summary-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
 .sprint-summary-name { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: #eee; }
@@ -236,7 +252,6 @@ footer .f-inner a:hover { color: var(--gold); }
   .nav-links { display: none; }
   .sprint-day { min-height: 56px; padding: .35rem .2rem .3rem; }
   .sprint-day .day-num { font-size: .8rem; }
-  .sprint-summary-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -262,6 +277,7 @@ footer .f-inner a:hover { color: var(--gold); }
 
   <!-- Legend -->
   <div class="sprint-legend">
+    <div class="sprint-legend-item"><div class="sprint-legend-dot" style="background:var(--primary)"></div> De Sprint</div>
     <div class="sprint-legend-item"><div class="sprint-legend-dot dot-planning"></div> Sprint Planning</div>
     <div class="sprint-legend-item"><div class="sprint-legend-dot dot-daily"></div> Daily Scrum</div>
     <div class="sprint-legend-item"><div class="sprint-legend-dot dot-review"></div> Sprint Review</div>
@@ -276,18 +292,21 @@ footer .f-inner a:hover { color: var(--gold); }
 
   <!-- Calendar + Detail -->
   <div class="sprint-layout">
-    <div class="sprint-calendar" id="sprint-calendar">
-      <!-- Headers -->
-      <div class="sprint-cal-header">Ma</div>
-      <div class="sprint-cal-header">Di</div>
-      <div class="sprint-cal-header">Wo</div>
-      <div class="sprint-cal-header">Do</div>
-      <div class="sprint-cal-header">Vr</div>
-      <div class="sprint-cal-header weekend">Za</div>
-      <div class="sprint-cal-header weekend">Zo</div>
-      <!-- Week 1 label -->
-      <div class="sprint-week-label">Week 1</div>
-      <!-- Day cells rendered by JS -->
+    <div class="sprint-container">
+      <div class="sprint-container-label">De Sprint <span class="sprint-container-sub">— 2 weken (Event 5)</span></div>
+      <div class="sprint-calendar" id="sprint-calendar">
+        <!-- Headers -->
+        <div class="sprint-cal-header">Ma</div>
+        <div class="sprint-cal-header">Di</div>
+        <div class="sprint-cal-header">Wo</div>
+        <div class="sprint-cal-header">Do</div>
+        <div class="sprint-cal-header">Vr</div>
+        <div class="sprint-cal-header weekend">Za</div>
+        <div class="sprint-cal-header weekend">Zo</div>
+        <!-- Week 1 label -->
+        <div class="sprint-week-label">Week 1</div>
+        <!-- Day cells rendered by JS -->
+      </div>
     </div>
     <div class="sprint-detail" id="sprint-detail"></div>
   </div>
@@ -726,17 +745,17 @@ function sprintPrev() {
 
 function renderSummary() {
   var events = [
-    { name: 'De Sprint', color: 'var(--primary)', timebox: '1, 2 of 4 weken', desc: 'De vaste periode waarin het team werkt aan het Sprint Doel' },
-    { name: 'Sprint Planning', color: 'var(--sprint-blue)', timebox: 'Max. 8 uur', desc: 'Het team plant wat er deze Sprint wordt opgeleverd' },
-    { name: 'Daily Scrum', color: 'var(--green)', timebox: 'Max. 15 minuten', desc: 'Dagelijkse standup om voortgang en obstakels te bespreken' },
-    { name: 'Sprint Review', color: 'var(--gold)', timebox: 'Max. 4 uur', desc: 'Demo van het increment aan stakeholders' },
-    { name: 'Sprint Retrospective', color: 'var(--accent)', timebox: 'Max. 3 uur', desc: 'Het team reflecteert en bepaalt verbeteringen' }
+    { num: 1, name: 'Sprint Planning', color: 'var(--sprint-blue)', timebox: 'Max. 8 uur', desc: 'Het team plant wat er deze Sprint wordt opgeleverd' },
+    { num: 2, name: 'Daily Scrum', color: 'var(--green)', timebox: 'Max. 15 minuten', desc: 'Dagelijkse standup om voortgang en obstakels te bespreken' },
+    { num: 3, name: 'Sprint Review', color: 'var(--gold)', timebox: 'Max. 4 uur', desc: 'Demo van het increment aan stakeholders' },
+    { num: 4, name: 'Sprint Retrospective', color: 'var(--accent)', timebox: 'Max. 3 uur', desc: 'Het team reflecteert en bepaalt verbeteringen' },
+    { num: 5, name: 'De Sprint', color: 'var(--primary)', timebox: '1, 2 of 4 weken', desc: 'Het overkoepelende event \u2014 de vaste periode waarin het team werkt aan het Sprint Doel' }
   ];
   var html = '';
   events.forEach(function(e) {
     html += '<div class="sprint-summary-item">' +
       '<div class="sprint-summary-dot" style="background:' + e.color + '"></div>' +
-      '<div><span class="sprint-summary-name">' + e.name + '</span>' +
+      '<div><span class="sprint-summary-name">Event ' + e.num + ': ' + e.name + '</span>' +
       '<span class="sprint-summary-time">' + e.timebox + ' \u2014 ' + e.desc + '</span></div>' +
     '</div>';
   });
