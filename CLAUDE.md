@@ -1,7 +1,9 @@
-# Project: Interactive Learning Webapp
+# CLAUDE.md
 
-## Goal
-Build an interactive webpage that teaches students Agile (and Scrum).
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project
+Interactive learning webapp that teaches students Agile (and Scrum). Part of the PXL Hogeschool "Projectmanagement" course series.
 
 ## Source materials (in `source/` folder)
 - `source/007 Agile Projectmanagement.md` — contains the lesson content and structure
@@ -54,3 +56,21 @@ All pages follow the PXL corporate identity:
 
 ## Language
 All page content is in **Dutch** (Nederlands).
+
+## Architecture
+Single-file HTML pages with inline `<style>` and `<script>` — no build step, no framework.
+
+**Pattern:** Each interactive section follows the same structure:
+1. **Data array** — JS array of objects defining content (e.g., `SPRINT_DAYS[]`)
+2. **Init IIFE** — builds DOM elements on page load
+3. **Click handler** — updates active state, visited set, renders detail panel via `innerHTML`
+4. **Next/Prev navigation** — sequential stepping through the data
+5. **State** — global vars: `sectionActive`, `sectionVisited = new Set()`
+6. **Summary card** — appears when all items visited (`.visible` class toggle)
+
+**CSS naming:** Each section uses a unique prefix (e.g., `sprint-`) for all classes and IDs.
+
+**Reference project:** `../PMTheBasics/projectmanagement-basis.html` — sibling repo with 5 interactive sections using the same patterns (triangle/diamond diagrams, PSS builder, SMART challenges, lifecycle stepper). Use as reference for new sections.
+
+## Development
+No build commands. Open `agile.html` directly in a browser to test. The deploy workflow uploads the entire repo root as a static site.
