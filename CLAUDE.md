@@ -10,6 +10,13 @@ Interactive learning webapp that teaches students Agile (and Scrum). Part of the
 - `source/007 Agile Projectmanagement.pdf` — exact the same text content as `007 Agile Projectmanagement.md` but with images
 - `source/2025_10_huisstijlhandboek.pdf` — PXL corporate identity / huisstijlhandboek
 - `source/1314_logo_pxl_bol_witrand.png` — original PXL logo (high-res)
+- `source/daily_standup_early.png` - an image of a scrum team having a daily standup in the beginning of a sprint
+- `source/daily_standup_late.png` - an image of a scrum team having a daily standup nearly at the end of a sprint
+- `source/daily_standup_burndown.png` - an image of a scrum team having a daily standup while looking at a burndown chart in the middle of a sprint
+- `source/sprint_planning.png` - an image of a scrum team having a sprint planning
+- `source/sprint_review.png` - an image of a scrum team having a sprint review
+- `source/sprint_retro.png` - an image of a scrum team having a sprint retrospective
+
 
 ## Requirements
 - Single-page scroll layout (all sections on one page, nav links are anchor scrolls)
