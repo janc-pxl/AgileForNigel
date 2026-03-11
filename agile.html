@@ -191,6 +191,12 @@ footer .f-inner a:hover { color: var(--gold); }
 .sprint-event-border-review { border-left: 4px solid var(--gold); }
 .sprint-event-border-retro { border-left: 4px solid var(--accent); }
 
+/* Event image */
+.sprint-event-img {
+  width: 100%; max-height: 220px; object-fit: cover;
+  display: block; border-bottom: 1px solid var(--border);
+}
+
 /* Narrative */
 .sprint-narrative {
   border-left: 3px solid var(--gold); background: var(--gold-bg);
@@ -347,6 +353,7 @@ var SPRINT_DAYS = [
         duration: 'max. 8 uur',
         icon: '\u{1F4CB}',
         color: 'planning',
+        image: 'img/sprint_planning.jpg',
         description: 'Bij de start van de Sprint komt het volledige Scrum Team samen voor de Sprint Planning. Het team beslist welke Product Backlog items ze deze Sprint zullen aanpakken.',
         details: [
           'Items selecteren uit de Product Backlog op basis van prioriteit en capaciteit',
@@ -367,6 +374,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_early.jpg',
         description: 'De eerste Daily Scrum van de Sprint. Het team staat recht en bespreekt kort de voortgang.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -386,6 +394,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_early.jpg',
         description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -405,6 +414,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_early.jpg',
         description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -424,6 +434,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_early.jpg',
         description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -453,6 +464,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_burndown.jpg',
         description: 'Start van week 2. Het team bespreekt wat er vorige week is bereikt en wat er deze week moet gebeuren.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -472,6 +484,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_burndown.jpg',
         description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -491,6 +504,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_late.jpg',
         description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -510,6 +524,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_late.jpg',
         description: 'Dagelijkse standup: het team bespreekt de voortgang en laatste obstakels voor het einde van de Sprint.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -529,6 +544,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_late.jpg',
         description: 'De laatste Daily Scrum van deze Sprint. Een kort moment om de dag in te delen.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -542,6 +558,7 @@ var SPRINT_DAYS = [
         duration: 'max. 4 uur',
         icon: '\u{1F3AC}',
         color: 'review',
+        image: 'img/sprint_review.jpg',
         description: 'Het Scrum Team toont het opgeleverde (deel)product aan de stakeholders. Alleen volledig afgeronde User Stories worden gedemonstreerd.',
         details: [
           'Demo van het werkende product-increment aan stakeholders',
@@ -556,6 +573,7 @@ var SPRINT_DAYS = [
         duration: 'max. 3 uur',
         icon: '\u{1F50D}',
         color: 'retro',
+        image: 'img/sprint_retro.jpg',
         description: 'Het team blikt terug op de voorbije Sprint en bepaalt verbeteringen voor de volgende Sprint.',
         details: [
           'Wat waren onze succesvolle acties deze Sprint?',
@@ -697,7 +715,9 @@ function buildEventCard(ev) {
     });
     detailsHtml += '</ul>';
   }
+  var imgHtml = ev.image ? '<img class="sprint-event-img" src="' + ev.image + '" alt="' + ev.name + '" loading="lazy" />' : '';
   return '<div class="sprint-event-card sprint-event-border-' + ev.color + '">' +
+    imgHtml +
     '<div class="sprint-event-header">' +
       '<span class="sprint-event-tag sprint-tag-' + ev.color + '">' + ev.icon + ' ' + ev.name + '</span>' +
       '<span class="sprint-event-duration">' + ev.duration + '</span>' +
