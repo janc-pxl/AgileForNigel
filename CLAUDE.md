@@ -17,7 +17,7 @@ Interactive learning webapp that teaches students Agile (and Scrum). Part of the
 - `source/sprint_review.png` - an image of a scrum team having a sprint review
 - `source/sprint_retro.png` - an image of a scrum team having a sprint retrospective
 - `source/team_relaxing.png` - an image of a scrum team during the weekend
-
+- `source/refinement session.png` - an image of a scrum team having a refinement session
 ## Requirements
 - Single-page scroll layout (all sections on one page, nav links are anchor scrolls)
 - Clean, modern design

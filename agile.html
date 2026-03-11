@@ -21,6 +21,7 @@
   --text: #1a1a1a;
   --muted: #666;
   --sprint-blue: #5b7fa6;
+  --refinement: #8b5cf6;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -130,6 +131,7 @@ footer .f-inner a:hover { color: var(--gold); }
 .dot-daily { background: var(--green); }
 .dot-review { background: var(--gold); }
 .dot-retro { background: var(--accent); }
+.dot-refinement { background: var(--refinement); }
 
 /* Weekend */
 .sprint-day.weekend {
@@ -190,6 +192,38 @@ footer .f-inner a:hover { color: var(--gold); }
 .sprint-event-border-daily { border-left: 4px solid var(--green); }
 .sprint-event-border-review { border-left: 4px solid var(--gold); }
 .sprint-event-border-retro { border-left: 4px solid var(--accent); }
+.sprint-event-border-refinement { border-left: 4px solid var(--refinement); }
+.sprint-tag-refinement { background: rgba(139,92,246,.12); color: #6d3fc4; }
+
+/* Mode toggle */
+.sprint-mode-toggle {
+  display: flex; align-items: center; gap: .75rem;
+  margin: 1.25rem 0 .25rem; padding: .85rem 1.1rem;
+  background: var(--card); border: 1.5px solid var(--border); border-radius: 8px;
+}
+.sprint-mode-label {
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem;
+  color: var(--muted); cursor: pointer; transition: color .15s;
+}
+.sprint-mode-label.active { color: var(--primary); font-weight: 800; }
+.sprint-toggle-track {
+  position: relative; width: 44px; height: 24px; flex-shrink: 0;
+  background: var(--border); border-radius: 12px; cursor: pointer;
+  transition: background .2s;
+}
+.sprint-toggle-track.on { background: var(--refinement); }
+.sprint-toggle-knob {
+  position: absolute; top: 2px; left: 2px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: white; box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  transition: transform .2s;
+}
+.sprint-toggle-track.on .sprint-toggle-knob { transform: translateX(20px); }
+.sprint-mode-callout {
+  font-size: .82rem; color: var(--muted); font-style: italic;
+  margin-left: auto; max-width: 55%; line-height: 1.45;
+}
+.sprint-mode-callout strong { color: var(--primary); font-style: normal; }
 
 /* Event image */
 .sprint-event-img {
@@ -256,6 +290,8 @@ footer .f-inner a:hover { color: var(--gold); }
 @media (max-width: 820px) {
   .sprint-layout { grid-template-columns: 1fr; }
   .sprint-detail { position: static; }
+  .sprint-mode-toggle { flex-wrap: wrap; }
+  .sprint-mode-callout { max-width: 100%; margin-left: 0; margin-top: .5rem; }
 }
 @media (max-width: 620px) {
   h2 { font-size: 1.5rem; }
@@ -292,6 +328,16 @@ footer .f-inner a:hover { color: var(--gold); }
     <div class="sprint-legend-item"><div class="sprint-legend-dot dot-daily"></div> Daily Scrum</div>
     <div class="sprint-legend-item"><div class="sprint-legend-dot dot-review"></div> Sprint Review</div>
     <div class="sprint-legend-item"><div class="sprint-legend-dot dot-retro"></div> Sprint Retrospective</div>
+  </div>
+
+  <!-- Mode toggle -->
+  <div class="sprint-mode-toggle" id="sprint-mode-toggle">
+    <span class="sprint-mode-label active" id="sprint-mode-official">Officieel (Scrum Guide)</span>
+    <div class="sprint-toggle-track" id="sprint-toggle" onclick="toggleRefinement()">
+      <div class="sprint-toggle-knob"></div>
+    </div>
+    <span class="sprint-mode-label" id="sprint-mode-refinement">In de praktijk (met Refinement)</span>
+    <span class="sprint-mode-callout" id="sprint-mode-callout">De Scrum Guide definieert 5 offici&euml;le events. Schakel de toggle in om te zien hoe teams in de praktijk Refinement sessies toevoegen.</span>
   </div>
 
   <!-- Progress bar -->
@@ -604,6 +650,97 @@ var SPRINT_DAYS = [
 var SPRINT_TOTAL = SPRINT_DAYS.length;
 var sprintActive = null;
 var sprintVisited = new Set();
+var refinementMode = false;
+
+// ── Refinement Overrides ─────────────────────────────────────────────────────
+// When refinement mode is ON, these overrides are merged into the base data.
+
+var REFINEMENT_OVERRIDES = {
+  0: { // Day 1 — shorter Sprint Planning
+    eventsReplace: [
+      {
+        name: 'Sprint Planning',
+        time: '10:00',
+        duration: '~1,5\u20132 uur',
+        icon: '\u{1F4CB}',
+        color: 'planning',
+        image: 'img/sprint_planning.jpg',
+        description: 'Dankzij de Refinement sessies in de vorige Sprint zijn de Product Backlog items al uitgewerkt, geschat en voorzien van acceptatiecriteria. De Sprint Planning focust nu op het selecteren van items en het afspreken van het Sprint Doel \u2014 veel effici\u00ebnter!',
+        details: [
+          'Items zijn al "ready": duidelijk, geschat en met acceptatiecriteria',
+          'Focus op het Sprint Doel en de selectie van items',
+          'De Sprint Backlog opstellen met concrete taken',
+          'Veel minder discussie nodig dan zonder Refinement'
+        ]
+      }
+    ],
+    narrative: 'De Sprint begint! Dankzij de Refinement sessies in de vorige Sprint zijn de backlog items al helder. De Sprint Planning verloopt vlot \u2014 in plaats van ~4 uur is het team in ~1,5\u20132 uur klaar.'
+  },
+  2: { // Day 3 (Wed W1) — add Refinement session
+    eventsAppend: [
+      {
+        name: 'Refinement',
+        time: '14:00',
+        duration: '~1 uur',
+        icon: '\u{1F9E9}',
+        color: 'refinement',
+        image: 'img/refinement_session.jpg',
+        description: 'Het team verfijnt Product Backlog items voor de volgende Sprint(s). Items worden besproken, opgesplitst, geschat en voorzien van acceptatiecriteria zodat ze "ready" zijn.',
+        details: [
+          'Product Owner presenteert de hoogst geprioriteerde items',
+          'Het team stelt vragen en verduidelijkt requirements',
+          'Items worden geschat (bijv. via Planning Poker)',
+          'Acceptatiecriteria worden gedefinieerd',
+          'Vuistregel: max. 10% van de sprintcapaciteit besteden aan Refinement'
+        ]
+      }
+    ],
+    narrative: 'Naast het dagelijkse werk houdt het team vanmiddag een Refinement sessie. Ze bekijken alvast de backlog items voor de volgende Sprint(s), stellen vragen aan de Product Owner en schatten de grootte in.'
+  },
+  8: { // Day 9 (Tue W2) — add Refinement session
+    eventsAppend: [
+      {
+        name: 'Refinement',
+        time: '14:00',
+        duration: '~1 uur',
+        icon: '\u{1F9E9}',
+        color: 'refinement',
+        image: 'img/refinement_session.jpg',
+        description: 'De tweede Refinement sessie van deze Sprint. Het team werkt verder aan het verfijnen van backlog items, zodat de Sprint Planning van de volgende Sprint vlot kan verlopen.',
+        details: [
+          'Vervolg op de eerste Refinement: verdere uitwerking van items',
+          'Eventuele nieuwe items van de Product Owner bespreken',
+          'Items splitsen als ze te groot zijn voor \u00e9\u00e9n Sprint',
+          'Resultaat: voldoende "ready" items voor de volgende Sprint Planning'
+        ]
+      }
+    ],
+    narrative: 'Naast de Daily Scrum plant het team vanmiddag de tweede Refinement sessie. Hiermee zorgen ze ervoor dat er voldoende uitgewerkte items klaar staan voor de volgende Sprint Planning.'
+  }
+};
+
+function getActiveDay(idx) {
+  var base = SPRINT_DAYS[idx];
+  if (!refinementMode || !REFINEMENT_OVERRIDES[idx]) return base;
+
+  var override = REFINEMENT_OVERRIDES[idx];
+  var day = {
+    day: base.day,
+    weekday: base.weekday,
+    week: base.week,
+    isWeekend: base.isWeekend,
+    events: base.events.slice(),
+    narrative: override.narrative || base.narrative
+  };
+
+  if (override.eventsReplace) {
+    day.events = override.eventsReplace;
+  }
+  if (override.eventsAppend) {
+    day.events = day.events.concat(override.eventsAppend);
+  }
+  return day;
+}
 
 // ── Build calendar cells ──────────────────────────────────────────────────────
 
@@ -627,7 +764,7 @@ var sprintVisited = new Set();
 })();
 
 function buildDayCell(container, idx) {
-  var d = SPRINT_DAYS[idx];
+  var d = getActiveDay(idx);
   var cell = document.createElement('div');
   cell.id = 'sprint-day-' + idx;
   cell.className = 'sprint-day' + (d.isWeekend ? ' weekend' : '');
@@ -664,7 +801,8 @@ function sprintClick(idx) {
   sprintVisited.add(idx);
 
   // Update cell classes
-  SPRINT_DAYS.forEach(function(d, i) {
+  SPRINT_DAYS.forEach(function(_, i) {
+    var d = getActiveDay(i);
     var cell = document.getElementById('sprint-day-' + i);
     if (!cell) return;
     var cls = 'sprint-day';
@@ -679,7 +817,7 @@ function sprintClick(idx) {
   document.getElementById('sprint-progress-label').textContent = 'Dag ' + (idx + 1) + ' / ' + SPRINT_TOTAL;
 
   // Detail
-  var day = SPRINT_DAYS[idx];
+  var day = getActiveDay(idx);
   var detail = document.getElementById('sprint-detail');
 
   if (day.isWeekend) {
@@ -770,14 +908,101 @@ function sprintPrev() {
   sprintClick(sprintActive - 1);
 }
 
+function toggleRefinement() {
+  refinementMode = !refinementMode;
+
+  // Update toggle UI
+  var track = document.getElementById('sprint-toggle');
+  var labelOff = document.getElementById('sprint-mode-official');
+  var labelOn = document.getElementById('sprint-mode-refinement');
+  var callout = document.getElementById('sprint-mode-callout');
+
+  if (refinementMode) {
+    track.classList.add('on');
+    labelOff.classList.remove('active');
+    labelOn.classList.add('active');
+    callout.innerHTML = '<strong>Refinement sessies</strong> zijn niet verplicht volgens de Scrum Guide, maar wel wijdverspreid. Ze maken de Sprint Planning korter en effici\u00ebnter, omdat items al uitgewerkt en geschat zijn. Vuistregel: max. 10% van de sprintcapaciteit.';
+  } else {
+    track.classList.remove('on');
+    labelOff.classList.add('active');
+    labelOn.classList.remove('active');
+    callout.innerHTML = 'De Scrum Guide definieert 5 offici\u00eble events. Schakel de toggle in om te zien hoe teams in de praktijk Refinement sessies toevoegen.';
+  }
+
+  // Update legend
+  updateLegend();
+
+  // Reset state and rebuild
+  sprintActive = null;
+  sprintVisited = new Set();
+  rebuildCalendar();
+  renderPlaceholder();
+
+  // Reset progress
+  document.getElementById('sprint-fill').style.width = '0%';
+  document.getElementById('sprint-progress-label').textContent = 'Dag 0 / 14';
+  document.getElementById('sprint-counter').textContent = '0 / 14 dagen bekeken';
+
+  // Reset nav buttons
+  var prev = document.getElementById('sprint-prev');
+  var next = document.getElementById('sprint-next');
+  prev.disabled = true;
+  next.innerHTML = 'Start de Sprint &rarr;';
+  next.disabled = false;
+
+  // Hide summary
+  document.getElementById('sprint-summary').classList.remove('visible');
+}
+
+function updateLegend() {
+  var legend = document.querySelector('.sprint-legend');
+  // Remove existing refinement item if any
+  var existing = document.getElementById('sprint-legend-refinement');
+  if (existing) existing.remove();
+
+  if (refinementMode) {
+    var item = document.createElement('div');
+    item.className = 'sprint-legend-item';
+    item.id = 'sprint-legend-refinement';
+    item.innerHTML = '<div class="sprint-legend-dot dot-refinement"></div> Refinement';
+    legend.appendChild(item);
+  }
+}
+
+function rebuildCalendar() {
+  var cal = document.getElementById('sprint-calendar');
+  // Remove all day cells and week-2 label (keep headers and week-1 label)
+  var children = Array.from(cal.children);
+  children.forEach(function(child) {
+    if (child.classList.contains('sprint-day') || (child.classList.contains('sprint-week-label') && child.textContent === 'Week 2')) {
+      cal.removeChild(child);
+    }
+  });
+
+  // Re-render week 1 day cells (indices 0–6)
+  for (var i = 0; i < 7; i++) { buildDayCell(cal, i); }
+
+  // Week 2 label
+  var w2 = document.createElement('div');
+  w2.className = 'sprint-week-label';
+  w2.textContent = 'Week 2';
+  cal.appendChild(w2);
+
+  // Re-render week 2 day cells (indices 7–13)
+  for (var i = 7; i < 14; i++) { buildDayCell(cal, i); }
+}
+
 function renderSummary() {
   var events = [
-    { num: 1, name: 'Sprint Planning', color: 'var(--sprint-blue)', timebox: 'Max. 8 uur', desc: 'Het team plant wat er deze Sprint wordt opgeleverd' },
+    { num: 1, name: 'Sprint Planning', color: 'var(--sprint-blue)', timebox: refinementMode ? '~1,5\u20132 uur (verkort)' : 'Max. 8 uur', desc: refinementMode ? 'Korter en effici\u00ebnter dankzij Refinement \u2014 items zijn al "ready"' : 'Het team plant wat er deze Sprint wordt opgeleverd' },
     { num: 2, name: 'Daily Scrum', color: 'var(--green)', timebox: 'Max. 15 minuten', desc: 'Dagelijkse standup om voortgang en obstakels te bespreken' },
     { num: 3, name: 'Sprint Review', color: 'var(--gold)', timebox: 'Max. 4 uur', desc: 'Demo van het increment aan stakeholders' },
     { num: 4, name: 'Sprint Retrospective', color: 'var(--accent)', timebox: 'Max. 3 uur', desc: 'Het team reflecteert en bepaalt verbeteringen' },
     { num: 5, name: 'De Sprint', color: 'var(--primary)', timebox: '1, 2 of 4 weken', desc: 'Het overkoepelende event \u2014 de vaste periode waarin het team werkt aan het Sprint Doel' }
   ];
+  if (refinementMode) {
+    events.splice(2, 0, { num: '*', name: 'Refinement', color: 'var(--refinement)', timebox: '2\u00d7 ~1 uur per Sprint', desc: 'Geen officieel event \u2014 maar essentieel in de praktijk voor een vlotte Sprint Planning' });
+  }
   var html = '';
   events.forEach(function(e) {
     html += '<div class="sprint-summary-item">' +
