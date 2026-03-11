@@ -219,11 +219,6 @@ footer .f-inner a:hover { color: var(--gold); }
   transition: transform .2s;
 }
 .sprint-toggle-track.on .sprint-toggle-knob { transform: translateX(20px); }
-.sprint-mode-callout {
-  font-size: .82rem; color: var(--muted); font-style: italic;
-  margin-left: auto; max-width: 55%; line-height: 1.45;
-}
-.sprint-mode-callout strong { color: var(--primary); font-style: normal; }
 
 /* Event image */
 .sprint-event-img {
@@ -291,7 +286,6 @@ footer .f-inner a:hover { color: var(--gold); }
   .sprint-layout { grid-template-columns: 1fr; }
   .sprint-detail { position: static; }
   .sprint-mode-toggle { flex-wrap: wrap; }
-  .sprint-mode-callout { max-width: 100%; margin-left: 0; margin-top: .5rem; }
 }
 @media (max-width: 620px) {
   h2 { font-size: 1.5rem; }
@@ -337,7 +331,10 @@ footer .f-inner a:hover { color: var(--gold); }
       <div class="sprint-toggle-knob"></div>
     </div>
     <span class="sprint-mode-label" id="sprint-mode-refinement">In de praktijk (met Refinement)</span>
-    <span class="sprint-mode-callout" id="sprint-mode-callout">De Scrum Guide definieert 5 offici&euml;le events. Schakel de toggle in om te zien hoe teams in de praktijk Refinement sessies toevoegen.</span>
+  </div>
+  <div class="callout" id="sprint-mode-callout-block">
+    <p id="sprint-mode-callout-text"><strong>Je bekijkt nu de offici&euml;le Scrum Guide versie.</strong> De Scrum Guide definieert exact 5 events: de Sprint zelf, Sprint Planning, Daily Scrum, Sprint Review en Sprint Retrospective. In deze weergave duurt de Sprint Planning tot 8 uur, omdat het team tijdens de planning ook de backlog items moet begrijpen en schatten.</p>
+    <p style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Schakel de toggle in om te zien hoe de meeste teams in de praktijk werken &mdash; met Refinement sessies die de Sprint Planning korter en effici&euml;nter maken.</p>
   </div>
 
   <!-- Progress bar -->
@@ -425,15 +422,17 @@ var SPRINT_DAYS = [
         icon: '\u{1F9CD}',
         color: 'daily',
         image: 'img/daily_standup_early.jpg',
-        description: 'De eerste Daily Scrum van de Sprint. Het team staat recht en bespreekt kort de voortgang.',
+        description: 'De eerste Daily Scrum van de Sprint. Het team verzamelt rond het Scrum Board en bekijkt samen de kolommen: To Do, In Progress en Done. Bijna alle stories staan nog in \u201cTo Do\u201d \u2014 logisch, want het echte werk begint vandaag pas.',
         details: [
-          'Wat heb ik gisteren bereikt?',
-          'Wat ga ik vandaag doen?',
-          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+          'Elk teamlid wijst op het Scrum Board naar de story waar hij/zij gisteren aan begon',
+          'Het Sprint Doel wordt kort herhaald: \u201cWeten we allemaal nog waarom we d\u00edt doen?\u201d',
+          'De burndown chart toont nog een vlakke lijn \u2014 er is nog nauwelijks werk afgerond',
+          'Het team bespreekt wie vandaag welke stories oppakt uit de \u201cTo Do\u201d kolom',
+          'Mogelijke obstakels worden vroeg gesignaleerd'
         ]
       }
     ],
-    narrative: 'De eerste echte werkdag na de planning. Het team start met een korte Daily Scrum om af te stemmen. Iedereen pakt de taken op die tijdens de Sprint Planning zijn afgesproken.'
+    narrative: 'De eerste echte werkdag na de planning. Het team verzamelt rond het Scrum Board: bijna alles staat nog in \u201cTo Do\u201d. De burndown chart is nog vlak. Iedereen pakt de eerste taken op die tijdens de Sprint Planning zijn afgesproken.'
   },
   {
     day: 3, weekday: 'Woensdag', week: 1, isWeekend: false,
@@ -445,15 +444,17 @@ var SPRINT_DAYS = [
         icon: '\u{1F9CD}',
         color: 'daily',
         image: 'img/daily_standup_early.jpg',
-        description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
+        description: 'Het team bekijkt het Scrum Board: de eerste stories schuiven van \u201cTo Do\u201d naar \u201cIn Progress\u201d. Teamleden wijzen naar de stories waar ze gisteren aan werkten en vertellen kort wat ze vandaag gaan doen.',
         details: [
-          'Wat heb ik gisteren bereikt?',
-          'Wat ga ik vandaag doen?',
-          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+          'Op het Scrum Board: enkele stories zijn verplaatst naar \u201cIn Progress\u201d',
+          'Teamleden wijzen fysiek naar hun stories op het board bij het bespreken',
+          'De burndown chart begint licht te dalen \u2014 de eerste taken worden afgevinkt',
+          'Het Sprint Doel hangt zichtbaar naast het board als referentiepunt',
+          'Eventuele blokkades worden meteen gemeld zodat de Scrum Master kan helpen'
         ]
       }
     ],
-    narrative: 'Het werk begint op gang te komen. Tijdens de Daily Scrum worden de eerste resultaten zichtbaar en kan het team eventuele blokkades snel signaleren.'
+    narrative: 'Het werk begint op gang te komen. Op het Scrum Board schuiven de eerste stories naar \u201cIn Progress\u201d. De burndown chart begint licht te dalen. Het team signaleert vroeg eventuele blokkades.'
   },
   {
     day: 4, weekday: 'Donderdag', week: 1, isWeekend: false,
@@ -465,15 +466,17 @@ var SPRINT_DAYS = [
         icon: '\u{1F9CD}',
         color: 'daily',
         image: 'img/daily_standup_early.jpg',
-        description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
+        description: 'Het team staat weer rond het Scrum Board. De \u201cIn Progress\u201d kolom is goed gevuld en de eerste story is verplaatst naar \u201cDone\u201d! De burndown chart toont een mooie dalende lijn.',
         details: [
-          'Wat heb ik gisteren bereikt?',
-          'Wat ga ik vandaag doen?',
-          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+          'Scrum Board: eerste story verplaatst naar \u201cDone\u201d \u2014 het team viert dit kort',
+          'De burndown chart daalt gestaag: het team ligt op schema',
+          'Elk teamlid wijst naar zijn/haar story en geeft een korte update',
+          'Het Sprint Doel wordt even gecheckt: \u201cDraagt dit werk bij aan ons doel?\u201d',
+          'Geen grote obstakels \u2014 het team zit in een goed ritme'
         ]
       }
     ],
-    narrative: 'Het team zit in een goed ritme. De Daily Scrum helpt om focus te houden op het Sprint Doel. Obstakels worden snel gedeeld zodat de Scrum Master ze kan helpen oplossen.'
+    narrative: 'De eerste story is \u201cDone\u201d! Het Scrum Board laat zien dat het team goed op dreef is. De burndown chart daalt mooi. Het Sprint Doel blijft het kompas voor alle beslissingen.'
   },
   {
     day: 5, weekday: 'Vrijdag', week: 1, isWeekend: false,
@@ -485,15 +488,17 @@ var SPRINT_DAYS = [
         icon: '\u{1F9CD}',
         color: 'daily',
         image: 'img/daily_standup_early.jpg',
-        description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
+        description: 'Einde van week 1. Het team bekijkt het Scrum Board kritisch: hoeveel stories staan er nog in \u201cTo Do\u201d versus \u201cDone\u201d? De burndown chart geeft een eerlijk beeld \u2014 liggen we op schema voor het Sprint Doel?',
         details: [
-          'Wat heb ik gisteren bereikt?',
-          'Wat ga ik vandaag doen?',
-          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+          'Scrum Board check: het team telt de stories per kolom (To Do / In Progress / Done)',
+          'Burndown chart: de lijn wordt vergeleken met de ideale dalende lijn',
+          'Sprint Doel evaluatie: \u201cKunnen we ons doel nog halen met wat er nog openstaat?\u201d',
+          'Als de burndown boven de ideale lijn ligt: het team bespreekt hoe bij te sturen',
+          'Teamleden bespreken wat ze v\u00f3\u00f3r het weekend nog willen afronden'
         ]
       }
     ],
-    narrative: 'Einde van de eerste week! Tijdens de Daily Scrum bekijkt het team hoever ze staan ten opzichte van het Sprint Doel. Zijn er taken die achterlopen?'
+    narrative: 'Einde van de eerste week! Het team bekijkt de burndown chart: liggen we op schema? Het Scrum Board laat zien hoeveel er nog in \u201cTo Do\u201d staat versus \u201cDone\u201d. Een goed moment om bij te sturen als dat nodig is.'
   },
   {
     day: 6, weekday: 'Zaterdag', week: 1, isWeekend: true,
@@ -515,15 +520,17 @@ var SPRINT_DAYS = [
         icon: '\u{1F9CD}',
         color: 'daily',
         image: 'img/daily_standup_burndown.jpg',
-        description: 'Start van week 2. Het team bespreekt wat er vorige week is bereikt en wat er deze week moet gebeuren.',
+        description: 'Start van week 2! Het team bekijkt de burndown chart aandachtig: waar staan we na het weekend? Op het Scrum Board is te zien dat er stories in \u201cDone\u201d staan, maar er is ook nog veel \u201cIn Progress\u201d. De focus verschuift nu naar het afmaken van werk.',
         details: [
-          'Wat heb ik gisteren bereikt?',
-          'Wat ga ik vandaag doen?',
-          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+          'Burndown chart analyse: het team vergelijkt de werkelijke lijn met de ideale lijn',
+          'Scrum Board: de kolom \u201cIn Progress\u201d moet leeglopen richting \u201cDone\u201d',
+          'Sprint Doel check: \u201cWat moet er nog gebeuren om ons doel te halen?\u201d',
+          'Het team bespreekt of stories die \u201cIn Progress\u201d zijn, geblokkeerd zijn geraakt',
+          'Focus deze week: afmaken, niet aan nieuwe dingen beginnen als het niet nodig is'
         ]
       }
     ],
-    narrative: 'Week twee begint. Het team bekijkt de voortgang: liggen we op schema? Zijn er nieuwe obstakels bijgekomen na het weekend? De focus verschuift naar het afwerken van items.'
+    narrative: 'Week twee begint. Het team bekijkt de burndown chart: liggen we op koers? Het Scrum Board laat zien dat er nog flink wat werk in \u201cIn Progress\u201d staat. De focus verschuift naar afmaken en opleveren.'
   },
   {
     day: 9, weekday: 'Dinsdag', week: 2, isWeekend: false,
@@ -535,15 +542,17 @@ var SPRINT_DAYS = [
         icon: '\u{1F9CD}',
         color: 'daily',
         image: 'img/daily_standup_burndown.jpg',
-        description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
+        description: 'De burndown chart wordt steeds belangrijker nu het einde van de Sprint nadert. Het team wijst op het board naar stories die bijna klaar zijn en bespreekt of er hulp nodig is om ze over de finish te krijgen.',
         details: [
-          'Wat heb ik gisteren bereikt?',
-          'Wat ga ik vandaag doen?',
-          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+          'Burndown chart: de dalende lijn wordt kritisch bekeken \u2014 halen we het?',
+          'Scrum Board: teamleden wijzen naar stories die bijna \u201cDone\u201d zijn',
+          'Samenwerken: als iemand vastloopt, bieden anderen hulp aan (swarming)',
+          'Het Sprint Doel wordt herhaald: \u201cWelke stories zijn essentieel voor het doel?\u201d',
+          'Stories die het Sprint Doel niet dienen, kunnen eventueel worden uitgesteld'
         ]
       }
     ],
-    narrative: 'De druk neemt toe naarmate het einde van de Sprint nadert. Het team werkt hard om alle Sprint Backlog items af te ronden.'
+    narrative: 'De druk neemt toe. De burndown chart laat zien of het team op schema ligt. Op het Scrum Board wijzen teamleden naar stories die bijna klaar zijn. Het Sprint Doel bepaalt de prioriteiten.'
   },
   {
     day: 10, weekday: 'Woensdag', week: 2, isWeekend: false,
@@ -555,15 +564,17 @@ var SPRINT_DAYS = [
         icon: '\u{1F9CD}',
         color: 'daily',
         image: 'img/daily_standup_late.jpg',
-        description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
+        description: 'Het team bekijkt het Scrum Board nauwkeurig: welke stories staan al in \u201cDone\u201d en voldoen aan de Definition of Done? De burndown chart wordt vergeleken met de ideale lijn \u2014 er is nog werk te doen.',
         details: [
-          'Wat heb ik gisteren bereikt?',
-          'Wat ga ik vandaag doen?',
-          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+          'Scrum Board: de \u201cDone\u201d kolom groeit, maar er staan nog items in \u201cIn Progress\u201d',
+          'Definition of Done check: zijn afgeronde stories \u00e9cht klaar? (geteste code, documentatie, ...)',
+          'Burndown chart: het team bespreekt of het tempo voldoende is om alles af te ronden',
+          'Sprint Doel: \u201cWelke stories m\u00f3eten af voor het doel, en welke zijn nice-to-have?\u201d',
+          'Het team maakt harde keuzes als de burndown laat zien dat niet alles haalbaar is'
         ]
       }
     ],
-    narrative: 'Halverwege de tweede week. Het team controleert welke items al \u201cDone\u201d zijn volgens de Definition of Done. Nog niet afgeronde items krijgen extra aandacht.'
+    narrative: 'Halverwege week twee. Het Scrum Board laat zien welke items al \u201cDone\u201d zijn volgens de Definition of Done. De burndown chart geeft aan of het tempo voldoende is. Het team maakt keuzes: wat moet af, wat kan wachten?'
   },
   {
     day: 11, weekday: 'Donderdag', week: 2, isWeekend: false,
@@ -575,15 +586,17 @@ var SPRINT_DAYS = [
         icon: '\u{1F9CD}',
         color: 'daily',
         image: 'img/daily_standup_late.jpg',
-        description: 'Dagelijkse standup: het team bespreekt de voortgang en laatste obstakels voor het einde van de Sprint.',
+        description: 'De voorlaatste dag! Het team staat rond het Scrum Board en de burndown chart. De \u201cDone\u201d kolom is flink gegroeid. Het team bespreekt welke stories morgen aan de stakeholders kunnen worden getoond in de Sprint Review.',
         details: [
-          'Wat heb ik gisteren bereikt?',
-          'Wat ga ik vandaag doen?',
-          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+          'Scrum Board: de meeste stories staan in \u201cDone\u201d \u2014 het team bekijkt wat er nog openstaat',
+          'Burndown chart: de lijn nadert de nullijn \u2014 het team is bijna klaar',
+          'Sprint Doel: \u201cHebben we ons doel bereikt? Wat ontbreekt er nog?\u201d',
+          'Morgen is de Sprint Review: alleen stories die voldoen aan de Definition of Done worden getoond',
+          'Laatste obstakels worden besproken en het team helpt elkaar om alles af te ronden'
         ]
       }
     ],
-    narrative: 'De voorlaatste dag! Het team rondt de laatste taken af en bereidt zich voor op de Sprint Review van morgen. Alleen volledig afgewerkte items worden getoond aan de stakeholders.'
+    narrative: 'De voorlaatste dag! Het Scrum Board toont een volle \u201cDone\u201d kolom. De burndown chart nadert de nullijn. Het team bereidt zich voor op de Sprint Review van morgen \u2014 alleen volledig afgewerkte stories worden getoond.'
   },
   {
     day: 12, weekday: 'Vrijdag', week: 2, isWeekend: false,
@@ -595,11 +608,13 @@ var SPRINT_DAYS = [
         icon: '\u{1F9CD}',
         color: 'daily',
         image: 'img/daily_standup_late.jpg',
-        description: 'De laatste Daily Scrum van deze Sprint. Een kort moment om de dag in te delen.',
+        description: 'De laatste Daily Scrum van deze Sprint. Een snelle blik op het Scrum Board: de \u201cDone\u201d kolom is vol, de burndown chart raakt de nullijn. Het team stemt af over de Sprint Review en Retrospective die vandaag volgen.',
         details: [
-          'Wat heb ik gisteren bereikt?',
-          'Wat ga ik vandaag doen?',
-          'Welke mogelijke obstakels belemmeren mijn vooruitgang?'
+          'Scrum Board: laatste check \u2014 de \u201cDone\u201d kolom bevat het meeste werk',
+          'Burndown chart: de lijn raakt (hopelijk!) de nullijn \u2014 alle geplande stories zijn af',
+          'Sprint Doel bereikt? Het team evalueert kort of het doel is gehaald',
+          'Voorbereiding Sprint Review: wie demonstreert welke stories aan de stakeholders?',
+          'Eventuele niet-afgeronde stories gaan terug naar de Product Backlog'
         ]
       },
       {
@@ -915,18 +930,18 @@ function toggleRefinement() {
   var track = document.getElementById('sprint-toggle');
   var labelOff = document.getElementById('sprint-mode-official');
   var labelOn = document.getElementById('sprint-mode-refinement');
-  var callout = document.getElementById('sprint-mode-callout');
+  var callout = document.getElementById('sprint-mode-callout-block');
 
   if (refinementMode) {
     track.classList.add('on');
     labelOff.classList.remove('active');
     labelOn.classList.add('active');
-    callout.innerHTML = '<strong>Refinement sessies</strong> zijn niet verplicht volgens de Scrum Guide, maar wel wijdverspreid. Ze maken de Sprint Planning korter en effici\u00ebnter, omdat items al uitgewerkt en geschat zijn. Vuistregel: max. 10% van de sprintcapaciteit.';
+    callout.innerHTML = '<p><strong>Je bekijkt nu de praktijkversie met Refinement sessies.</strong> Refinement is g\u00e9\u00e9n officieel Scrum Event, maar wordt door de meeste teams wel ingepland. Het effect: de Sprint Planning krimpt van ~4\u20138 uur naar ~1,5\u20132 uur, omdat backlog items al zijn uitgewerkt, geschat en voorzien van acceptatiecriteria (\u201cready\u201d). De vuistregel is dat Refinement maximaal 10% van de sprintcapaciteit inneemt \u2014 voor een 2-weken sprint is dat ongeveer 2\u00d71 uur.</p><p style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Schakel de toggle uit om terug te keren naar de offici\u00eble Scrum Guide versie zonder Refinement sessies.</p>';
   } else {
     track.classList.remove('on');
     labelOff.classList.add('active');
     labelOn.classList.remove('active');
-    callout.innerHTML = 'De Scrum Guide definieert 5 offici\u00eble events. Schakel de toggle in om te zien hoe teams in de praktijk Refinement sessies toevoegen.';
+    callout.innerHTML = '<p><strong>Je bekijkt nu de offici\u00eble Scrum Guide versie.</strong> De Scrum Guide definieert exact 5 events: de Sprint zelf, Sprint Planning, Daily Scrum, Sprint Review en Sprint Retrospective. In deze weergave duurt de Sprint Planning tot 8 uur, omdat het team tijdens de planning ook de backlog items moet begrijpen en schatten.</p><p style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Schakel de toggle in om te zien hoe de meeste teams in de praktijk werken \u2014 met Refinement sessies die de Sprint Planning korter en effici\u00ebnter maken.</p>';
   }
 
   // Update legend
