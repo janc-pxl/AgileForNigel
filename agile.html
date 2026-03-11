@@ -82,6 +82,22 @@ footer .f-inner a:hover { color: var(--gold); }
 /* Layout: calendar + detail */
 .sprint-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1rem; align-items: start; }
 
+/* Sprint container — shows "De Sprint" as the overarching 5th event */
+.sprint-container {
+  border: 2.5px solid var(--primary); border-radius: 12px;
+  padding: 2rem 1rem 1rem; position: relative; margin-top: .5rem;
+}
+.sprint-container-label {
+  position: absolute; top: -11px; left: 1.25rem;
+  background: var(--primary); color: white;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .72rem;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 2px 12px; border-radius: 3px;
+}
+.sprint-container-sub {
+  font-weight: 600; color: #bbb; letter-spacing: .04em; margin-left: 4px;
+}
+
 /* Calendar grid */
 .sprint-calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 .sprint-cal-header {
@@ -175,6 +191,12 @@ footer .f-inner a:hover { color: var(--gold); }
 .sprint-event-border-review { border-left: 4px solid var(--gold); }
 .sprint-event-border-retro { border-left: 4px solid var(--accent); }
 
+/* Event image */
+.sprint-event-img {
+  width: 100%; max-height: 220px; object-fit: cover;
+  display: block; border-bottom: 1px solid var(--border);
+}
+
 /* Narrative */
 .sprint-narrative {
   border-left: 3px solid var(--gold); background: var(--gold-bg);
@@ -215,7 +237,7 @@ footer .f-inner a:hover { color: var(--gold); }
 }
 .sprint-summary.visible { display: block; animation: sprintIn .4s ease; }
 .sprint-summary h3 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.05rem; color: var(--gold); margin-bottom: .75rem; }
-.sprint-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem .75rem; }
+.sprint-summary-grid { display: grid; grid-template-columns: 1fr; gap: .5rem; }
 .sprint-summary-item { display: flex; align-items: flex-start; gap: .5rem; padding: .4rem 0; }
 .sprint-summary-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
 .sprint-summary-name { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: #eee; }
@@ -236,7 +258,6 @@ footer .f-inner a:hover { color: var(--gold); }
   .nav-links { display: none; }
   .sprint-day { min-height: 56px; padding: .35rem .2rem .3rem; }
   .sprint-day .day-num { font-size: .8rem; }
-  .sprint-summary-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -262,6 +283,7 @@ footer .f-inner a:hover { color: var(--gold); }
 
   <!-- Legend -->
   <div class="sprint-legend">
+    <div class="sprint-legend-item"><div class="sprint-legend-dot" style="background:var(--primary)"></div> De Sprint</div>
     <div class="sprint-legend-item"><div class="sprint-legend-dot dot-planning"></div> Sprint Planning</div>
     <div class="sprint-legend-item"><div class="sprint-legend-dot dot-daily"></div> Daily Scrum</div>
     <div class="sprint-legend-item"><div class="sprint-legend-dot dot-review"></div> Sprint Review</div>
@@ -276,18 +298,21 @@ footer .f-inner a:hover { color: var(--gold); }
 
   <!-- Calendar + Detail -->
   <div class="sprint-layout">
-    <div class="sprint-calendar" id="sprint-calendar">
-      <!-- Headers -->
-      <div class="sprint-cal-header">Ma</div>
-      <div class="sprint-cal-header">Di</div>
-      <div class="sprint-cal-header">Wo</div>
-      <div class="sprint-cal-header">Do</div>
-      <div class="sprint-cal-header">Vr</div>
-      <div class="sprint-cal-header weekend">Za</div>
-      <div class="sprint-cal-header weekend">Zo</div>
-      <!-- Week 1 label -->
-      <div class="sprint-week-label">Week 1</div>
-      <!-- Day cells rendered by JS -->
+    <div class="sprint-container">
+      <div class="sprint-container-label">De Sprint <span class="sprint-container-sub">— 2 weken (Event 5)</span></div>
+      <div class="sprint-calendar" id="sprint-calendar">
+        <!-- Headers -->
+        <div class="sprint-cal-header">Ma</div>
+        <div class="sprint-cal-header">Di</div>
+        <div class="sprint-cal-header">Wo</div>
+        <div class="sprint-cal-header">Do</div>
+        <div class="sprint-cal-header">Vr</div>
+        <div class="sprint-cal-header weekend">Za</div>
+        <div class="sprint-cal-header weekend">Zo</div>
+        <!-- Week 1 label -->
+        <div class="sprint-week-label">Week 1</div>
+        <!-- Day cells rendered by JS -->
+      </div>
     </div>
     <div class="sprint-detail" id="sprint-detail"></div>
   </div>
@@ -328,6 +353,7 @@ var SPRINT_DAYS = [
         duration: 'max. 8 uur',
         icon: '\u{1F4CB}',
         color: 'planning',
+        image: 'img/sprint_planning.jpg',
         description: 'Bij de start van de Sprint komt het volledige Scrum Team samen voor de Sprint Planning. Het team beslist welke Product Backlog items ze deze Sprint zullen aanpakken.',
         details: [
           'Items selecteren uit de Product Backlog op basis van prioriteit en capaciteit',
@@ -348,6 +374,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_early.jpg',
         description: 'De eerste Daily Scrum van de Sprint. Het team staat recht en bespreekt kort de voortgang.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -367,6 +394,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_early.jpg',
         description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -386,6 +414,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_early.jpg',
         description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -405,6 +434,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_early.jpg',
         description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -434,6 +464,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_burndown.jpg',
         description: 'Start van week 2. Het team bespreekt wat er vorige week is bereikt en wat er deze week moet gebeuren.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -453,6 +484,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_burndown.jpg',
         description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -472,6 +504,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_late.jpg',
         description: 'Dagelijkse standup: het team bespreekt de voortgang en eventuele obstakels.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -491,6 +524,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_late.jpg',
         description: 'Dagelijkse standup: het team bespreekt de voortgang en laatste obstakels voor het einde van de Sprint.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -510,6 +544,7 @@ var SPRINT_DAYS = [
         duration: 'max. 15 min',
         icon: '\u{1F9CD}',
         color: 'daily',
+        image: 'img/daily_standup_late.jpg',
         description: 'De laatste Daily Scrum van deze Sprint. Een kort moment om de dag in te delen.',
         details: [
           'Wat heb ik gisteren bereikt?',
@@ -523,6 +558,7 @@ var SPRINT_DAYS = [
         duration: 'max. 4 uur',
         icon: '\u{1F3AC}',
         color: 'review',
+        image: 'img/sprint_review.jpg',
         description: 'Het Scrum Team toont het opgeleverde (deel)product aan de stakeholders. Alleen volledig afgeronde User Stories worden gedemonstreerd.',
         details: [
           'Demo van het werkende product-increment aan stakeholders',
@@ -537,6 +573,7 @@ var SPRINT_DAYS = [
         duration: 'max. 3 uur',
         icon: '\u{1F50D}',
         color: 'retro',
+        image: 'img/sprint_retro.jpg',
         description: 'Het team blikt terug op de voorbije Sprint en bepaalt verbeteringen voor de volgende Sprint.',
         details: [
           'Wat waren onze succesvolle acties deze Sprint?',
@@ -678,7 +715,9 @@ function buildEventCard(ev) {
     });
     detailsHtml += '</ul>';
   }
+  var imgHtml = ev.image ? '<img class="sprint-event-img" src="' + ev.image + '" alt="' + ev.name + '" loading="lazy" />' : '';
   return '<div class="sprint-event-card sprint-event-border-' + ev.color + '">' +
+    imgHtml +
     '<div class="sprint-event-header">' +
       '<span class="sprint-event-tag sprint-tag-' + ev.color + '">' + ev.icon + ' ' + ev.name + '</span>' +
       '<span class="sprint-event-duration">' + ev.duration + '</span>' +
@@ -726,17 +765,17 @@ function sprintPrev() {
 
 function renderSummary() {
   var events = [
-    { name: 'De Sprint', color: 'var(--primary)', timebox: '1, 2 of 4 weken', desc: 'De vaste periode waarin het team werkt aan het Sprint Doel' },
-    { name: 'Sprint Planning', color: 'var(--sprint-blue)', timebox: 'Max. 8 uur', desc: 'Het team plant wat er deze Sprint wordt opgeleverd' },
-    { name: 'Daily Scrum', color: 'var(--green)', timebox: 'Max. 15 minuten', desc: 'Dagelijkse standup om voortgang en obstakels te bespreken' },
-    { name: 'Sprint Review', color: 'var(--gold)', timebox: 'Max. 4 uur', desc: 'Demo van het increment aan stakeholders' },
-    { name: 'Sprint Retrospective', color: 'var(--accent)', timebox: 'Max. 3 uur', desc: 'Het team reflecteert en bepaalt verbeteringen' }
+    { num: 1, name: 'Sprint Planning', color: 'var(--sprint-blue)', timebox: 'Max. 8 uur', desc: 'Het team plant wat er deze Sprint wordt opgeleverd' },
+    { num: 2, name: 'Daily Scrum', color: 'var(--green)', timebox: 'Max. 15 minuten', desc: 'Dagelijkse standup om voortgang en obstakels te bespreken' },
+    { num: 3, name: 'Sprint Review', color: 'var(--gold)', timebox: 'Max. 4 uur', desc: 'Demo van het increment aan stakeholders' },
+    { num: 4, name: 'Sprint Retrospective', color: 'var(--accent)', timebox: 'Max. 3 uur', desc: 'Het team reflecteert en bepaalt verbeteringen' },
+    { num: 5, name: 'De Sprint', color: 'var(--primary)', timebox: '1, 2 of 4 weken', desc: 'Het overkoepelende event \u2014 de vaste periode waarin het team werkt aan het Sprint Doel' }
   ];
   var html = '';
   events.forEach(function(e) {
     html += '<div class="sprint-summary-item">' +
       '<div class="sprint-summary-dot" style="background:' + e.color + '"></div>' +
-      '<div><span class="sprint-summary-name">' + e.name + '</span>' +
+      '<div><span class="sprint-summary-name">Event ' + e.num + ': ' + e.name + '</span>' +
       '<span class="sprint-summary-time">' + e.timebox + ' \u2014 ' + e.desc + '</span></div>' +
     '</div>';
   });

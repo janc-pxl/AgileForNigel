@@ -1,13 +1,22 @@
-# Project: Interactive Learning Webapp
+# CLAUDE.md
 
-## Goal
-Build an interactive webpage that teaches students Agile (and Scrum).
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project
+Interactive learning webapp that teaches students Agile (and Scrum). Part of the PXL Hogeschool "Projectmanagement" course series.
 
 ## Source materials (in `source/` folder)
 - `source/007 Agile Projectmanagement.md` — contains the lesson content and structure
 - `source/007 Agile Projectmanagement.pdf` — exact the same text content as `007 Agile Projectmanagement.md` but with images
 - `source/2025_10_huisstijlhandboek.pdf` — PXL corporate identity / huisstijlhandboek
 - `source/1314_logo_pxl_bol_witrand.png` — original PXL logo (high-res)
+- `source/daily_standup_early.png` - an image of a scrum team having a daily standup in the beginning of a sprint
+- `source/daily_standup_late.png` - an image of a scrum team having a daily standup nearly at the end of a sprint
+- `source/daily_standup_burndown.png` - an image of a scrum team having a daily standup while looking at a burndown chart in the middle of a sprint
+- `source/sprint_planning.png` - an image of a scrum team having a sprint planning
+- `source/sprint_review.png` - an image of a scrum team having a sprint review
+- `source/sprint_retro.png` - an image of a scrum team having a sprint retrospective
+
 
 ## Requirements
 - Single-page scroll layout (all sections on one page, nav links are anchor scrolls)
@@ -54,3 +63,21 @@ All pages follow the PXL corporate identity:
 
 ## Language
 All page content is in **Dutch** (Nederlands).
+
+## Architecture
+Single-file HTML pages with inline `<style>` and `<script>` — no build step, no framework.
+
+**Pattern:** Each interactive section follows the same structure:
+1. **Data array** — JS array of objects defining content (e.g., `SPRINT_DAYS[]`)
+2. **Init IIFE** — builds DOM elements on page load
+3. **Click handler** — updates active state, visited set, renders detail panel via `innerHTML`
+4. **Next/Prev navigation** — sequential stepping through the data
+5. **State** — global vars: `sectionActive`, `sectionVisited = new Set()`
+6. **Summary card** — appears when all items visited (`.visible` class toggle)
+
+**CSS naming:** Each section uses a unique prefix (e.g., `sprint-`) for all classes and IDs.
+
+**Reference project:** `../PMTheBasics/projectmanagement-basis.html` — sibling repo with 5 interactive sections using the same patterns (triangle/diamond diagrams, PSS builder, SMART challenges, lifecycle stepper). Use as reference for new sections.
+
+## Development
+No build commands. Open `agile.html` directly in a browser to test. The deploy workflow uploads the entire repo root as a static site.
