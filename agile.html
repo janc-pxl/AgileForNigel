@@ -208,8 +208,12 @@ footer .f-inner a:hover { color: var(--gold); }
 /* Weekend panel */
 .sprint-weekend-card {
   background: white; border: 2px dashed var(--border); border-radius: 10px;
-  padding: 2rem; text-align: center; animation: sprintIn .25s ease;
+  overflow: hidden; text-align: center; animation: sprintIn .25s ease;
 }
+.sprint-weekend-img {
+  width: 100%; max-height: 220px; object-fit: cover; display: block;
+}
+.sprint-weekend-body { padding: 1.5rem 2rem; }
 .sprint-weekend-icon { font-size: 2rem; margin-bottom: .5rem; opacity: .5; }
 .sprint-weekend-text { font-size: .92rem; color: var(--muted); }
 
@@ -681,8 +685,11 @@ function sprintClick(idx) {
   if (day.isWeekend) {
     detail.innerHTML =
       '<div class="sprint-weekend-card">' +
-        '<div class="sprint-weekend-icon">\u{1F6CC}</div>' +
-        '<div class="sprint-weekend-text">Geen Scrum Events gepland \u2014 het team rust uit.</div>' +
+        '<img class="sprint-weekend-img" src="img/team_relaxing.jpg" alt="Team rust uit" loading="lazy" />' +
+        '<div class="sprint-weekend-body">' +
+          '<div class="sprint-weekend-icon">\u{1F6CC}</div>' +
+          '<div class="sprint-weekend-text">Geen Scrum Events gepland \u2014 het team rust uit.</div>' +
+        '</div>' +
       '</div>';
   } else {
     var html = '';
