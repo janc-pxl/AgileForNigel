@@ -18,6 +18,8 @@ Interactive learning webapp that teaches students Agile (and Scrum). Part of the
 - `source/sprint_retro.png` - an image of a scrum team having a sprint retrospective
 - `source/team_relaxing.png` - an image of a scrum team during the weekend
 - `source/refinement session.png` - an image of a scrum team having a refinement session
+- `source/poker planning.md` - a few examples of scenarios of how to do a poke planning where a scrum team uses poker cards
+
 ## Requirements
 - Single-page scroll layout (all sections on one page, nav links are anchor scrolls)
 - Clean, modern design
@@ -46,6 +48,8 @@ All pages follow the PXL corporate identity:
   --border:  #e0ddd6;
   --text:    #1a1a1a;
   --muted:   #666;
+  --sprint-blue: #5b7fa6;      /* Sprint Planning event color */
+  --refinement: #8b5cf6;       /* Refinement session color (purple) */
 }
 ```
 
@@ -68,14 +72,20 @@ All page content is in **Dutch** (Nederlands).
 Single-file HTML pages with inline `<style>` and `<script>` — no build step, no framework.
 
 **Pattern:** Each interactive section follows the same structure:
-1. **Data array** — JS array of objects defining content (e.g., `SPRINT_DAYS[]`)
+1. **Data array** — JS array of objects defining content (e.g., `SPRINT_DAYS[]`, `POKER_STORIES[]`)
 2. **Init IIFE** — builds DOM elements on page load
 3. **Click handler** — updates active state, visited set, renders detail panel via `innerHTML`
 4. **Next/Prev navigation** — sequential stepping through the data
 5. **State** — global vars: `sectionActive`, `sectionVisited = new Set()`
 6. **Summary card** — appears when all items visited (`.visible` class toggle)
 
-**CSS naming:** Each section uses a unique prefix (e.g., `sprint-`) for all classes and IDs.
+**CSS naming:** Each section uses a unique prefix (e.g., `sprint-`, `poker-`) for all classes and IDs.
+
+**Current sections in `agile.html`:**
+- `#sprint-events` — Interactive 2-week Sprint timeline with day-by-day Scrum events. Has a toggle switch between official Scrum Guide view and a practice view with Refinement sessions (uses `REFINEMENT_OVERRIDES` overlay pattern via `getActiveDay()` helper).
+- `#poker-planning` — Planning Poker simulation with 8 User Stories for "Campi" campus app, each demonstrating a different estimation scenario (consensus, big spread, too big, etc.).
+
+**Image pipeline:** High-res source images (`source/*.png`, 7–8MB) are resized to 600px-wide JPEGs (`img/*.jpg`, ~40–50KB) using Python/Pillow. Always resize before committing to keep the repo lightweight.
 
 **Reference project:** `../PMTheBasics/projectmanagement-basis.html` — sibling repo with 5 interactive sections using the same patterns (triangle/diamond diagrams, PSS builder, SMART challenges, lifecycle stepper). Use as reference for new sections.
 
