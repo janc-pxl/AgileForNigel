@@ -72,6 +72,179 @@ footer .f-inner span { font-family: 'Raleway', sans-serif; font-weight: 600; fon
 footer .f-inner a { color: #999; text-decoration: none; }
 footer .f-inner a:hover { color: var(--gold); }
 
+/* ── EMPIRISME ─────────────────────────────────────────────────────────────── */
+
+/* Layout */
+.empir-layout { display: grid; grid-template-columns: 260px 1fr; gap: 2rem; margin-top: 1rem; align-items: start; }
+h3.empir-subtitle {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.15rem;
+  color: var(--primary); margin: 2.5rem 0 .75rem; padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 1.5rem; }
+
+/* Event cards (left column) */
+.empir-events { display: flex; flex-direction: column; gap: 6px; }
+.empir-event-card {
+  background: var(--card); border: 1.5px solid var(--border); border-radius: 8px;
+  padding: .65rem .85rem; cursor: pointer; display: flex; align-items: center; gap: .6rem;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+}
+.empir-event-card:hover { border-color: #bbb; background: #fafaf8; }
+.empir-event-card.active { border-color: var(--gold); background: rgba(174,154,100,.15); box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.empir-event-card.complete { border-color: var(--gold); background: rgba(174,154,100,.06); }
+.empir-event-card.complete::after { content: ' \2713'; color: var(--gold); font-weight: 800; margin-left: auto; font-size: .85rem; }
+.empir-event-icon { font-size: 1.1rem; flex-shrink: 0; }
+.empir-event-name { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .88rem; color: var(--primary); }
+
+/* Detail panel (right column) */
+.empir-detail { min-height: 260px; position: sticky; top: 70px; }
+.empir-placeholder {
+  height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem;
+  color: var(--muted); font-size: .92rem; border: 2px dashed var(--border); border-radius: 10px;
+  background: white; text-align: center; padding: 2rem;
+}
+.empir-placeholder-icon { font-size: 2rem; opacity: .35; }
+
+/* Pillar buttons */
+.empir-pillar-row { display: flex; gap: .5rem; margin-bottom: 1rem; }
+.empir-pillar-btn {
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem;
+  padding: .45rem 1rem; border-radius: 5px; cursor: pointer;
+  border: 2px solid; transition: background .15s, color .15s, box-shadow .15s;
+  position: relative;
+}
+.empir-pillar-btn[data-pillar="T"] { border-color: var(--sprint-blue); color: var(--sprint-blue); background: white; }
+.empir-pillar-btn[data-pillar="T"]:hover,
+.empir-pillar-btn[data-pillar="T"].active { background: var(--sprint-blue); color: white; }
+.empir-pillar-btn[data-pillar="I"] { border-color: var(--gold); color: #7a6535; background: white; }
+.empir-pillar-btn[data-pillar="I"]:hover,
+.empir-pillar-btn[data-pillar="I"].active { background: var(--gold); color: white; }
+.empir-pillar-btn[data-pillar="A"] { border-color: var(--green); color: var(--green); background: white; }
+.empir-pillar-btn[data-pillar="A"]:hover,
+.empir-pillar-btn[data-pillar="A"].active { background: var(--green); color: white; }
+.empir-pillar-btn.visited::after { content: ' \2713'; font-size: .7rem; margin-left: 2px; }
+
+/* Pillar explanation card */
+@keyframes empirIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.empir-explanation {
+  background: white; border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 1.1rem; animation: empirIn .25s ease;
+}
+.empir-explanation-title {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem;
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: .5rem;
+}
+.empir-explanation-title[data-pillar="T"] { color: var(--sprint-blue); }
+.empir-explanation-title[data-pillar="I"] { color: var(--gold); }
+.empir-explanation-title[data-pillar="A"] { color: var(--green); }
+.empir-explanation p { font-size: .9rem; line-height: 1.55; color: var(--text); margin: 0; }
+
+/* Progress matrix (3×5 grid) */
+.empir-matrix { display: grid; grid-template-columns: 100px repeat(5, 1fr); gap: 3px; margin-top: 1.5rem; }
+.empir-matrix-header {
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .68rem;
+  text-align: center; padding: .3rem .2rem; color: var(--muted);
+  letter-spacing: .04em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.empir-matrix-label {
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .72rem;
+  display: flex; align-items: center; padding: .2rem .4rem; border-radius: 3px;
+}
+.empir-matrix-label[data-pillar="T"] { color: var(--sprint-blue); }
+.empir-matrix-label[data-pillar="I"] { color: #7a6535; }
+.empir-matrix-label[data-pillar="A"] { color: var(--green); }
+.empir-matrix-cell {
+  height: 26px; border-radius: 4px; border: 1.5px solid var(--border);
+  background: white; transition: background .3s, border-color .3s;
+}
+.empir-matrix-cell.filled-T { background: rgba(91,127,166,.2); border-color: var(--sprint-blue); }
+.empir-matrix-cell.filled-I { background: rgba(174,154,100,.2); border-color: var(--gold); }
+.empir-matrix-cell.filled-A { background: rgba(42,157,143,.2); border-color: var(--green); }
+.empir-progress-text {
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem;
+  color: var(--muted); text-align: center; margin-top: .75rem;
+}
+
+/* Summary */
+.empir-summary {
+  background: var(--gold-bg); border: 2px solid var(--gold); border-radius: 10px;
+  padding: 1.5rem; margin-top: 1.5rem; display: none; animation: empirIn .4s ease;
+}
+.empir-summary.visible { display: block; }
+.empir-summary h4 {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem;
+  color: var(--primary); margin-bottom: .5rem;
+}
+.empir-summary p { font-size: .92rem; color: var(--text); margin: 0; line-height: 1.5; }
+
+/* ── SCENARIO SORTER ──────────────────────────────────────────────────────── */
+
+.scenario-card {
+  background: white; border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 1.5rem; min-height: 220px; animation: empirIn .25s ease;
+}
+.scenario-number {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .7rem;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem;
+}
+.scenario-text {
+  font-size: 1.05rem; font-weight: 600; color: var(--primary); line-height: 1.5;
+  margin-bottom: 1.25rem; min-height: 2.5em;
+}
+.scenario-btn-row { display: flex; gap: .5rem; margin-bottom: 1rem; }
+.scenario-btn {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem;
+  padding: .5rem 1.2rem; border-radius: 5px; cursor: pointer;
+  border: 2px solid var(--border); background: white; color: var(--text);
+  transition: all .2s;
+}
+.scenario-btn:hover { border-color: #aaa; background: #fafaf8; }
+.scenario-btn.correct { border-color: var(--green); background: rgba(42,157,143,.12); color: var(--green); cursor: default; }
+.scenario-btn.wrong { border-color: var(--accent); background: rgba(230,57,70,.06); color: var(--accent); cursor: default; }
+.scenario-btn.disabled { opacity: .4; pointer-events: none; }
+.scenario-feedback {
+  font-size: .9rem; line-height: 1.5; padding: .75rem 1rem; border-radius: 6px;
+  margin-top: .5rem; animation: empirIn .25s ease;
+}
+.scenario-feedback.hint { background: rgba(174,154,100,.1); border-left: 3px solid var(--gold); color: var(--primary); }
+.scenario-feedback.success { background: rgba(42,157,143,.08); border-left: 3px solid var(--green); color: var(--text); }
+
+/* Scenario nav */
+.scenario-nav-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 1.25rem; gap: 1rem;
+}
+.scenario-counter { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: var(--muted); }
+.scenario-btn-nav {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem;
+  padding: .45rem 1.2rem; background: var(--primary); color: white;
+  border: 2px solid var(--primary); border-radius: 5px;
+  cursor: pointer; transition: background .12s;
+}
+.scenario-btn-nav:hover { background: #222; }
+.scenario-btn-nav:disabled { opacity: .35; cursor: not-allowed; }
+.scenario-btn-nav.outline { background: transparent; color: var(--primary); }
+.scenario-btn-nav.outline:hover:not(:disabled) { background: rgba(0,0,0,.04); }
+
+/* Scenario progress */
+.scenario-progress { display: flex; align-items: center; gap: .75rem; margin: .75rem 0; }
+.scenario-progress-track { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.scenario-progress-fill { height: 100%; width: 0; background: var(--green); border-radius: 3px; transition: width .3s; }
+.scenario-progress-label { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .78rem; color: var(--muted); white-space: nowrap; }
+
+/* Scenario summary */
+.scenario-summary {
+  background: var(--gold-bg); border: 2px solid var(--gold); border-radius: 10px;
+  padding: 1.5rem; margin-top: 1.5rem; display: none; animation: empirIn .4s ease;
+}
+.scenario-summary.visible { display: block; }
+.scenario-summary h4 {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem;
+  color: var(--primary); margin-bottom: .5rem;
+}
+.scenario-summary p { font-size: .92rem; color: var(--text); margin: 0 0 .25rem; line-height: 1.5; }
+
 /* ── SPRINT TIMELINE ───────────────────────────────────────────────────────── */
 
 /* Progress bar */
@@ -445,6 +618,9 @@ footer .f-inner a:hover { color: var(--gold); }
 
 /* Responsive */
 @media (max-width: 820px) {
+  .empir-layout { grid-template-columns: 1fr; }
+  .empir-detail { position: static; }
+  .empir-matrix { grid-template-columns: 80px repeat(5, 1fr); }
   .sprint-layout { grid-template-columns: 1fr; }
   .sprint-detail { position: static; }
   .sprint-mode-toggle { flex-wrap: wrap; }
@@ -467,12 +643,72 @@ footer .f-inner a:hover { color: var(--gold); }
   <span class="nav-sep">/</span>
   <span class="nav-page">Agile &amp; Scrum</span>
   <div class="nav-links">
+    <a href="#empirisme">Empirisme</a>
     <a href="#sprint-events">Sprint Events</a>
     <a href="#poker-planning">Planning Poker</a>
   </div>
 </nav>
 
 <main>
+
+<section id="empirisme">
+  <div class="badge">Empirische Procescontrole</div>
+  <h2>Transparantie, Inspectie &amp; Adaptatie</h2>
+  <p class="lead">Scrum is gebouwd op <strong>empirisme</strong>: leren door te doen en te observeren. Drie pijlers vormen het fundament van alles wat je in Scrum tegenkomt. Als je deze drie principes begrijpt, begrijp je <em>waarom</em> Scrum werkt zoals het werkt.</p>
+
+  <div class="callout"><p>De drie pijlers (Transparantie, Inspectie en Adaptatie) zijn geen losse concepten. Ze zijn verweven in elk Scrum Event. Ontdek hieronder waar ze zich manifesteren.</p></div>
+
+  <!-- Subsectie A: Scrum Event Scanner -->
+  <h3 class="empir-subtitle">Ontdek de drie pijlers in elk Scrum Event</h3>
+  <p>Klik op een Scrum Event en gebruik de drie knoppen om te ontdekken hoe Transparantie, Inspectie en Adaptatie zich in dat event manifesteren.</p>
+
+  <div class="empir-layout">
+    <div class="empir-events" id="empir-events">
+      <!-- JS renders event cards -->
+    </div>
+    <div class="empir-detail" id="empir-detail">
+      <!-- JS renders placeholder / detail -->
+    </div>
+  </div>
+
+  <!-- Progress matrix -->
+  <div id="empir-matrix">
+    <!-- JS renders 3×5 grid -->
+  </div>
+  <div class="empir-progress-text" id="empir-progress-text">0 / 15 combinaties ontdekt</div>
+
+  <!-- Scanner summary -->
+  <div class="empir-summary" id="empir-summary">
+    <h4>Alle 15 combinaties ontdekt!</h4>
+    <p>Zie je het patroon? <strong>Elk Scrum Event is ontworpen rond dezelfde drie empirische pijlers.</strong> Transparantie maakt zichtbaar, Inspectie controleert, en Adaptatie past aan. Dit is geen toeval, het is het fundament waarop heel Scrum gebouwd is.</p>
+  </div>
+
+  <!-- Subsectie B: Scenario Sorter -->
+  <h3 class="empir-subtitle">Test jezelf: herken de pijlers in de praktijk</h3>
+  <p>Lees elk scenario en beslis: is dit een voorbeeld van Transparantie, Inspectie of Adaptatie?</p>
+
+  <!-- Scenario progress -->
+  <div class="scenario-progress">
+    <div class="scenario-progress-track"><div class="scenario-progress-fill" id="scenario-fill"></div></div>
+    <span class="scenario-progress-label" id="scenario-progress-label">0 / 12 scenario's</span>
+  </div>
+
+  <div id="scenario-card">
+    <!-- JS renders scenario -->
+  </div>
+
+  <!-- Scenario nav -->
+  <div class="scenario-nav-row">
+    <button class="scenario-btn-nav outline" id="scenario-prev" onclick="scenarioPrev()" disabled>&larr; Vorig scenario</button>
+    <span class="scenario-counter" id="scenario-counter"></span>
+    <button class="scenario-btn-nav" id="scenario-next" onclick="scenarioNext()">Volgend scenario &rarr;</button>
+  </div>
+
+  <!-- Scenario summary -->
+  <div class="scenario-summary" id="scenario-summary">
+    <!-- JS fills -->
+  </div>
+</section>
 
 <section id="sprint-events">
   <div class="badge">De 5 Scrum Events</div>
@@ -499,7 +735,7 @@ footer .f-inner a:hover { color: var(--gold); }
   </div>
   <div class="callout" id="sprint-mode-callout-block">
     <p id="sprint-mode-callout-text"><strong>Je bekijkt nu de offici&euml;le Scrum Guide versie.</strong> De Scrum Guide definieert exact 5 events: de Sprint zelf, Sprint Planning, Daily Scrum, Sprint Review en Sprint Retrospective. In deze weergave duurt de Sprint Planning tot 8 uur, omdat het team tijdens de planning ook de backlog items moet begrijpen en schatten.</p>
-    <p style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Schakel de toggle in om te zien hoe de meeste teams in de praktijk werken &mdash; met Refinement sessies die de Sprint Planning korter en effici&euml;nter maken.</p>
+    <p style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Schakel de toggle in om te zien hoe de meeste teams in de praktijk werken, met Refinement sessies die de Sprint Planning korter en effici&euml;nter maken.</p>
   </div>
 
   <!-- Progress bar -->
@@ -511,7 +747,7 @@ footer .f-inner a:hover { color: var(--gold); }
   <!-- Calendar + Detail -->
   <div class="sprint-layout">
     <div class="sprint-container">
-      <div class="sprint-container-label">De Sprint <span class="sprint-container-sub">— 2 weken (Event 5)</span></div>
+      <div class="sprint-container-label">De Sprint <span class="sprint-container-sub">(2 weken, Event 5)</span></div>
       <div class="sprint-calendar" id="sprint-calendar">
         <!-- Headers -->
         <div class="sprint-cal-header">Ma</div>
@@ -549,7 +785,7 @@ footer .f-inner a:hover { color: var(--gold); }
   <p class="lead">Bij Planning Poker schat het Scrum Team samen de omvang van User Stories in met behulp van kaarten op basis van de Fibonacci-reeks. Het gaat niet om exacte tijd, maar om een <strong>relatieve inschatting</strong> van hoeveelheid werk, complexiteit en onzekerheid.</p>
 
   <div class="callout">
-    <p><strong>Project: Campi &mdash; de campusapp voor PXL-studenten.</strong> Een team van vier PXL-Digital studenten ontwikkelt een mobiele app die alles bundelt wat een student dagelijks nodig heeft: het persoonlijke lesrooster, campusnieuws, een interactief plattegrond en het dagmenu van PXL Catering. Klik op een User Story om de Planning Poker sessie te simuleren.</p>
+    <p><strong>Project: Campi, de campusapp voor PXL-studenten.</strong> Een team van vier PXL-Digital studenten ontwikkelt een mobiele app die alles bundelt wat een student dagelijks nodig heeft: het persoonlijke lesrooster, campusnieuws, een interactief plattegrond en het dagmenu van PXL Catering. Klik op een User Story om de Planning Poker sessie te simuleren.</p>
   </div>
 
   <!-- Fibonacci reference -->
@@ -579,6 +815,363 @@ footer .f-inner a:hover { color: var(--gold); }
 </footer>
 
 <script>
+// ── Empirisme: Scrum Event Scanner ──────────────────────────────────────────
+
+var EMPIR_EVENTS = [
+  {
+    name: 'De Sprint', icon: '\u{1F504}',
+    T: 'Het Sprint Doel en de Sprint Backlog zijn voor iedereen zichtbaar en toegankelijk. Het hele team en de stakeholders weten wat er deze Sprint wordt nagestreefd. Er zijn geen verborgen agenda\u2019s. De scope, het doel en de voortgang liggen open op tafel.',
+    I: 'Tijdens de Sprint wordt de voortgang continu ge\u00efnspecteerd. Het team bekijkt dagelijks het Scrum Board en de burndown chart om te controleren of ze op koers liggen richting het Sprint Doel. Elke afwijking wordt snel opgemerkt.',
+    A: 'Als blijkt dat het Sprint Doel niet meer haalbaar is of de omstandigheden veranderen, kan de scope worden heronderhandeld met de Product Owner. Het team past het dagplan aan op basis van nieuwe inzichten. De Sprint Backlog is een levend document.'
+  },
+  {
+    name: 'Sprint Planning', icon: '\u{1F4CB}',
+    T: 'De Product Backlog is transparant en geprioriteerd: iedereen ziet welke items bovenaan staan. Het team bespreekt openlijk hoeveel werk ze aankunnen (capaciteit) en welke afhankelijkheden er zijn. Niets wordt achtergehouden.',
+    I: 'Het team inspecteert de Product Backlog items: zijn ze duidelijk genoeg? Zijn de acceptatiecriteria helder? Kloppen de schattingen? Het team beoordeelt ook eerdere velocity om een realistische Sprint Backlog samen te stellen.',
+    A: 'Op basis van de inspectie past het team het plan aan: items worden opgesplitst, herschat, of teruggeplaatst op de backlog als ze te groot zijn. Het Sprint Doel wordt geformuleerd als gezamenlijke focus. Dit stuurt alle beslissingen.'
+  },
+  {
+    name: 'Daily Scrum', icon: '\u{1F4AC}',
+    T: 'Elk teamlid deelt openlijk wat hij of zij gisteren deed, vandaag gaat doen, en welke obstakels er zijn. Het Scrum Board en de burndown chart zijn voor iedereen zichtbaar en de voortgang wordt niet verborgen.',
+    I: 'Het team inspecteert samen de voortgang richting het Sprint Doel. Ze kijken naar de verhoudingen op het Scrum Board (hoeveel stories zijn \u201cIn Progress\u201d vs. \u201cDone\u201d?) en de trend op de burndown chart.',
+    A: 'Als iemand geblokkeerd is of de voortgang achterblijft, past het team direct het dagplan aan. Werk wordt herverdeeld, hulp wordt aangeboden, of de Scrum Master wordt ingeschakeld om impediments op te lossen.'
+  },
+  {
+    name: 'Sprint Review', icon: '\u{1F3AF}',
+    T: 'Het team demonstreert het werkende increment aan stakeholders. Wat er gebouwd is (en wat niet) wordt transparant getoond: geen PowerPoint, maar werkende software. Ook de status van de Product Backlog wordt besproken.',
+    I: 'Stakeholders inspecteren het increment: voldoet het aan hun verwachtingen? Is het bruikbaar? Ze geven feedback op basis van wat ze zien en ervaren, niet op basis van abstracte plannen.',
+    A: 'Op basis van de feedback past de Product Owner de Product Backlog aan. Nieuwe items worden toegevoegd, prioriteiten verschuiven, en het plan voor de volgende Sprint wordt bijgestuurd. De roadmap evolueert.'
+  },
+  {
+    name: 'Sprint Retrospective', icon: '\u{1F6E0}\uFE0F',
+    T: 'Het team bespreekt openlijk wat goed ging, wat beter kon, en hoe de samenwerking verliep. Iedereen mag vrijuit spreken. Psychologische veiligheid is essentieel. Problemen worden niet onder het tapijt geveegd.',
+    I: 'Het team inspecteert hun eigen werkproces: hoe effectief waren de Daily Scrums? Was de communicatie helder? Waren de schattingen accuraat? Ze analyseren patronen en zoeken naar de grondoorzaken van problemen.',
+    A: 'Het team kiest concrete verbeteracties voor de volgende Sprint. Bijvoorbeeld: \u201cWe gaan pair programming invoeren voor complexe stories\u201d of \u201cWe verkorten de Daily Scrum door ons strikt aan het format te houden.\u201d'
+  }
+];
+
+var EMPIR_SCENARIOS = [
+  {
+    scenario: 'Het team toont de burndown chart tijdens de Daily Scrum.',
+    correct: 'T',
+    hint: 'Denk na: wordt hier iets zichtbaar gemaakt, bekeken, of aangepast?',
+    explanation: 'De burndown chart zichtbaar maken is <strong>transparantie</strong>: het team maakt voortgang open en beschikbaar voor iedereen. Iedereen kan zien hoe het ervoor staat.'
+  },
+  {
+    scenario: 'De Product Owner past de prioriteit van backlog items aan na de Sprint Review.',
+    correct: 'A',
+    hint: 'Er verandert hier iets op basis van wat er geleerd is. Welk principe hoort daarbij?',
+    explanation: 'De backlog aanpassen op basis van feedback is <strong>adaptatie</strong>: het plan wordt bijgestuurd op basis van wat er ge\u00efnspecteerd is.'
+  },
+  {
+    scenario: 'Stakeholders bekijken het werkende increment en geven feedback.',
+    correct: 'I',
+    hint: 'De stakeholders ontvangen hier niet alleen informatie: ze beoordelen actief wat er gebouwd is.',
+    explanation: 'Het increment beoordelen en feedback geven is <strong>inspectie</strong>: stakeholders controleren of het opgeleverde werk aan hun verwachtingen voldoet.'
+  },
+  {
+    scenario: 'Het Scrum Board hangt zichtbaar in de teamruimte.',
+    correct: 'T',
+    hint: 'Dit gaat over het beschikbaar maken van informatie. Wie kan het zien?',
+    explanation: 'Een zichtbaar Scrum Board is <strong>transparantie</strong>: iedereen (team, stakeholders, management) kan de status van het werk bekijken.'
+  },
+  {
+    scenario: 'Het team besluit om volgende Sprint pair programming te gebruiken na de Retrospective.',
+    correct: 'A',
+    hint: 'Het team verandert hier bewust iets aan hun manier van werken. Waarom?',
+    explanation: 'Een procesverbetering doorvoeren is <strong>adaptatie</strong>: het team past hun werkwijze aan op basis van wat ze geleerd hebben in de Retrospective.'
+  },
+  {
+    scenario: 'De Scrum Master controleert of het team de Definition of Done naleeft.',
+    correct: 'I',
+    hint: 'Er wordt hier iets gecontroleerd of beoordeeld. Wat voor principe is dat?',
+    explanation: 'Controleren of kwaliteitsstandaarden worden nageleefd is <strong>inspectie</strong>: de Scrum Master verifieert of het werk aan de afgesproken normen voldoet.'
+  },
+  {
+    scenario: 'Tijdens Sprint Planning bespreekt het team openlijk hoeveel werk ze aankunnen.',
+    correct: 'T',
+    hint: 'Het team deelt hier eerlijk informatie over hun capaciteit. Verbergen ze iets?',
+    explanation: 'Eerlijk communiceren over capaciteit is <strong>transparantie</strong>: het team verbergt geen problemen en is open over wat realistisch haalbaar is.'
+  },
+  {
+    scenario: 'Het team vergelijkt de geplande velocity met de werkelijke velocity.',
+    correct: 'I',
+    hint: 'Er wordt hier een vergelijking gemaakt tussen plan en realiteit. Dat klinkt als...',
+    explanation: 'Plan versus realiteit vergelijken is <strong>inspectie</strong>: het team controleert of hun schattingen accuraat waren en zoekt naar afwijkingen.'
+  },
+  {
+    scenario: 'Na feedback van stakeholders wordt een User Story herschreven.',
+    correct: 'A',
+    hint: 'Er wordt hier iets aangepast op basis van geleerde lessen. Welk principe?',
+    explanation: 'Een User Story herschrijven op basis van feedback is <strong>adaptatie</strong>: het product wordt bijgestuurd op basis van nieuwe inzichten.'
+  },
+  {
+    scenario: 'Elk teamlid deelt in de Daily Scrum welke obstakels er zijn.',
+    correct: 'T',
+    hint: 'Obstakels delen met het team: wordt hier iets verborgen of juist openbaar gemaakt?',
+    explanation: 'Obstakels openlijk delen is <strong>transparantie</strong>: problemen worden niet verborgen maar zichtbaar gemaakt zodat het team kan helpen.'
+  },
+  {
+    scenario: 'De Product Owner bekijkt het opgeleverde increment op kwaliteit en volledigheid.',
+    correct: 'I',
+    hint: 'De Product Owner beoordeelt hier het resultaat. Is dit controleren, delen, of aanpassen?',
+    explanation: 'Het increment beoordelen op kwaliteit is <strong>inspectie</strong>: de Product Owner controleert of het werk voldoet aan de verwachtingen en acceptatiecriteria.'
+  },
+  {
+    scenario: 'Het team voert een procesverbetering door die in de Retrospective was afgesproken.',
+    correct: 'A',
+    hint: 'Een eerder gemaakte afspraak wordt nu daadwerkelijk doorgevoerd. Wat verandert er?',
+    explanation: 'Een procesverbetering implementeren is <strong>adaptatie</strong>: het team past hun werkwijze aan om effectiever te worden in de volgende Sprint.'
+  }
+];
+
+// State
+var empirActive = null;       // currently selected event index
+var empirPillar = null;        // currently selected pillar (T/I/A)
+var empirVisited = new Set();  // "idx-T", "idx-I", "idx-A"
+
+var scenarioActive = 0;
+var scenarioAnswered = new Set();
+var scenarioScore = 0;         // first-try correct count
+var scenarioAttempted = {};    // idx -> true if already attempted wrong
+
+// ── Empirisme: Init ─────────────────────────────────────────────────────────
+
+(function empirInit() {
+  var container = document.getElementById('empir-events');
+  EMPIR_EVENTS.forEach(function(ev, idx) {
+    var card = document.createElement('div');
+    card.className = 'empir-event-card';
+    card.setAttribute('data-idx', idx);
+    card.innerHTML = '<span class="empir-event-icon">' + ev.icon + '</span>' +
+      '<span class="empir-event-name">' + ev.name + '</span>';
+    card.onclick = function() { empirClickEvent(idx); };
+    container.appendChild(card);
+  });
+
+  // Build matrix
+  buildEmpirMatrix();
+
+  // Render placeholder
+  empirRenderPlaceholder();
+
+  // Init scenario
+  scenarioRender(0);
+  scenarioUpdateNav();
+})();
+
+function buildEmpirMatrix() {
+  var matrix = document.getElementById('empir-matrix');
+  matrix.className = 'empir-matrix';
+  var pillars = [
+    { key: 'T', label: 'Transparantie' },
+    { key: 'I', label: 'Inspectie' },
+    { key: 'A', label: 'Adaptatie' }
+  ];
+
+  // Header row: empty corner + 5 event names
+  var html = '<div class="empir-matrix-header"></div>';
+  EMPIR_EVENTS.forEach(function(ev) {
+    html += '<div class="empir-matrix-header">' + ev.icon + ' ' + ev.name.replace('Sprint ', 'S. ') + '</div>';
+  });
+
+  // 3 rows (T, I, A) × 5 cells
+  pillars.forEach(function(p) {
+    html += '<div class="empir-matrix-label" data-pillar="' + p.key + '">' + p.label + '</div>';
+    EMPIR_EVENTS.forEach(function(ev, idx) {
+      var id = 'empir-cell-' + idx + '-' + p.key;
+      var filled = empirVisited.has(idx + '-' + p.key) ? ' filled-' + p.key : '';
+      html += '<div class="empir-matrix-cell' + filled + '" id="' + id + '"></div>';
+    });
+  });
+
+  matrix.innerHTML = html;
+}
+
+function empirRenderPlaceholder() {
+  document.getElementById('empir-detail').innerHTML =
+    '<div class="empir-placeholder">' +
+      '<div class="empir-placeholder-icon">\u{1F50D}</div>' +
+      '<div>Klik op een Scrum Event om de drie empirische pijlers te ontdekken.</div>' +
+    '</div>';
+}
+
+function empirClickEvent(idx) {
+  empirActive = idx;
+  empirPillar = null;
+
+  // Update active states on cards
+  var cards = document.querySelectorAll('.empir-event-card');
+  cards.forEach(function(c, i) {
+    c.classList.toggle('active', i === idx);
+    // Check if all 3 pillars visited for this event
+    var allVisited = empirVisited.has(i + '-T') && empirVisited.has(i + '-I') && empirVisited.has(i + '-A');
+    c.classList.toggle('complete', allVisited && i !== idx);
+  });
+
+  // Render pillar buttons + placeholder
+  var ev = EMPIR_EVENTS[idx];
+  var html = '<div style="margin-bottom:.75rem;">' +
+    '<span style="font-family:Raleway,sans-serif;font-weight:800;font-size:1.1rem;">' + ev.icon + ' ' + ev.name + '</span>' +
+    '</div>';
+  html += '<div class="empir-pillar-row">';
+  ['T', 'I', 'A'].forEach(function(p) {
+    var label = p === 'T' ? 'Transparantie' : (p === 'I' ? 'Inspectie' : 'Adaptatie');
+    var visited = empirVisited.has(idx + '-' + p) ? ' visited' : '';
+    html += '<button class="empir-pillar-btn' + visited + '" data-pillar="' + p + '" onclick="empirClickPillar(\'' + p + '\')">' + label + '</button>';
+  });
+  html += '</div>';
+  html += '<div id="empir-pillar-detail"><div style="color:var(--muted);font-size:.9rem;font-style:italic;padding:1rem 0;">Klik op een pijler hierboven om de uitleg te zien.</div></div>';
+
+  document.getElementById('empir-detail').innerHTML = html;
+}
+
+function empirClickPillar(pillar) {
+  if (empirActive === null) return;
+  empirPillar = pillar;
+
+  var key = empirActive + '-' + pillar;
+  empirVisited.add(key);
+
+  // Update button states
+  var buttons = document.querySelectorAll('.empir-pillar-btn');
+  buttons.forEach(function(btn) {
+    var p = btn.getAttribute('data-pillar');
+    btn.classList.toggle('active', p === pillar);
+    if (empirVisited.has(empirActive + '-' + p)) btn.classList.add('visited');
+  });
+
+  // Show explanation
+  var label = pillar === 'T' ? 'Transparantie' : (pillar === 'I' ? 'Inspectie' : 'Adaptatie');
+  var text = EMPIR_EVENTS[empirActive][pillar];
+  document.getElementById('empir-pillar-detail').innerHTML =
+    '<div class="empir-explanation">' +
+      '<div class="empir-explanation-title" data-pillar="' + pillar + '">' + label + '</div>' +
+      '<p>' + text + '</p>' +
+    '</div>';
+
+  // Update matrix cell
+  var cell = document.getElementById('empir-cell-' + empirActive + '-' + pillar);
+  if (cell) cell.className = 'empir-matrix-cell filled-' + pillar;
+
+  // Update progress
+  document.getElementById('empir-progress-text').textContent = empirVisited.size + ' / 15 combinaties ontdekt';
+
+  // Check event completion
+  var cards = document.querySelectorAll('.empir-event-card');
+  cards.forEach(function(c, i) {
+    var allVisited = empirVisited.has(i + '-T') && empirVisited.has(i + '-I') && empirVisited.has(i + '-A');
+    c.classList.toggle('complete', allVisited && i !== empirActive);
+  });
+
+  // Check overall completion
+  if (empirVisited.size >= 15) {
+    document.getElementById('empir-summary').classList.add('visible');
+  }
+}
+
+// ── Scenario Sorter ─────────────────────────────────────────────────────────
+
+function scenarioRender(idx) {
+  var s = EMPIR_SCENARIOS[idx];
+  var answered = scenarioAnswered.has(idx);
+
+  var html = '<div class="scenario-card">';
+  html += '<div class="scenario-number">Scenario ' + (idx + 1) + ' van ' + EMPIR_SCENARIOS.length + '</div>';
+  html += '<div class="scenario-text">\u201c' + s.scenario + '\u201d</div>';
+  html += '<div class="scenario-btn-row">';
+
+  ['T', 'I', 'A'].forEach(function(p) {
+    var label = p === 'T' ? 'Transparantie' : (p === 'I' ? 'Inspectie' : 'Adaptatie');
+    var cls = 'scenario-btn';
+    if (answered && p === s.correct) cls += ' correct';
+    if (answered && p !== s.correct) cls += ' disabled';
+    html += '<button class="' + cls + '" data-answer="' + p + '" onclick="scenarioAnswer(' + idx + ',\'' + p + '\')"' + (answered ? ' disabled' : '') + '>' + label + '</button>';
+  });
+  html += '</div>';
+
+  html += '<div id="scenario-feedback-' + idx + '">';
+  if (answered) {
+    html += '<div class="scenario-feedback success">' + s.explanation + '</div>';
+  }
+  html += '</div>';
+  html += '</div>';
+
+  document.getElementById('scenario-card').innerHTML = html;
+}
+
+function scenarioAnswer(idx, answer) {
+  if (scenarioAnswered.has(idx)) return;
+  var s = EMPIR_SCENARIOS[idx];
+
+  if (answer === s.correct) {
+    // Correct
+    scenarioAnswered.add(idx);
+    if (!scenarioAttempted[idx]) scenarioScore++;
+    scenarioRender(idx);
+    scenarioUpdateNav();
+    scenarioUpdateProgress();
+
+    if (scenarioAnswered.size >= EMPIR_SCENARIOS.length) {
+      scenarioShowSummary();
+    }
+  } else {
+    // Wrong — show hint
+    scenarioAttempted[idx] = true;
+    var feedbackEl = document.getElementById('scenario-feedback-' + idx);
+    feedbackEl.innerHTML = '<div class="scenario-feedback hint">\u{1F4A1} <strong>Hint:</strong> ' + s.hint + '</div>';
+
+    // Mark clicked button as wrong
+    var buttons = document.querySelectorAll('.scenario-btn[data-answer="' + answer + '"]');
+    buttons.forEach(function(btn) {
+      btn.classList.add('wrong');
+      btn.disabled = true;
+    });
+  }
+}
+
+function scenarioNext() {
+  if (scenarioActive < EMPIR_SCENARIOS.length - 1) {
+    scenarioActive++;
+    scenarioRender(scenarioActive);
+    scenarioUpdateNav();
+  }
+}
+
+function scenarioPrev() {
+  if (scenarioActive > 0) {
+    scenarioActive--;
+    scenarioRender(scenarioActive);
+    scenarioUpdateNav();
+  }
+}
+
+function scenarioUpdateNav() {
+  var prev = document.getElementById('scenario-prev');
+  var next = document.getElementById('scenario-next');
+  var counter = document.getElementById('scenario-counter');
+
+  prev.disabled = scenarioActive <= 0;
+  next.disabled = scenarioActive >= EMPIR_SCENARIOS.length - 1;
+
+  counter.textContent = scenarioAnswered.size + ' / ' + EMPIR_SCENARIOS.length + ' correct beantwoord';
+}
+
+function scenarioUpdateProgress() {
+  var pct = (scenarioAnswered.size / EMPIR_SCENARIOS.length * 100).toFixed(0);
+  document.getElementById('scenario-fill').style.width = pct + '%';
+  document.getElementById('scenario-progress-label').textContent = scenarioAnswered.size + ' / ' + EMPIR_SCENARIOS.length + ' scenario\'s';
+}
+
+function scenarioShowSummary() {
+  var el = document.getElementById('scenario-summary');
+  var pct = Math.round(scenarioScore / EMPIR_SCENARIOS.length * 100);
+  el.innerHTML = '<h4>Alle scenario\'s beantwoord!</h4>' +
+    '<p><strong>' + scenarioScore + ' van de ' + EMPIR_SCENARIOS.length + '</strong> scenario\'s correct bij de eerste poging (' + pct + '%).</p>' +
+    '<p>De drie pijlers van empirische procescontrole (Transparantie, Inspectie en Adaptatie) zijn overal in Scrum aanwezig. Hoe beter je ze herkent, hoe beter je begrijpt <em>waarom</em> elk Scrum Event bestaat.</p>';
+  el.classList.add('visible');
+}
+
 // ── Sprint Days Data ──────────────────────────────────────────────────────────
 
 var SPRINT_DAYS = [
@@ -613,11 +1206,11 @@ var SPRINT_DAYS = [
         icon: '\u{1F9CD}',
         color: 'daily',
         image: 'img/daily_standup_early.jpg',
-        description: 'De eerste Daily Scrum van de Sprint. Het team verzamelt rond het Scrum Board en bekijkt samen de kolommen: To Do, In Progress en Done. Bijna alle stories staan nog in \u201cTo Do\u201d \u2014 logisch, want het echte werk begint vandaag pas.',
+        description: 'De eerste Daily Scrum van de Sprint. Het team verzamelt rond het Scrum Board en bekijkt samen de kolommen: To Do, In Progress en Done. Bijna alle stories staan nog in \u201cTo Do\u201d. Logisch, want het echte werk begint vandaag pas.',
         details: [
           'Elk teamlid wijst op het Scrum Board naar de story waar hij/zij gisteren aan begon',
           'Het Sprint Doel wordt kort herhaald: \u201cWeten we allemaal nog waarom we d\u00edt doen?\u201d',
-          'De burndown chart toont nog een vlakke lijn \u2014 er is nog nauwelijks werk afgerond',
+          'De burndown chart toont nog een vlakke lijn: er is nog nauwelijks werk afgerond',
           'Het team bespreekt wie vandaag welke stories oppakt uit de \u201cTo Do\u201d kolom',
           'Mogelijke obstakels worden vroeg gesignaleerd'
         ]
@@ -639,7 +1232,7 @@ var SPRINT_DAYS = [
         details: [
           'Op het Scrum Board: enkele stories zijn verplaatst naar \u201cIn Progress\u201d',
           'Teamleden wijzen fysiek naar hun stories op het board bij het bespreken',
-          'De burndown chart begint licht te dalen \u2014 de eerste taken worden afgevinkt',
+          'De burndown chart begint licht te dalen en de eerste taken worden afgevinkt',
           'Het Sprint Doel hangt zichtbaar naast het board als referentiepunt',
           'Eventuele blokkades worden meteen gemeld zodat de Scrum Master kan helpen'
         ]
@@ -659,11 +1252,11 @@ var SPRINT_DAYS = [
         image: 'img/daily_standup_early.jpg',
         description: 'Het team staat weer rond het Scrum Board. De \u201cIn Progress\u201d kolom is goed gevuld en de eerste story is verplaatst naar \u201cDone\u201d! De burndown chart toont een mooie dalende lijn.',
         details: [
-          'Scrum Board: eerste story verplaatst naar \u201cDone\u201d \u2014 het team viert dit kort',
+          'Scrum Board: eerste story verplaatst naar \u201cDone\u201d. Het team viert dit kort',
           'De burndown chart daalt gestaag: het team ligt op schema',
           'Elk teamlid wijst naar zijn/haar story en geeft een korte update',
           'Het Sprint Doel wordt even gecheckt: \u201cDraagt dit werk bij aan ons doel?\u201d',
-          'Geen grote obstakels \u2014 het team zit in een goed ritme'
+          'Geen grote obstakels. Het team zit in een goed ritme'
         ]
       }
     ],
@@ -679,7 +1272,7 @@ var SPRINT_DAYS = [
         icon: '\u{1F9CD}',
         color: 'daily',
         image: 'img/daily_standup_early.jpg',
-        description: 'Einde van week 1. Het team bekijkt het Scrum Board kritisch: hoeveel stories staan er nog in \u201cTo Do\u201d versus \u201cDone\u201d? De burndown chart geeft een eerlijk beeld \u2014 liggen we op schema voor het Sprint Doel?',
+        description: 'Einde van week 1. Het team bekijkt het Scrum Board kritisch: hoeveel stories staan er nog in \u201cTo Do\u201d versus \u201cDone\u201d? De burndown chart geeft een eerlijk beeld. Liggen we op schema voor het Sprint Doel?',
         details: [
           'Scrum Board check: het team telt de stories per kolom (To Do / In Progress / Done)',
           'Burndown chart: de lijn wordt vergeleken met de ideale dalende lijn',
@@ -735,7 +1328,7 @@ var SPRINT_DAYS = [
         image: 'img/daily_standup_burndown.jpg',
         description: 'De burndown chart wordt steeds belangrijker nu het einde van de Sprint nadert. Het team wijst op het board naar stories die bijna klaar zijn en bespreekt of er hulp nodig is om ze over de finish te krijgen.',
         details: [
-          'Burndown chart: de dalende lijn wordt kritisch bekeken \u2014 halen we het?',
+          'Burndown chart: de dalende lijn wordt kritisch bekeken. Halen we het?',
           'Scrum Board: teamleden wijzen naar stories die bijna \u201cDone\u201d zijn',
           'Samenwerken: als iemand vastloopt, bieden anderen hulp aan (swarming)',
           'Het Sprint Doel wordt herhaald: \u201cWelke stories zijn essentieel voor het doel?\u201d',
@@ -755,7 +1348,7 @@ var SPRINT_DAYS = [
         icon: '\u{1F9CD}',
         color: 'daily',
         image: 'img/daily_standup_late.jpg',
-        description: 'Het team bekijkt het Scrum Board nauwkeurig: welke stories staan al in \u201cDone\u201d en voldoen aan de Definition of Done? De burndown chart wordt vergeleken met de ideale lijn \u2014 er is nog werk te doen.',
+        description: 'Het team bekijkt het Scrum Board nauwkeurig: welke stories staan al in \u201cDone\u201d en voldoen aan de Definition of Done? De burndown chart wordt vergeleken met de ideale lijn: er is nog werk te doen.',
         details: [
           'Scrum Board: de \u201cDone\u201d kolom groeit, maar er staan nog items in \u201cIn Progress\u201d',
           'Definition of Done check: zijn afgeronde stories \u00e9cht klaar? (geteste code, documentatie, ...)',
@@ -779,15 +1372,15 @@ var SPRINT_DAYS = [
         image: 'img/daily_standup_late.jpg',
         description: 'De voorlaatste dag! Het team staat rond het Scrum Board en de burndown chart. De \u201cDone\u201d kolom is flink gegroeid. Het team bespreekt welke stories morgen aan de stakeholders kunnen worden getoond in de Sprint Review.',
         details: [
-          'Scrum Board: de meeste stories staan in \u201cDone\u201d \u2014 het team bekijkt wat er nog openstaat',
-          'Burndown chart: de lijn nadert de nullijn \u2014 het team is bijna klaar',
+          'Scrum Board: de meeste stories staan in \u201cDone\u201d. Het team bekijkt wat er nog openstaat',
+          'Burndown chart: de lijn nadert de nullijn. Het team is bijna klaar',
           'Sprint Doel: \u201cHebben we ons doel bereikt? Wat ontbreekt er nog?\u201d',
           'Morgen is de Sprint Review: alleen stories die voldoen aan de Definition of Done worden getoond',
           'Laatste obstakels worden besproken en het team helpt elkaar om alles af te ronden'
         ]
       }
     ],
-    narrative: 'De voorlaatste dag! Het Scrum Board toont een volle \u201cDone\u201d kolom. De burndown chart nadert de nullijn. Het team bereidt zich voor op de Sprint Review van morgen \u2014 alleen volledig afgewerkte stories worden getoond.'
+    narrative: 'De voorlaatste dag! Het Scrum Board toont een volle \u201cDone\u201d kolom. De burndown chart nadert de nullijn. Het team bereidt zich voor op de Sprint Review van morgen. Alleen volledig afgewerkte stories worden getoond.'
   },
   {
     day: 12, weekday: 'Vrijdag', week: 2, isWeekend: false,
@@ -801,8 +1394,8 @@ var SPRINT_DAYS = [
         image: 'img/daily_standup_late.jpg',
         description: 'De laatste Daily Scrum van deze Sprint. Een snelle blik op het Scrum Board: de \u201cDone\u201d kolom is vol, de burndown chart raakt de nullijn. Het team stemt af over de Sprint Review en Retrospective die vandaag volgen.',
         details: [
-          'Scrum Board: laatste check \u2014 de \u201cDone\u201d kolom bevat het meeste werk',
-          'Burndown chart: de lijn raakt (hopelijk!) de nullijn \u2014 alle geplande stories zijn af',
+          'Scrum Board: laatste check: de \u201cDone\u201d kolom bevat het meeste werk',
+          'Burndown chart: de lijn raakt (hopelijk!) de nullijn. Alle geplande stories zijn af',
           'Sprint Doel bereikt? Het team evalueert kort of het doel is gehaald',
           'Voorbereiding Sprint Review: wie demonstreert welke stories aan de stakeholders?',
           'Eventuele niet-afgeronde stories gaan terug naar de Product Backlog'
@@ -871,7 +1464,7 @@ var REFINEMENT_OVERRIDES = {
         icon: '\u{1F4CB}',
         color: 'planning',
         image: 'img/sprint_planning.jpg',
-        description: 'Dankzij de Refinement sessies in de vorige Sprint zijn de Product Backlog items al uitgewerkt, geschat en voorzien van acceptatiecriteria. De Sprint Planning focust nu op het selecteren van items en het afspreken van het Sprint Doel \u2014 veel effici\u00ebnter!',
+        description: 'Dankzij de Refinement sessies in de vorige Sprint zijn de Product Backlog items al uitgewerkt, geschat en voorzien van acceptatiecriteria. De Sprint Planning focust nu op het selecteren van items en het afspreken van het Sprint Doel. Veel effici\u00ebnter!',
         details: [
           'Items zijn al "ready": duidelijk, geschat en met acceptatiecriteria',
           'Focus op het Sprint Doel en de selectie van items',
@@ -880,7 +1473,7 @@ var REFINEMENT_OVERRIDES = {
         ]
       }
     ],
-    narrative: 'De Sprint begint! Dankzij de Refinement sessies in de vorige Sprint zijn de backlog items al helder. De Sprint Planning verloopt vlot \u2014 in plaats van ~4 uur is het team in ~1,5\u20132 uur klaar.'
+    narrative: 'De Sprint begint! Dankzij de Refinement sessies in de vorige Sprint zijn de backlog items al helder. De Sprint Planning verloopt vlot: in plaats van ~4 uur is het team in ~1,5\u20132 uur klaar.'
   },
   2: { // Day 3 (Wed W1) — add Refinement session
     eventsAppend: [
@@ -1035,7 +1628,7 @@ function sprintClick(idx) {
         '</div>' +
         '<div class="sprint-weekend-body">' +
           '<div class="sprint-weekend-icon">\u{1F6CC}</div>' +
-          '<div class="sprint-weekend-text">Geen Scrum Events gepland \u2014 het team rust uit.</div>' +
+          '<div class="sprint-weekend-text">Geen Scrum Events gepland. Het team rust uit.</div>' +
         '</div>' +
       '</div>';
   } else {
@@ -1130,12 +1723,12 @@ function toggleRefinement() {
     track.classList.add('on');
     labelOff.classList.remove('active');
     labelOn.classList.add('active');
-    callout.innerHTML = '<p><strong>Je bekijkt nu de praktijkversie met Refinement sessies.</strong> Refinement is g\u00e9\u00e9n officieel Scrum Event, maar wordt door de meeste teams wel ingepland. Het effect: de Sprint Planning krimpt van ~4\u20138 uur naar ~1,5\u20132 uur, omdat backlog items al zijn uitgewerkt, geschat en voorzien van acceptatiecriteria (\u201cready\u201d). De vuistregel is dat Refinement maximaal 10% van de sprintcapaciteit inneemt \u2014 voor een 2-weken sprint is dat ongeveer 2\u00d71 uur.</p><p style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Schakel de toggle uit om terug te keren naar de offici\u00eble Scrum Guide versie zonder Refinement sessies.</p>';
+    callout.innerHTML = '<p><strong>Je bekijkt nu de praktijkversie met Refinement sessies.</strong> Refinement is g\u00e9\u00e9n officieel Scrum Event, maar wordt door de meeste teams wel ingepland. Het effect: de Sprint Planning krimpt van ~4\u20138 uur naar ~1,5\u20132 uur, omdat backlog items al zijn uitgewerkt, geschat en voorzien van acceptatiecriteria (\u201cready\u201d). De vuistregel is dat Refinement maximaal 10% van de sprintcapaciteit inneemt. Voor een 2-weken sprint is dat ongeveer 2\u00d71 uur.</p><p style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Schakel de toggle uit om terug te keren naar de offici\u00eble Scrum Guide versie zonder Refinement sessies.</p>';
   } else {
     track.classList.remove('on');
     labelOff.classList.add('active');
     labelOn.classList.remove('active');
-    callout.innerHTML = '<p><strong>Je bekijkt nu de offici\u00eble Scrum Guide versie.</strong> De Scrum Guide definieert exact 5 events: de Sprint zelf, Sprint Planning, Daily Scrum, Sprint Review en Sprint Retrospective. In deze weergave duurt de Sprint Planning tot 8 uur, omdat het team tijdens de planning ook de backlog items moet begrijpen en schatten.</p><p style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Schakel de toggle in om te zien hoe de meeste teams in de praktijk werken \u2014 met Refinement sessies die de Sprint Planning korter en effici\u00ebnter maken.</p>';
+    callout.innerHTML = '<p><strong>Je bekijkt nu de offici\u00eble Scrum Guide versie.</strong> De Scrum Guide definieert exact 5 events: de Sprint zelf, Sprint Planning, Daily Scrum, Sprint Review en Sprint Retrospective. In deze weergave duurt de Sprint Planning tot 8 uur, omdat het team tijdens de planning ook de backlog items moet begrijpen en schatten.</p><p style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Schakel de toggle in om te zien hoe de meeste teams in de praktijk werken, met Refinement sessies die de Sprint Planning korter en effici\u00ebnter maken.</p>';
   }
 
   // Update legend
@@ -1203,21 +1796,21 @@ function rebuildCalendar() {
 
 function renderSummary() {
   var events = [
-    { num: 1, name: 'Sprint Planning', color: 'var(--sprint-blue)', timebox: refinementMode ? '~1,5\u20132 uur (verkort)' : 'Max. 8 uur', desc: refinementMode ? 'Korter en effici\u00ebnter dankzij Refinement \u2014 items zijn al "ready"' : 'Het team plant wat er deze Sprint wordt opgeleverd' },
+    { num: 1, name: 'Sprint Planning', color: 'var(--sprint-blue)', timebox: refinementMode ? '~1,5\u20132 uur (verkort)' : 'Max. 8 uur', desc: refinementMode ? 'Korter en effici\u00ebnter dankzij Refinement: items zijn al "ready"' : 'Het team plant wat er deze Sprint wordt opgeleverd' },
     { num: 2, name: 'Daily Scrum', color: 'var(--green)', timebox: 'Max. 15 minuten', desc: 'Dagelijkse standup om voortgang en obstakels te bespreken' },
     { num: 3, name: 'Sprint Review', color: 'var(--gold)', timebox: 'Max. 4 uur', desc: 'Demo van het increment aan stakeholders' },
     { num: 4, name: 'Sprint Retrospective', color: 'var(--accent)', timebox: 'Max. 3 uur', desc: 'Het team reflecteert en bepaalt verbeteringen' },
-    { num: 5, name: 'De Sprint', color: 'var(--primary)', timebox: '1, 2 of 4 weken', desc: 'Het overkoepelende event \u2014 de vaste periode waarin het team werkt aan het Sprint Doel' }
+    { num: 5, name: 'De Sprint', color: 'var(--primary)', timebox: '1, 2 of 4 weken', desc: 'Het overkoepelende event: de vaste periode waarin het team werkt aan het Sprint Doel' }
   ];
   if (refinementMode) {
-    events.splice(2, 0, { num: '*', name: 'Refinement', color: 'var(--refinement)', timebox: '2\u00d7 ~1 uur per Sprint', desc: 'Geen officieel event \u2014 maar essentieel in de praktijk voor een vlotte Sprint Planning' });
+    events.splice(2, 0, { num: '*', name: 'Refinement', color: 'var(--refinement)', timebox: '2\u00d7 ~1 uur per Sprint', desc: 'Geen officieel event, maar essentieel in de praktijk voor een vlotte Sprint Planning' });
   }
   var html = '';
   events.forEach(function(e) {
     html += '<div class="sprint-summary-item">' +
       '<div class="sprint-summary-dot" style="background:' + e.color + '"></div>' +
       '<div><span class="sprint-summary-name">Event ' + e.num + ': ' + e.name + '</span>' +
-      '<span class="sprint-summary-time">' + e.timebox + ' \u2014 ' + e.desc + '</span></div>' +
+      '<span class="sprint-summary-time">' + e.timebox + ': ' + e.desc + '</span></div>' +
     '</div>';
   });
   document.getElementById('sprint-summary-grid').innerHTML = html;
@@ -1293,7 +1886,7 @@ var POKER_STORIES = [
     votes: [8, 13, 8, 13, 20],
     result: null,
     scenario: 'too-big',
-    explanation: '<strong>Scenario: Te hoge waarden \u2014 story is te groot!</strong> De schattingen lopen van 8 tot 20. Dit is een duidelijk signaal: de story is te groot en te complex om in \u00e9\u00e9n Sprint af te ronden. Mohammed (20) wijst op de routeberekening als groot risico. <strong>Het team beslist de story op te splitsen</strong> in kleinere stories: (1) statische kaart met zoom, (2) zoekfunctie voor lokalen, (3) routeberekening. Elke deelstory wordt apart ingeschat.'
+    explanation: '<strong>Scenario: Te hoge waarden: story is te groot!</strong> De schattingen lopen van 8 tot 20. Dit is een duidelijk signaal: de story is te groot en te complex om in \u00e9\u00e9n Sprint af te ronden. Mohammed (20) wijst op de routeberekening als groot risico. <strong>Het team beslist de story op te splitsen</strong> in kleinere stories: (1) statische kaart met zoom, (2) zoekfunctie voor lokalen, (3) routeberekening. Elke deelstory wordt apart ingeschat.'
   },
   {
     id: 'US-04',
@@ -1314,7 +1907,7 @@ var POKER_STORIES = [
     votes: [3, 3, 3, 2, 3],
     result: 3,
     scenario: 'consensus',
-    explanation: '<strong>Scenario: Consensus!</strong> Vier teamleden schatten 3, \u00e9\u00e9n schat 2. De waarden liggen zo dicht bij elkaar dat het team direct tot een compromis komt. <strong>Het team kiest 3</strong> \u2014 de meest voorkomende waarde. Er is geen verdere discussie nodig.'
+    explanation: '<strong>Scenario: Consensus!</strong> Vier teamleden schatten 3, \u00e9\u00e9n schat 2. De waarden liggen zo dicht bij elkaar dat het team direct tot een compromis komt. <strong>Het team kiest 3</strong>. De meest voorkomende waarde. Er is geen verdere discussie nodig.'
   },
   {
     id: 'US-05',
@@ -1335,7 +1928,7 @@ var POKER_STORIES = [
     votes: [5, 8, 8, 5, 8],
     result: 8,
     scenario: 'discussion',
-    explanation: '<strong>Scenario: Discussie nodig.</strong> Het team is verdeeld: 5 vs. 8. Leen en Sara (5) denken dat Firebase dit eenvoudig maakt. Stef, Arnaud en Mohammed (8) wijzen op de complexiteit van achtergrond-synchronisatie en per-vak instellingen. Na discussie erkent het team dat achtergrondprocessen vaak voor verrassingen zorgen. <strong>Het team kiest 8 \u2014 de hogere waarde vanwege de onzekerheid.</strong>'
+    explanation: '<strong>Scenario: Discussie nodig.</strong> Het team is verdeeld: 5 vs. 8. Leen en Sara (5) denken dat Firebase dit eenvoudig maakt. Stef, Arnaud en Mohammed (8) wijzen op de complexiteit van achtergrond-synchronisatie en per-vak instellingen. Na discussie erkent het team dat achtergrondprocessen vaak voor verrassingen zorgen. <strong>Het team kiest 8. De hogere waarde vanwege de onzekerheid.</strong>'
   },
   {
     id: 'US-06',
@@ -1355,7 +1948,7 @@ var POKER_STORIES = [
     votes: [1, 2, 1, 1, 2],
     result: 1,
     scenario: 'consensus',
-    explanation: '<strong>Scenario: Snel consensus.</strong> Iedereen is het erover eens: dit is een kleine, overzichtelijke story. Puur lokale opslag, geen server-integratie. <strong>Het team kiest 1</strong> \u2014 de kleinst mogelijke waarde. Dit is een typische \u201cquick win\u201d.'
+    explanation: '<strong>Scenario: Snel consensus.</strong> Iedereen is het erover eens: dit is een kleine, overzichtelijke story. Puur lokale opslag, geen server-integratie. <strong>Het team kiest 1</strong>. De kleinst mogelijke waarde. Dit is een typische \u201cquick win\u201d.'
   },
   {
     id: 'US-07',
@@ -1376,7 +1969,7 @@ var POKER_STORIES = [
     votes: [1, 5, 3, 8, 3],
     result: 3,
     scenario: 'big-spread',
-    explanation: '<strong>Scenario: Grote spreiding \u2014 het team begrijpt de story niet gelijk!</strong> De waarden vari\u00ebren van 1 tot 8. De Scrum Master vraagt Leen (1) en Sara (8) om uitleg. Leen: \u201cIk heb al eens SSO gedaan, het is een standaard library.\u201d Sara: \u201cIk heb nog nooit met OAuth gewerkt, ik zie veel risico.\u201d Dit verschil in ervaring is cruciaal. Na een uitgebreide uitleg door Leen beseft het team dat het met een library inderdaad haalbaar is. <strong>Het team herschat: 3 \u2013 3 \u2013 3 \u2013 5 \u2013 3 \u2192 het team kiest 3.</strong><br><br><strong>\u26A0 Belangrijk: Definition of Ready!</strong> Het team merkt op dat er eerst een afspraak met de PXL IT-dienst moet gemaakt worden om toegang te krijgen tot de Microsoft SSO-integratie (API-sleutels, tenant-configuratie). Zonder die toegang kan deze story niet eens beginnen. Dit is een typisch voorbeeld van de <em>Definition of Ready</em>: een story is pas \u201cready\u201d voor de Sprint als alle voorwaarden vervuld zijn. De Product Owner neemt als actie mee om dit te regelen v\u00f3\u00f3r de volgende Sprint Planning.'
+    explanation: '<strong>Scenario: Grote spreiding: het team begrijpt de story niet gelijk!</strong> De waarden vari\u00ebren van 1 tot 8. De Scrum Master vraagt Leen (1) en Sara (8) om uitleg. Leen: \u201cIk heb al eens SSO gedaan, het is een standaard library.\u201d Sara: \u201cIk heb nog nooit met OAuth gewerkt, ik zie veel risico.\u201d Dit verschil in ervaring is cruciaal. Na een uitgebreide uitleg door Leen beseft het team dat het met een library inderdaad haalbaar is. <strong>Het team herschat: 3 \u2013 3 \u2013 3 \u2013 5 \u2013 3 \u2192 het team kiest 3.</strong><br><br><strong>\u26A0 Belangrijk: Definition of Ready!</strong> Het team merkt op dat er eerst een afspraak met de PXL IT-dienst moet gemaakt worden om toegang te krijgen tot de Microsoft SSO-integratie (API-sleutels, tenant-configuratie). Zonder die toegang kan deze story niet eens beginnen. Dit is een typisch voorbeeld van de <em>Definition of Ready</em>: een story is pas \u201cready\u201d voor de Sprint als alle voorwaarden vervuld zijn. De Product Owner neemt als actie mee om dit te regelen v\u00f3\u00f3r de volgende Sprint Planning.'
   },
   {
     id: 'US-08',
@@ -1465,7 +2058,7 @@ function pokerRenderDetail(idx) {
 
   // Team cards — initially hidden
   var cardsHtml = '<div class="poker-cards-section">' +
-    '<h5>Planning Poker \u2014 Team schat in</h5>' +
+    '<h5>Planning Poker: Team schat in</h5>' +
     '<div class="poker-team-row" id="poker-team-row-' + idx + '">';
 
   POKER_TEAM.forEach(function(name, mi) {
@@ -1572,7 +2165,7 @@ function pokerResultHtml(s) {
   if (s.result !== null) {
     html += '<div style="margin-top:.6rem;font-family:Raleway,sans-serif;font-weight:800;font-size:.85rem;color:var(--green);">\u2713 Resultaat: ' + s.result + ' storypunten</div>';
   } else {
-    html += '<div style="margin-top:.6rem;font-family:Raleway,sans-serif;font-weight:800;font-size:.85rem;color:var(--accent);">\u26A0 Story moet opgesplitst worden &mdash; niet ingeschat</div>';
+    html += '<div style="margin-top:.6rem;font-family:Raleway,sans-serif;font-weight:800;font-size:.85rem;color:var(--accent);">\u26A0 Story moet opgesplitst worden, niet ingeschat</div>';
   }
   return html;
 }

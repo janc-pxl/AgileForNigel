@@ -32,6 +32,7 @@ The site is published via GitHub Actions to GitHub Pages.
 - **Workflow**: `.github/workflows/deploy.yml` — triggers on every push to `main`
 - **Source setting**: GitHub Pages → Source must be set to **GitHub Actions** (in repo Settings → Pages)
 - No build step — the entire repo root is uploaded as the Pages artifact
+- **Gotcha:** Pushing workflow files requires the `workflow` OAuth scope. If rejected, add the file via GitHub web UI instead.
 
 ## Styling — PXL Hogeschool huisstijl
 All pages follow the PXL corporate identity:
@@ -68,6 +69,7 @@ All pages follow the PXL corporate identity:
 
 ## Language
 All page content is in **Dutch** (Nederlands).
+Do NOT use em dashes (—, `&mdash;`, `\u2014`) in any user-visible text. Use periods, colons, commas, or parentheses instead.
 
 ## Architecture
 Single-file HTML pages with inline `<style>` and `<script>` — no build step, no framework.
@@ -83,6 +85,7 @@ Single-file HTML pages with inline `<style>` and `<script>` — no build step, n
 **CSS naming:** Each section uses a unique prefix (e.g., `sprint-`, `poker-`) for all classes and IDs.
 
 **Current sections in `agile.html`:**
+- `#empirisme` — Two-part section: (A) "Scrum Event Scanner" 5×3 matrix where students discover T/I/A in each Scrum Event, (B) "Scenario Sorter" quiz with 12 practice scenarios. Prefixes: `empir-`, `scenario-`.
 - `#sprint-events` — Interactive 2-week Sprint timeline with day-by-day Scrum events. Has a toggle switch between official Scrum Guide view and a practice view with Refinement sessions (uses `REFINEMENT_OVERRIDES` overlay pattern via `getActiveDay()` helper).
 - `#poker-planning` — Planning Poker simulation with 8 User Stories for "Campi" campus app, each demonstrating a different estimation scenario (consensus, big spread, too big, etc.).
 
