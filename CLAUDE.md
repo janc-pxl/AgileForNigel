@@ -17,6 +17,7 @@ Interactive learning webapp that teaches students Agile (and Scrum). Part of the
 - `source/sprint_review.png` - an image of a scrum team having a sprint review
 - `source/sprint_retro.png` - an image of a scrum team having a sprint retrospective
 - `source/team_relaxing.png` - an image of a scrum team during the weekend
+- `source/team_relaxing_clicked.png` - an image of a scrum team during the weekend, to show when hovered above the other image
 - `source/refinement session.png` - an image of a scrum team having a refinement session
 - `source/poker planning.md` - a few examples of scenarios of how to do a poke planning where a scrum team uses poker cards
 

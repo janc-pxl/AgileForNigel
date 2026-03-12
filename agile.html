@@ -239,9 +239,18 @@ footer .f-inner a:hover { color: var(--gold); }
   background: white; border: 2px dashed var(--border); border-radius: 10px;
   overflow: hidden; text-align: center; animation: sprintIn .25s ease;
 }
-.sprint-weekend-img {
-  width: 100%; max-height: 220px; object-fit: cover; display: block;
+.sprint-weekend-img-wrap {
+  position: relative; width: 100%; max-height: 220px; overflow: hidden;
 }
+.sprint-weekend-img, .sprint-weekend-img-hover {
+  width: 100%; max-height: 220px; object-fit: cover; display: block;
+  transition: opacity .3s ease;
+}
+.sprint-weekend-img-hover {
+  position: absolute; top: 0; left: 0; opacity: 0;
+}
+.sprint-weekend-img-wrap:hover .sprint-weekend-img { opacity: 0; }
+.sprint-weekend-img-wrap:hover .sprint-weekend-img-hover { opacity: 1; }
 .sprint-weekend-body { padding: 1.5rem 2rem; }
 .sprint-weekend-icon { font-size: 2rem; margin-bottom: .5rem; opacity: .5; }
 .sprint-weekend-text { font-size: .92rem; color: var(--muted); }
@@ -1020,7 +1029,10 @@ function sprintClick(idx) {
   if (day.isWeekend) {
     detail.innerHTML =
       '<div class="sprint-weekend-card">' +
-        '<img class="sprint-weekend-img" src="img/team_relaxing.jpg" alt="Team rust uit" loading="lazy" />' +
+        '<div class="sprint-weekend-img-wrap">' +
+          '<img class="sprint-weekend-img" src="img/team_relaxing.jpg" alt="Team rust uit" loading="lazy" />' +
+          '<img class="sprint-weekend-img-hover" src="img/team_relaxing_clicked.jpg" alt="Team rust uit" loading="lazy" />' +
+        '</div>' +
         '<div class="sprint-weekend-body">' +
           '<div class="sprint-weekend-icon">\u{1F6CC}</div>' +
           '<div class="sprint-weekend-text">Geen Scrum Events gepland \u2014 het team rust uit.</div>' +
