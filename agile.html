@@ -38,9 +38,35 @@ body { font-family: Arial, system-ui, sans-serif; background: var(--bg); color: 
 .nav-brand { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: .06em; color: var(--gold); }
 .nav-sep { color: #555; margin: 0 2px; }
 .nav-page { font-family: 'Raleway', sans-serif; font-weight: 600; font-size: .92rem; color: #bbb; }
-.nav-links { margin-left: auto; display: flex; gap: 1.5rem; }
-.nav-links a { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; letter-spacing: .04em; color: #bbb; text-decoration: none; text-transform: uppercase; transition: color .15s; }
-.nav-links a:hover { color: var(--gold); }
+.nav-hamburger {
+  margin-left: auto; background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 5px; padding: 6px; border-radius: 4px; transition: background .15s;
+}
+.nav-hamburger:hover { background: rgba(255,255,255,.08); }
+.nav-hamburger span {
+  display: block; width: 22px; height: 2px; background: #bbb;
+  transition: transform .2s, opacity .2s, background .15s;
+}
+.nav-hamburger:hover span { background: var(--gold); }
+.nav-hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-dropdown {
+  display: none; flex-direction: column;
+  position: fixed; top: 54px; right: 0;
+  background: var(--primary); border-top: 2px solid var(--gold);
+  min-width: 220px; z-index: 200; box-shadow: 0 4px 16px rgba(0,0,0,.35);
+}
+.nav-dropdown.open { display: flex; }
+.nav-dropdown a {
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .85rem;
+  letter-spacing: .04em; text-transform: uppercase; text-decoration: none;
+  color: #bbb; padding: .85rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.07);
+  transition: color .15s, background .15s;
+}
+.nav-dropdown a:last-child { border-bottom: none; }
+.nav-dropdown a:hover { color: var(--gold); background: rgba(255,255,255,.04); }
 
 /* LAYOUT */
 main { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 5rem; }
@@ -629,7 +655,6 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 }
 @media (max-width: 620px) {
   h2 { font-size: 1.5rem; }
-  .nav-links { display: none; }
   .sprint-day { min-height: 56px; padding: .35rem .2rem .3rem; }
   .sprint-day .day-num { font-size: .8rem; }
 }
@@ -642,10 +667,13 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   <span class="nav-brand">Projectmanagement</span>
   <span class="nav-sep">/</span>
   <span class="nav-page">Agile &amp; Scrum</span>
-  <div class="nav-links">
-    <a href="#empirisme">Empirisme</a>
-    <a href="#sprint-events">Sprint Events</a>
-    <a href="#poker-planning">Planning Poker</a>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false" onclick="navToggle()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-dropdown" id="nav-dropdown">
+    <a href="#empirisme" onclick="navClose()">Empirisme</a>
+    <a href="#sprint-events" onclick="navClose()">Sprint Events</a>
+    <a href="#poker-planning" onclick="navClose()">Planning Poker</a>
   </div>
 </nav>
 
@@ -2169,6 +2197,22 @@ function pokerResultHtml(s) {
   }
   return html;
 }
+
+/* NAV HAMBURGER */
+function navToggle() {
+  var btn = document.getElementById('nav-hamburger');
+  var dd = document.getElementById('nav-dropdown');
+  var open = dd.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+}
+function navClose() {
+  document.getElementById('nav-dropdown').classList.remove('open');
+  document.getElementById('nav-hamburger').setAttribute('aria-expanded', 'false');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-hamburger') && !e.target.closest('.nav-dropdown')) navClose();
+});
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') navClose(); });
 </script>
 
 </body>
