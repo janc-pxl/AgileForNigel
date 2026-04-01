@@ -729,14 +729,14 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 
 <section id="empirisme">
   <div class="badge">Empirische Procescontrole</div>
-  <h2>Transparantie, Inspectie &amp; Adaptatie</h2>
+  <h2>Transparantie, Inspectie &amp; Aanpassing</h2>
   <p class="lead">Scrum is gebouwd op <strong>empirisme</strong>: leren door te doen en te observeren. Drie pijlers vormen het fundament van alles wat je in Scrum tegenkomt. Als je deze drie principes begrijpt, begrijp je <em>waarom</em> Scrum werkt zoals het werkt.</p>
 
-  <div class="callout"><p>De drie pijlers (Transparantie, Inspectie en Adaptatie) zijn geen losse concepten. Ze zijn verweven in elk Scrum Event. Ontdek hieronder waar ze zich manifesteren.</p></div>
+  <div class="callout"><p>De drie pijlers (Transparantie, Inspectie en Aanpassing) zijn geen losse concepten. Ze zijn verweven in elk Scrum Event. Ontdek hieronder waar ze zich manifesteren.</p></div>
 
   <!-- Subsectie A: Scrum Event Scanner -->
   <h3 class="empir-subtitle">Ontdek de drie pijlers in elk Scrum Event</h3>
-  <p>Klik op een Scrum Event en gebruik de drie knoppen om te ontdekken hoe Transparantie, Inspectie en Adaptatie zich in dat event manifesteren.</p>
+  <p>Klik op een Scrum Event en gebruik de drie knoppen om te ontdekken hoe Transparantie, Inspectie en Aanpassing zich in dat event manifesteren.</p>
 
   <div class="empir-layout">
     <div class="empir-events" id="empir-events">
@@ -756,12 +756,12 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   <!-- Scanner summary -->
   <div class="empir-summary" id="empir-summary">
     <h4>Alle 15 combinaties ontdekt!</h4>
-    <p>Zie je het patroon? <strong>Elk Scrum Event is ontworpen rond dezelfde drie empirische pijlers.</strong> Transparantie maakt zichtbaar, Inspectie controleert, en Adaptatie past aan. Dit is geen toeval, het is het fundament waarop heel Scrum gebouwd is.</p>
+    <p>Zie je het patroon? <strong>Elk Scrum Event is ontworpen rond dezelfde drie empirische pijlers.</strong> Transparantie maakt zichtbaar, Inspectie controleert, en Aanpassing past aan. Dit is geen toeval, het is het fundament waarop heel Scrum gebouwd is.</p>
   </div>
 
   <!-- Subsectie B: Scenario Sorter -->
   <h3 class="empir-subtitle">Test jezelf: herken de pijlers in de praktijk</h3>
-  <p>Lees elk scenario en beslis: is dit een voorbeeld van Transparantie, Inspectie of Adaptatie?</p>
+  <p>Lees elk scenario en beslis: is dit een voorbeeld van Transparantie, Inspectie of Aanpassing?</p>
 
   <!-- Scenario progress -->
   <div class="scenario-progress">
@@ -956,7 +956,7 @@ var EMPIR_SCENARIOS = [
     scenario: 'De Product Owner past de prioriteit van backlog items aan na de Sprint Review.',
     correct: 'A',
     hint: 'Er verandert hier iets op basis van wat er geleerd is. Welk principe hoort daarbij?',
-    explanation: 'De backlog aanpassen op basis van feedback is <strong>adaptatie</strong>: het plan wordt bijgestuurd op basis van wat er ge\u00efnspecteerd is.'
+    explanation: 'De backlog aanpassen op basis van feedback is <strong>aanpassing</strong>: het plan wordt bijgestuurd op basis van wat er ge\u00efnspecteerd is.'
   },
   {
     scenario: 'Stakeholders bekijken het werkende increment en geven feedback.',
@@ -974,7 +974,7 @@ var EMPIR_SCENARIOS = [
     scenario: 'Het team besluit om volgende Sprint pair programming te gebruiken na de Retrospective.',
     correct: 'A',
     hint: 'Het team verandert hier bewust iets aan hun manier van werken. Waarom?',
-    explanation: 'Een procesverbetering doorvoeren is <strong>adaptatie</strong>: het team past hun werkwijze aan op basis van wat ze geleerd hebben in de Retrospective.'
+    explanation: 'Een procesverbetering doorvoeren is <strong>aanpassing</strong>: het team past hun werkwijze aan op basis van wat ze geleerd hebben in de Retrospective.'
   },
   {
     scenario: 'De Scrum Master controleert of het team de Definition of Done naleeft.',
@@ -998,7 +998,7 @@ var EMPIR_SCENARIOS = [
     scenario: 'Na feedback van stakeholders wordt een User Story herschreven.',
     correct: 'A',
     hint: 'Er wordt hier iets aangepast op basis van geleerde lessen. Welk principe?',
-    explanation: 'Een User Story herschrijven op basis van feedback is <strong>adaptatie</strong>: het product wordt bijgestuurd op basis van nieuwe inzichten.'
+    explanation: 'Een User Story herschrijven op basis van feedback is <strong>aanpassing</strong>: het product wordt bijgestuurd op basis van nieuwe inzichten.'
   },
   {
     scenario: 'Elk teamlid deelt in de Daily Scrum welke obstakels er zijn.',
@@ -1016,7 +1016,7 @@ var EMPIR_SCENARIOS = [
     scenario: 'Het team voert een procesverbetering door die in de Retrospective was afgesproken.',
     correct: 'A',
     hint: 'Een eerder gemaakte afspraak wordt nu daadwerkelijk doorgevoerd. Wat verandert er?',
-    explanation: 'Een procesverbetering implementeren is <strong>adaptatie</strong>: het team past hun werkwijze aan om effectiever te worden in de volgende Sprint.'
+    explanation: 'Een procesverbetering implementeren is <strong>aanpassing</strong>: het team past hun werkwijze aan om effectiever te worden in de volgende Sprint.'
   }
 ];
 
@@ -1061,7 +1061,7 @@ function buildEmpirMatrix() {
   var pillars = [
     { key: 'T', label: 'Transparantie' },
     { key: 'I', label: 'Inspectie' },
-    { key: 'A', label: 'Adaptatie' }
+    { key: 'A', label: 'Aanpassing' }
   ];
 
   // Header row: empty corner + 5 event names
@@ -1111,7 +1111,7 @@ function empirClickEvent(idx) {
     '</div>';
   html += '<div class="empir-pillar-row">';
   ['T', 'I', 'A'].forEach(function(p) {
-    var label = p === 'T' ? 'Transparantie' : (p === 'I' ? 'Inspectie' : 'Adaptatie');
+    var label = p === 'T' ? 'Transparantie' : (p === 'I' ? 'Inspectie' : 'Aanpassing');
     var visited = empirVisited.has(idx + '-' + p) ? ' visited' : '';
     html += '<button class="empir-pillar-btn' + visited + '" data-pillar="' + p + '" onclick="empirClickPillar(\'' + p + '\')">' + label + '</button>';
   });
@@ -1137,7 +1137,7 @@ function empirClickPillar(pillar) {
   });
 
   // Show explanation
-  var label = pillar === 'T' ? 'Transparantie' : (pillar === 'I' ? 'Inspectie' : 'Adaptatie');
+  var label = pillar === 'T' ? 'Transparantie' : (pillar === 'I' ? 'Inspectie' : 'Aanpassing');
   var text = EMPIR_EVENTS[empirActive][pillar];
   document.getElementById('empir-pillar-detail').innerHTML =
     '<div class="empir-explanation">' +
@@ -1177,7 +1177,7 @@ function scenarioRender(idx) {
   html += '<div class="scenario-btn-row">';
 
   ['T', 'I', 'A'].forEach(function(p) {
-    var label = p === 'T' ? 'Transparantie' : (p === 'I' ? 'Inspectie' : 'Adaptatie');
+    var label = p === 'T' ? 'Transparantie' : (p === 'I' ? 'Inspectie' : 'Aanpassing');
     var cls = 'scenario-btn';
     if (answered && p === s.correct) cls += ' correct';
     if (answered && p !== s.correct) cls += ' disabled';
@@ -1263,7 +1263,7 @@ function scenarioShowSummary() {
   var pct = Math.round(scenarioScore / EMPIR_SCENARIOS.length * 100);
   el.innerHTML = '<h4>Alle scenario\'s beantwoord!</h4>' +
     '<p><strong>' + scenarioScore + ' van de ' + EMPIR_SCENARIOS.length + '</strong> scenario\'s correct bij de eerste poging (' + pct + '%).</p>' +
-    '<p>De drie pijlers van empirische procescontrole (Transparantie, Inspectie en Adaptatie) zijn overal in Scrum aanwezig. Hoe beter je ze herkent, hoe beter je begrijpt <em>waarom</em> elk Scrum Event bestaat.</p>';
+    '<p>De drie pijlers van empirische procescontrole (Transparantie, Inspectie en Aanpassing) zijn overal in Scrum aanwezig. Hoe beter je ze herkent, hoe beter je begrijpt <em>waarom</em> elk Scrum Event bestaat.</p>';
   el.classList.add('visible');
 }
 
@@ -1531,13 +1531,13 @@ var SPRINT_DAYS = [
         image: 'img/sprint_retro.jpg',
         description: 'Het team blikt terug op de voorbije Sprint en bepaalt verbeteringen voor de volgende Sprint. Concreet definieert het team een tweetal SMART-geformuleerde actiepunten waaraan ze zich de komende Sprint committeren.',
         details: [
-          'Eerst: zijn de actiepunten van de vorige Retrospective uitgevoerd? Hebben ze effect gehad? (Inspect & Adapt!)',
+          'Eerst: zijn de actiepunten van de vorige Retrospective uitgevoerd? Hebben ze effect gehad? (Inspectie & Aanpassing!)',
           'Wat waren onze succesvolle acties deze Sprint?',
           'Wat leerden we en wat kan beter?',
           'Traden er problemen of fouten op? Hoe lossen we die op?',
           'Het team formuleert typisch 2 concrete actiepunten die SMART zijn (Specifiek, Meetbaar, Acceptabel, Realistisch, Tijdgebonden)',
           'Voorbeeld: niet \u201cWe gaan beter communiceren\u201d, maar \u201cWe updaten het Scrum Board elke dag v\u00f3\u00f3r de Daily Scrum\u201d',
-          'Deze actiepunten worden in de volgende Retrospective ge\u00ebvalueerd: dit is empirisme in actie (transparantie, inspectie, adaptatie)'
+          'Deze actiepunten worden in de volgende Retrospective ge\u00ebvalueerd: dit is empirisme in actie (transparantie, inspectie, aanpassing)'
         ]
       }
     ],
