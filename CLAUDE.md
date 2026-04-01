@@ -23,6 +23,7 @@ Interactive learning webapp that teaches students Agile (and Scrum). Part of the
 - `source/MadSadGlad.png` - an image of an empty Mad Sad Glad retrospective board
 - `source/StartStopContinue.png` - an image of an empty Start Stop Continue retrospective board
 - `source/Sailboat.png` - an image of an empty Sailboat retrospective board
+- `source/empirisme.png` - an image showing an image explaining empirisme
 
 ## Requirements
 - Single-page scroll layout (all sections on one page, nav links are anchor scrolls)
