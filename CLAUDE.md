@@ -20,6 +20,9 @@ Interactive learning webapp that teaches students Agile (and Scrum). Part of the
 - `source/team_relaxing_clicked.png` - an image of a scrum team during the weekend, to show when hovered above the other image
 - `source/refinement session.png` - an image of a scrum team having a refinement session
 - `source/poker planning.md` - a few examples of scenarios of how to do a poke planning where a scrum team uses poker cards
+- `source/MadSadGlad.png` - an image of an empty Mad Sad Glad retrospective board
+- `source/StartStopContinue.png` - an image of an empty Start Stop Continue retrospective board
+- `source/Sailboat.png` - an image of an empty Sailboat retrospective board
 
 ## Requirements
 - Single-page scroll layout (all sections on one page, nav links are anchor scrolls)
