@@ -60,7 +60,7 @@ All pages follow the PXL corporate identity:
 
 **Typography:** Raleway (600–900) for headings via Google Fonts CDN; Arial/system-ui for body.
 
-**Nav:** Black bg (`--primary`), PXL logo (`pxl-logo-64.png`, 34×34px), course name in gold (e.g. "Projectmanagement"), page subtitle in `#bbb` (e.g. "Basisbegrippen"). Sticky, `z-index: 100`.
+**Nav:** Black bg (`--primary`), PXL logo (`pxl-logo-64.png`, 34×34px), course name in gold (e.g. "Projectmanagement"), page subtitle in `#bbb` (e.g. "Basisbegrippen"). Sticky, `z-index: 100`. Nav links are hidden behind a **hamburger menu** (`#nav-hamburger` button + `#nav-dropdown` div). The dropdown opens/closes via `navToggle()` / `navClose()` and closes on outside click or Escape. Add new nav items as `<a href="#section" onclick="navClose()">` inside `#nav-dropdown`.
 
 **Footer:** Black bg, centered PXL logo + "Hogeschool PXL", full line: "Hogeschool PXL • Elfde-Liniestraat 24 • B-3500 HASSELT • www.pxl.be".
 
@@ -91,8 +91,18 @@ Single-file HTML pages with inline `<style>` and `<script>` — no build step, n
 - `#empirisme` — Two-part section: (A) "Scrum Event Scanner" 5×3 matrix where students discover T/I/A in each Scrum Event, (B) "Scenario Sorter" quiz with 12 practice scenarios. Prefixes: `empir-`, `scenario-`.
 - `#sprint-events` — Interactive 2-week Sprint timeline with day-by-day Scrum events. Has a toggle switch between official Scrum Guide view and a practice view with Refinement sessions (uses `REFINEMENT_OVERRIDES` overlay pattern via `getActiveDay()` helper).
 - `#poker-planning` — Planning Poker simulation with 8 User Stories for "Campi" campus app, each demonstrating a different estimation scenario (consensus, big spread, too big, etc.).
+- `#retrospectives` — Three retrospective formats (Start/Stop/Continue, Mad/Sad/Glad, Zeilboot) shown as animated post-it replays. Prefix: `retro-`. See pattern notes below.
 
-**Image pipeline:** High-res source images (`source/*.png`, 7–8MB) are resized to 600px-wide JPEGs (`img/*.jpg`, ~40–50KB) using Python/Pillow. Always resize before committing to keep the repo lightweight.
+**Image pipeline:** High-res source images (`source/*.png`, 7–8MB) are resized using Python/Pillow and saved as JPEGs in `img/`. Always convert RGBA to RGB before saving as JPEG (`img.convert('RGB')`). Always resize before committing to keep the repo lightweight. Typical widths: 600px for scene photos, 900px for board/whiteboard images (e.g. retro boards).
+
+**Retrospective section pattern** (`#retrospectives`):
+- Data lives in `RETRO_FORMATS[]` — each entry has `id`, `name`, `img`, `rules[]`, and `postits[]`.
+- Each postit has `text`, `top`/`left` (% strings for absolute positioning over the board image), `rot` (degrees), and optionally `blue: true` for action-point post-its.
+- The board image is rendered inside `.retro-board-wrap` as a 100%-wide `<img>`. Post-its are `position: absolute` children, animated with `opacity` + `transform: scale` transition.
+- Clicking either the "Volgende post-it" button or the board image itself advances to the next post-it (`onclick="retroNext()"`). The board wrapper has `cursor: pointer`.
+- Post-its have `pointer-events: none` so clicks pass through them to the wrapper.
+- Yellow post-its = team observations. Blue post-its = action points (rendered last, positioned in the "Actiepunten" area of the board image).
+- Pedagogical note: the formats shown are examples only — many formats exist. The emphasis is on a *small* number of actions that will actually be executed, rather than a long list that gets ignored. Unexecuted actions from a previous retro are themselves a source of frustration in the next one.
 
 **Reference project:** `../PMTheBasics/projectmanagement-basis.html` — sibling repo with 5 interactive sections using the same patterns (triangle/diamond diagrams, PSS builder, SMART challenges, lifecycle stepper). Use as reference for new sections.
 
