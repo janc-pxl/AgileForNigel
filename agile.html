@@ -719,7 +719,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   </button>
   <div class="nav-dropdown" id="nav-dropdown">
     <a href="#empirisme" onclick="navClose()">Empirisme</a>
-    <a href="#sprint-events" onclick="navClose()">Sprint Events</a>
+    <a href="#sprint-events" onclick="navClose()">Scrum Events</a>
     <a href="#poker-planning" onclick="navClose()">Planning Poker</a>
     <a href="#retrospectives" onclick="navClose()">Retrospectives</a>
   </div>
@@ -837,15 +837,14 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
         <div class="sprint-week-label">Week 1</div>
         <!-- Day cells rendered by JS -->
       </div>
+      <!-- Navigation row -->
+      <div class="sprint-nav-row">
+        <button class="sprint-btn outline" id="sprint-prev" onclick="sprintPrev()" disabled>&larr; Vorige dag</button>
+        <span class="sprint-counter" id="sprint-counter">0 / 14 dagen bekeken</span>
+        <button class="sprint-btn" id="sprint-next" onclick="sprintNext()">Start de Sprint &rarr;</button>
+      </div>
     </div>
     <div class="sprint-detail" id="sprint-detail"></div>
-  </div>
-
-  <!-- Navigation row -->
-  <div class="sprint-nav-row">
-    <button class="sprint-btn outline" id="sprint-prev" onclick="sprintPrev()" disabled>&larr; Vorige dag</button>
-    <span class="sprint-counter" id="sprint-counter">0 / 14 dagen bekeken</span>
-    <button class="sprint-btn" id="sprint-next" onclick="sprintNext()">Start de Sprint &rarr;</button>
   </div>
 
   <!-- Summary -->
