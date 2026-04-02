@@ -67,6 +67,7 @@ body { font-family: Arial, system-ui, sans-serif; background: var(--bg); color: 
 }
 .nav-dropdown a:last-child { border-bottom: none; }
 .nav-dropdown a:hover { color: var(--gold); background: rgba(255,255,255,.04); }
+.nav-dropdown a.spy-active { color: var(--gold); border-left: 3px solid var(--gold); padding-left: calc(1.5rem - 3px); background: rgba(174,154,100,.1); }
 
 /* LAYOUT */
 main { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 5rem; }
@@ -2501,6 +2502,56 @@ document.addEventListener('click', function(e) {
   if (!e.target.closest('.nav-hamburger') && !e.target.closest('.nav-dropdown')) navClose();
 });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') navClose(); });
+
+/* SCROLL SPY */
+(function() {
+  var NAV_HEIGHT = 54;
+  var spyLinks = Array.from(document.querySelectorAll('.nav-dropdown a[href^="#"]'));
+  var spySections = spyLinks.map(function(a) {
+    return document.querySelector(a.getAttribute('href'));
+  }).filter(Boolean);
+
+  // Track whether a click just happened — suppress observer override briefly
+  var clickedId = null;
+  var clickTimer = null;
+
+  function setActive(id) {
+    spyLinks.forEach(function(a) {
+      var isActive = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('spy-active', isActive);
+    });
+  }
+
+  // IntersectionObserver: fire when ≥30% of a section is inside the viewport
+  // rootMargin top offset = nav height so sections aren't counted as visible
+  // while they're hiding behind the sticky nav
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        // Don't override if a click is in progress for a different section
+        if (clickedId && clickedId !== entry.target.id) return;
+        setActive(entry.target.id);
+      }
+    });
+  }, {
+    rootMargin: '-' + NAV_HEIGHT + 'px 0px -30% 0px',
+    threshold: 0.1
+  });
+
+  spySections.forEach(function(s) { observer.observe(s); });
+
+  // On click: set active immediately and lock out observer for 1s
+  // (prevents observer from switching to a different section mid-scroll)
+  spyLinks.forEach(function(a) {
+    a.addEventListener('click', function() {
+      var id = a.getAttribute('href').slice(1);
+      setActive(id);
+      clickedId = id;
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(function() { clickedId = null; }, 1000);
+    });
+  });
+})();
 </script>
 
 </body>
