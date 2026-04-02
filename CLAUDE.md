@@ -12,6 +12,8 @@ Interactive learning webapp that teaches students Agile (and Scrum). Part of the
 - `source/1314_logo_pxl_bol_witrand.png` — original PXL logo (high-res)
 - `source/daily_standup_early.png` - an image of a scrum team having a daily standup in the beginning of a sprint
 - `source/daily_standup_late.png` - an image of a scrum team having a daily standup nearly at the end of a sprint
+- `source/daily_standup_2ndday.png` - an image of a scrum team having a daily standup at the 2nd day of a sprint
+- `source/daily_standup_lastday.png` - an image of a scrum team having a daily standup at the last day of a sprint
 - `source/daily_standup_burndown.png` - an image of a scrum team having a daily standup while looking at a burndown chart in the middle of a sprint
 - `source/sprint_planning.png` - an image of a scrum team having a sprint planning
 - `source/sprint_review.png` - an image of a scrum team having a sprint review
