@@ -664,6 +664,15 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 }
 .retro-tab:hover { border-color: var(--gold); color: var(--primary); }
 .retro-tab.active { background: var(--primary); border-color: var(--primary); color: white; }
+.retro-formats-label {
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem;
+  color: var(--muted); margin: 1.5rem 0 .5rem; text-transform: uppercase; letter-spacing: .04em;
+}
+.retro-formats-label span { color: var(--gold); }
+.retro-tab.visited:not(.active) {
+  border-color: var(--gold); color: var(--primary); background: rgba(174,154,100,.08);
+}
+.retro-tab.visited:not(.active)::after { content: ' \2713'; font-size: .75em; color: var(--gold); }
 .retro-rules {
   background: var(--gold-bg); border-left: 4px solid var(--gold);
   border-radius: 0 4px 4px 0; padding: 1rem 1.25rem; margin-bottom: 1.25rem;
@@ -686,7 +695,22 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   z-index: 10; word-break: break-word; pointer-events: none;
 }
 .retro-postit.blue { background: #90CAF9; }
-.retro-postit.visible { opacity: 1; transform: scale(1) rotate(var(--rot, 0deg)); }
+.retro-postit.visible { opacity: 1; transform: scale(1) rotate(var(--rot, 0deg)); animation: retro-stick .35s cubic-bezier(.22,1.4,.64,1) both; }
+@keyframes retro-stick {
+  0%   { opacity: 0; transform: scale(.7) rotate(calc(var(--rot, 0deg) - 6deg)) translateY(-8px); }
+  60%  { opacity: 1; transform: scale(1.06) rotate(calc(var(--rot, 0deg) + 2deg)) translateY(1px); }
+  100% { opacity: 1; transform: scale(1) rotate(var(--rot, 0deg)) translateY(0); }
+}
+.retro-board-placeholder {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -52%) rotate(-4deg);
+  width: 150px; height: 150px;
+  border: 2px dashed #ccc; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  color: #bbb; font-size: .78rem; font-weight: 700; font-family: 'Raleway', sans-serif;
+  text-transform: uppercase; letter-spacing: .04em; text-align: center; padding: .75rem;
+  pointer-events: none; line-height: 1.4;
+  transition: opacity .3s;
+}
 .retro-controls { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
 .retro-btn {
   font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 1rem;
@@ -968,6 +992,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
     <p style="margin-top:.6rem;">Elke retrospective eindigt idealiter met een <strong>beperkt aantal concrete actiepunten</strong>. Liever 2 acties die het team zeker uitvoert dan een lange lijst die blijft liggen. Acties die sprint na sprint onuitgevoerd blijven, zijn trouwens zelf een bron van frustratie: ze komen gegarandeerd terug als post-it in de volgende retrospective.</p>
   </div>
 
+  <p class="retro-formats-label">Ontdek de 3 formats: <span id="retro-formats-progress">1 / 3 bekeken</span></p>
   <div class="retro-tabs" id="retro-tabs"></div>
   <div class="retro-rules" id="retro-rules"></div>
   <p class="retro-hint-text" id="retro-hint">Klik op de afbeelding of de knop om post-its te onthullen</p>
@@ -2437,6 +2462,7 @@ var RETRO_FORMATS = [
 
 var retroActive = 0;
 var retroSteps = [0, 0, 0];
+var retroVisited = new Set([0]);
 
 (function initRetro() {
   var tabsEl = document.getElementById('retro-tabs');
@@ -2449,16 +2475,27 @@ var retroSteps = [0, 0, 0];
   });
   retroRenderRules();
   retroRenderBoard();
+  retroUpdateFormatProgress();
 })();
 
 function retroSelectFormat(idx) {
   retroActive = idx;
+  retroVisited.add(idx);
   retroSteps[retroActive] = 0;
   document.querySelectorAll('.retro-tab').forEach(function(t, i) {
     t.classList.toggle('active', i === idx);
   });
   retroRenderRules();
   retroRenderBoard();
+  retroUpdateFormatProgress();
+}
+
+function retroUpdateFormatProgress() {
+  document.querySelectorAll('.retro-tab').forEach(function(t, i) {
+    t.classList.toggle('visited', retroVisited.has(i));
+  });
+  var el = document.getElementById('retro-formats-progress');
+  if (el) el.textContent = retroVisited.size + ' / 3 bekeken';
 }
 
 function retroRenderRules() {
@@ -2473,6 +2510,9 @@ function retroRenderBoard() {
   var fmt = RETRO_FORMATS[retroActive];
   var step = retroSteps[retroActive];
   var html = '<img class="retro-board-img" src="' + fmt.img + '" alt="' + fmt.name + '">';
+  if (step === 0) {
+    html += '<div class="retro-board-placeholder">Klik om post-its te ontdekken</div>';
+  }
   fmt.postits.forEach(function(p, i) {
     html += '<div class="retro-postit' + (p.blue ? ' blue' : '') + (i < step ? ' visible' : '') + '"' +
       ' id="rp-' + retroActive + '-' + i + '"' +
@@ -2488,6 +2528,8 @@ function retroNext() {
   var step = retroSteps[retroActive];
   if (step >= fmt.postits.length) return;
   retroSteps[retroActive]++;
+  var placeholder = document.querySelector('.retro-board-placeholder');
+  if (placeholder) placeholder.remove();
   var el = document.getElementById('rp-' + retroActive + '-' + step);
   if (el) setTimeout(function() { el.classList.add('visible'); }, 20);
   retroUpdateControls();
