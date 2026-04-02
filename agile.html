@@ -689,6 +689,52 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 .retro-btn.outline:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
 .retro-step-label { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .8rem; color: var(--muted); }
 
+/* FOCUS-VISIBLE — toetsenbordnavigatie */
+/* Globale fallback voor alles wat nog niet specifiek is */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+/* Nav: donkere achtergrond — gebruik goud zodat de focus zichtbaar blijft */
+.nav-hamburger:focus-visible,
+.nav-dropdown a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+/* Empirisme: event-cards en pijlerknoppen */
+.empir-event-card:focus-visible,
+.empir-pillar-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+/* Scenario-quiz: antwoordknoppen en navigatieknoppen */
+.scenario-btn:focus-visible,
+.scenario-btn-nav:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+/* Sprint-kalender: dagtegels, knoppen en toggle */
+.sprint-day:focus-visible,
+.sprint-btn:focus-visible,
+.sprint-toggle-track:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+/* Planning Poker: story-kaarten, reveal-knop en resultaatknop */
+.poker-story-card:focus-visible,
+.poker-reveal-btn:focus-visible,
+.poker-result-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+/* Retrospective: tabs, knoppen en klikbaar bord */
+.retro-tab:focus-visible,
+.retro-btn:focus-visible,
+.retro-board-wrap:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 /* Responsive */
 @media (max-width: 820px) {
   .empir-layout { grid-template-columns: 1fr; }
