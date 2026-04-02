@@ -138,6 +138,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 .empir-pillar-btn {
   font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem;
   padding: .45rem 1rem; border-radius: 5px; cursor: pointer;
+  min-height: 44px; display: inline-flex; align-items: center;
   border: 2px solid; transition: background .15s, color .15s, box-shadow .15s;
   position: relative;
 }
@@ -223,6 +224,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 .scenario-btn {
   font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem;
   padding: .5rem 1.2rem; border-radius: 5px; cursor: pointer;
+  min-height: 44px; display: inline-flex; align-items: center;
   border: 2px solid var(--border); background: white; color: var(--text);
   transition: all .2s;
 }
@@ -247,7 +249,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem;
   padding: .45rem 1.2rem; background: var(--primary); color: white;
   border: 2px solid var(--primary); border-radius: 5px;
-  cursor: pointer; transition: background .12s;
+  min-height: 44px; cursor: pointer; transition: background .12s;
 }
 .scenario-btn-nav:hover { background: #222; }
 .scenario-btn-nav:disabled { opacity: .35; cursor: not-allowed; }
@@ -465,7 +467,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem;
   padding: .45rem 1.2rem; background: var(--primary); color: white;
   border: 2px solid var(--primary); border-radius: 5px;
-  cursor: pointer; transition: background .12s;
+  min-height: 44px; cursor: pointer; transition: background .12s;
 }
 .sprint-btn:hover:not(:disabled) { background: #333; border-color: #333; }
 .sprint-btn:disabled { opacity: .28; cursor: default; }
@@ -606,7 +608,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .82rem;
   padding: .4rem 1rem; background: var(--primary); color: white;
   border: 2px solid var(--primary); border-radius: 5px;
-  cursor: pointer; transition: background .12s; margin-top: .5rem;
+  min-height: 44px; cursor: pointer; transition: background .12s; margin-top: .5rem;
 }
 .poker-reveal-btn:hover { background: #222; }
 .poker-reveal-btn:disabled { opacity: .4; cursor: not-allowed; }
@@ -614,7 +616,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .82rem;
   padding: .4rem 1rem; background: var(--green); color: white;
   border: 2px solid var(--green); border-radius: 5px;
-  cursor: pointer; transition: background .12s; margin-left: .5rem;
+  min-height: 44px; cursor: pointer; transition: background .12s; margin-left: .5rem;
 }
 .poker-result-btn:hover { background: #238a7e; }
 
@@ -734,6 +736,16 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 .retro-board-wrap:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+
+/* MOTION — toegankelijkheid */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Responsive */
