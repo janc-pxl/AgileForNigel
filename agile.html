@@ -130,7 +130,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   color: var(--muted); font-size: .92rem; border: 2px dashed var(--border); border-radius: 10px;
   background: white; text-align: center; padding: 2rem;
 }
-.empir-placeholder-icon { font-size: 2rem; opacity: .35; }
+.empir-placeholder-icon { width: 38px; height: 38px; opacity: .5; display: block; color: var(--muted); }
 
 /* Pillar buttons */
 .empir-pillar-row { display: flex; gap: .5rem; margin-bottom: 1rem; }
@@ -354,7 +354,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   color: var(--muted); font-size: .92rem; border: 2px dashed var(--border); border-radius: 10px;
   background: white; text-align: center; padding: 2rem;
 }
-.sprint-placeholder-icon { font-size: 2rem; opacity: .35; }
+.sprint-placeholder-icon { width: 38px; height: 38px; opacity: .5; display: block; color: var(--muted); }
 
 /* Event cards */
 @keyframes sprintIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -527,7 +527,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   color: var(--muted); font-size: .92rem; border: 2px dashed var(--border); border-radius: 10px;
   background: white; text-align: center; padding: 2rem;
 }
-.poker-placeholder-icon { font-size: 2rem; opacity: .35; }
+.poker-placeholder-icon { width: 38px; height: 38px; opacity: .5; display: block; color: var(--muted); }
 
 /* Story detail card */
 @keyframes pokerIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -960,6 +960,9 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 </footer>
 
 <script>
+// Gedeeld SVG-cursor-icoon voor alle empty-state placeholders
+var PLACEHOLDER_ICON = '<svg class="PREFIX-placeholder-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 2.5 L5 18.5 L8.8 14.7 L11.6 21 L13.7 20.1 L10.9 13.8 L16 13.8 Z"/></svg>';
+
 // ── Empirisme: Scrum Event Scanner ──────────────────────────────────────────
 
 var EMPIR_EVENTS = [
@@ -1136,7 +1139,7 @@ function buildEmpirMatrix() {
 function empirRenderPlaceholder() {
   document.getElementById('empir-detail').innerHTML =
     '<div class="empir-placeholder">' +
-      '<div class="empir-placeholder-icon">\u{1F50D}</div>' +
+      PLACEHOLDER_ICON.replace('PREFIX', 'empir') +
       '<div>Klik op een Scrum Event om de drie empirische pijlers te ontdekken.</div>' +
     '</div>';
 }
@@ -1839,7 +1842,7 @@ function buildEventCard(ev) {
 function renderPlaceholder() {
   document.getElementById('sprint-detail').innerHTML =
     '<div class="sprint-placeholder">' +
-      '<div class="sprint-placeholder-icon">\u{1F4C5}</div>' +
+      PLACEHOLDER_ICON.replace('PREFIX', 'sprint') +
       '<div>Klik op een dag in de kalender of gebruik <strong>\u201cStart de Sprint\u201d</strong> om te beginnen.</div>' +
     '</div>';
 }
@@ -2203,7 +2206,7 @@ function pokerClick(idx) {
 function pokerRenderPlaceholder() {
   document.getElementById('poker-detail').innerHTML =
     '<div class="poker-placeholder">' +
-      '<div class="poker-placeholder-icon">\u{1F0CF}</div>' +
+      PLACEHOLDER_ICON.replace('PREFIX', 'poker') +
       '<div>Klik op een User Story in de lijst om de Planning Poker sessie te starten.</div>' +
     '</div>';
 }
