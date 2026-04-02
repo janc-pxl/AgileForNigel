@@ -689,10 +689,14 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 .retro-postit.visible { opacity: 1; transform: scale(1) rotate(var(--rot, 0deg)); }
 .retro-controls { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
 .retro-btn {
-  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .8rem;
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 1rem;
   letter-spacing: .04em; text-transform: uppercase;
-  padding: .55rem 1.3rem; border-radius: 4px; border: none;
-  background: var(--primary); color: white; cursor: pointer; transition: opacity .15s;
+  padding: .75rem 2rem; border-radius: 4px; border: none;
+  background: var(--gold); color: var(--primary); cursor: pointer; transition: opacity .15s;
+}
+.retro-hint-text {
+  font-size: .88rem; color: var(--muted); text-align: center;
+  margin: 0 0 .6rem; font-style: italic;
 }
 .retro-btn:hover:not(:disabled) { opacity: .82; }
 .retro-btn:disabled { opacity: .3; cursor: not-allowed; }
@@ -966,6 +970,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 
   <div class="retro-tabs" id="retro-tabs"></div>
   <div class="retro-rules" id="retro-rules"></div>
+  <p class="retro-hint-text" id="retro-hint">Klik op de afbeelding of de knop om post-its te onthullen</p>
   <div class="retro-board-wrap" id="retro-board" onclick="retroNext()"></div>
   <div class="retro-controls">
     <button class="retro-btn" id="retro-next-btn" onclick="retroNext()">Volgende post-it &rarr;</button>
@@ -2506,6 +2511,7 @@ function retroUpdateControls() {
   else if (step < total)      lbl = 'Actiepunt ' + (step - contentCount) + ' / 2';
   else                        lbl = 'Retrospective afgerond!';
   document.getElementById('retro-step-label').textContent = lbl;
+  document.getElementById('retro-hint').style.display = (step === 0) ? '' : 'none';
 }
 
 /* NAV HAMBURGER */
