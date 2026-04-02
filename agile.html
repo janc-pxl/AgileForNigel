@@ -325,6 +325,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   min-height: 68px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
 }
 .sprint-day:hover:not(.weekend) { border-color: #bbb; background: #fafaf8; }
+.sprint-day.weekend:hover { border-color: #bbb; background: #f0ede8; }
 .sprint-day .day-num { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .92rem; color: var(--primary); line-height: 1.1; }
 .sprint-day .day-name { font-size: .68rem; color: var(--muted); font-weight: 600; }
 .sprint-day .day-dots { display: flex; gap: 3px; margin-top: 3px; justify-content: center; }
@@ -463,6 +464,13 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   margin-top: 1.5rem; gap: 1rem;
 }
 .sprint-counter { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: var(--muted); }
+.sprint-reset-row { display: flex; justify-content: flex-end; margin-top: .5rem; }
+.sprint-reset-link {
+  background: none; border: none; cursor: pointer; font-family: 'Raleway', sans-serif;
+  font-size: .78rem; font-weight: 700; color: var(--muted); text-decoration: underline;
+  text-underline-offset: 2px; padding: .25rem 0; transition: color .15s;
+}
+.sprint-reset-link:hover { color: var(--gold); }
 .sprint-btn {
   font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem;
   padding: .45rem 1.2rem; background: var(--primary); color: white;
@@ -904,7 +912,10 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
       <div class="sprint-nav-row">
         <button class="sprint-btn outline" id="sprint-prev" onclick="sprintPrev()" disabled>&larr; Vorige dag</button>
         <span class="sprint-counter" id="sprint-counter">0 / 14 dagen bekeken</span>
-        <button class="sprint-btn" id="sprint-next" onclick="sprintNext()">Start de Sprint &rarr;</button>
+        <button class="sprint-btn" id="sprint-next" onclick="sprintNext()">Volgende dag &rarr;</button>
+      </div>
+      <div class="sprint-reset-row">
+        <button class="sprint-reset-link" onclick="sprintReset()">&#8635; Opnieuw beginnen</button>
       </div>
     </div>
     <div class="sprint-detail" id="sprint-detail"></div>
@@ -1733,8 +1744,8 @@ function getActiveDay(idx) {
   // Render day cells for week 2 (indices 7–13)
   for (var i = 7; i < 14; i++) { buildDayCell(cal, i); }
 
-  // Initial detail
-  renderPlaceholder();
+  // Auto-select day 1
+  sprintClick(0);
 })();
 
 function buildDayCell(container, idx) {
@@ -1856,7 +1867,7 @@ function renderPlaceholder() {
   document.getElementById('sprint-detail').innerHTML =
     '<div class="sprint-placeholder">' +
       PLACEHOLDER_ICON.replace('PREFIX', 'sprint') +
-      '<div>Klik op een dag in de kalender of gebruik <strong>\u201cStart de Sprint\u201d</strong> om te beginnen.</div>' +
+      '<div>Klik op een dag in de kalender om te beginnen.</div>' +
     '</div>';
 }
 
@@ -1883,6 +1894,14 @@ function sprintNext() {
 function sprintPrev() {
   if (sprintActive === null || sprintActive <= 0) return;
   sprintClick(sprintActive - 1);
+}
+
+function sprintReset() {
+  sprintActive = null;
+  sprintVisited = new Set();
+  rebuildCalendar();
+  document.getElementById('sprint-summary').classList.remove('visible');
+  sprintClick(0);
 }
 
 function toggleRefinement() {
@@ -1913,22 +1932,12 @@ function toggleRefinement() {
   sprintActive = null;
   sprintVisited = new Set();
   rebuildCalendar();
-  renderPlaceholder();
-
-  // Reset progress
-  document.getElementById('sprint-fill').style.width = '0%';
-  document.getElementById('sprint-progress-label').textContent = 'Dag 0 / 14';
-  document.getElementById('sprint-counter').textContent = '0 / 14 dagen bekeken';
-
-  // Reset nav buttons
-  var prev = document.getElementById('sprint-prev');
-  var next = document.getElementById('sprint-next');
-  prev.disabled = true;
-  next.innerHTML = 'Start de Sprint &rarr;';
-  next.disabled = false;
 
   // Hide summary
   document.getElementById('sprint-summary').classList.remove('visible');
+
+  // Auto-select day 1
+  sprintClick(0);
 }
 
 function updateLegend() {
