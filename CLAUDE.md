@@ -91,7 +91,7 @@ Single-file HTML pages with inline `<style>` and `<script>` — no build step, n
 **CSS naming:** Each section uses a unique prefix (e.g., `sprint-`, `poker-`) for all classes and IDs.
 
 **Current sections in `agile.html`:**
-- `#empirisme` — Two-part section: (A) "Scrum Event Scanner" 5×3 matrix where students discover T/I/A in each Scrum Event, (B) "Scenario Sorter" quiz with 12 practice scenarios. Prefixes: `empir-`, `scenario-`.
+- `#empirisme` — Two-part section: (A) "Scrum Event Scanner" 5×3 matrix where students discover T/I/A in each Scrum Event, (B) "Scenario Sorter" quiz with 12 practice scenarios. Prefixes: `empir-`, `scenario-`. Key words in the `EMPIR_EVENTS[]` T/I/A texts are wrapped in `<mark>`; they get an animated highlighter stripe in the pillar color (via `data-pillar` on `.empir-explanation`), staggered per word.
 - `#sprint-events` — Interactive 2-week Sprint timeline with day-by-day Scrum events. Has a toggle switch between official Scrum Guide view and a practice view with Refinement sessions (uses `REFINEMENT_OVERRIDES` overlay pattern via `getActiveDay()` helper).
 - `#poker-planning` — Planning Poker simulation with 8 User Stories for "Campi" campus app, each demonstrating a different estimation scenario (consensus, big spread, too big, etc.).
 - `#retrospectives` — Three retrospective formats (Start/Stop/Continue, Mad/Sad/Glad, Zeilboot) shown as animated post-it replays. Prefix: `retro-`. See pattern notes below.

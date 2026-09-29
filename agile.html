@@ -168,6 +168,21 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 .empir-explanation-title[data-pillar="A"] { color: var(--green); }
 .empir-explanation p { font-size: .9rem; line-height: 1.55; color: var(--text); margin: 0; }
 
+/* Kernwoorden: geanimeerde markeerstift in de pijlerkleur */
+.empir-explanation[data-pillar="T"] { --empir-hl: rgba(91,127,166,.38); }
+.empir-explanation[data-pillar="I"] { --empir-hl: rgba(174,154,100,.5); }
+.empir-explanation[data-pillar="A"] { --empir-hl: rgba(42,157,143,.38); }
+.empir-explanation mark {
+  color: inherit; font-weight: 700; padding: 0 1px;
+  background: linear-gradient(transparent 55%, var(--empir-hl) 55%) no-repeat 0 0 / 0% 100%;
+  animation: empirHighlight .6s ease .3s forwards;
+}
+.empir-explanation mark:nth-of-type(2) { animation-delay: .8s; }
+.empir-explanation mark:nth-of-type(3) { animation-delay: 1.3s; }
+.empir-explanation mark:nth-of-type(4) { animation-delay: 1.8s; }
+.empir-explanation mark:nth-of-type(n+5) { animation-delay: 2.3s; }
+@keyframes empirHighlight { to { background-size: 100% 100%; } }
+
 /* Progress matrix (3×5 grid) */
 .empir-matrix { display: grid; grid-template-columns: 100px repeat(5, 1fr); gap: 3px; margin-top: 1.5rem; }
 .empir-matrix-header {
@@ -782,6 +797,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
     transition-duration: .01ms !important;
     scroll-behavior: auto !important;
   }
+  .empir-explanation mark { animation-delay: 0s !important; }
 }
 
 /* Responsive */
@@ -1022,33 +1038,33 @@ var PLACEHOLDER_ICON = '<svg class="PREFIX-placeholder-icon" viewBox="0 0 24 24"
 var EMPIR_EVENTS = [
   {
     name: 'De Sprint', icon: '\u{1F504}',
-    T: 'Het Sprint Doel en de Sprint Backlog zijn voor iedereen zichtbaar en toegankelijk. Het hele team en de stakeholders weten wat er deze Sprint wordt nagestreefd. Er zijn geen verborgen agenda\u2019s. De scope, het doel en de voortgang liggen open op tafel.',
-    I: 'Tijdens de Sprint wordt de voortgang continu ge\u00efnspecteerd. Het team bekijkt dagelijks het Scrum Board en de burndown chart om te controleren of ze op koers liggen richting het Sprint Doel. Elke afwijking wordt snel opgemerkt.',
-    A: 'Het team past dagelijks het plan van aanpak aan: ze beslissen zelf hoe ze het werk het beste aanpakken om het Sprint Doel te bereiken. Belangrijk hierbij: het Sprint Doel staat vast en kan tijdens de Sprint niet worden gewijzigd. De scope mag alleen worden heronderhandeld met de Product Owner als het Sprint Doel in gevaar komt, en dat is een uitzonderlijke situatie. Niemand buiten het Scrum Team mag het team dwingen om extra werk op te nemen. Alleen als het Sprint Doel echt achterhaald is (bv. door een technologiewijziging of marktverandering), kan de Product Owner de Sprint vroegtijdig annuleren (Sprint cancellation), maar dat gebeurt zelden.'
+    T: 'Het Sprint Doel en de Sprint Backlog zijn voor iedereen <mark>zichtbaar</mark> en toegankelijk. Het hele team en de stakeholders weten wat er deze Sprint wordt nagestreefd. Er zijn <mark>geen verborgen</mark> agenda\u2019s. De scope, het doel en de voortgang liggen <mark>open op tafel</mark>.',
+    I: 'Tijdens de Sprint wordt de voortgang <mark>continu ge\u00efnspecteerd</mark>. Het team <mark>bekijkt dagelijks</mark> het Scrum Board en de burndown chart om te <mark>controleren</mark> of ze op koers liggen richting het Sprint Doel. Elke <mark>afwijking wordt snel opgemerkt</mark>.',
+    A: 'Het team <mark>past dagelijks het plan van aanpak aan</mark>: ze <mark>beslissen zelf</mark> hoe ze het werk het beste aanpakken om het Sprint Doel te bereiken. Belangrijk hierbij: het Sprint Doel staat vast en kan tijdens de Sprint niet worden gewijzigd. De scope mag alleen worden <mark>heronderhandeld</mark> met de Product Owner als het Sprint Doel in gevaar komt, en dat is een uitzonderlijke situatie. Niemand buiten het Scrum Team mag het team dwingen om extra werk op te nemen. Alleen als het Sprint Doel echt achterhaald is (bv. door een technologiewijziging of marktverandering), kan de Product Owner de <mark>Sprint vroegtijdig annuleren</mark> (Sprint cancellation), maar dat gebeurt zelden.'
   },
   {
     name: 'Sprint Planning', icon: '\u{1F4CB}',
-    T: 'De Product Backlog is transparant en geprioriteerd: iedereen ziet welke items bovenaan staan. Het team bespreekt openlijk hoeveel werk ze aankunnen (capaciteit) en welke afhankelijkheden er zijn. Niets wordt achtergehouden.',
-    I: 'Het team inspecteert de Product Backlog items: zijn ze duidelijk genoeg? Zijn de acceptatiecriteria helder? Kloppen de schattingen? Het team beoordeelt ook eerdere velocity om een realistische Sprint Backlog samen te stellen.',
-    A: 'Op basis van de inspectie past het team het plan aan: items worden opgesplitst, herschat, of teruggeplaatst op de backlog als ze te groot zijn. Het Sprint Doel wordt geformuleerd als gezamenlijke focus. Dit stuurt alle beslissingen.'
+    T: 'De Product Backlog is <mark>transparant</mark> en geprioriteerd: <mark>iedereen ziet</mark> welke items bovenaan staan. Het team bespreekt <mark>openlijk</mark> hoeveel werk ze aankunnen (capaciteit) en welke afhankelijkheden er zijn. <mark>Niets wordt achtergehouden</mark>.',
+    I: 'Het team <mark>inspecteert de Product Backlog items</mark>: zijn ze duidelijk genoeg? Zijn de acceptatiecriteria helder? <mark>Kloppen de schattingen</mark>? Het team <mark>beoordeelt</mark> ook eerdere velocity om een realistische Sprint Backlog samen te stellen.',
+    A: 'Op basis van de inspectie <mark>past het team het plan aan</mark>: items worden <mark>opgesplitst, herschat, of teruggeplaatst</mark> op de backlog als ze te groot zijn. Het <mark>Sprint Doel wordt geformuleerd</mark> als gezamenlijke focus. Dit stuurt alle beslissingen.'
   },
   {
     name: 'Daily Scrum', icon: '\u{1F4AC}',
-    T: 'Elk teamlid deelt openlijk wat hij of zij gisteren deed, vandaag gaat doen, en welke obstakels er zijn. Het Scrum Board en de burndown chart zijn voor iedereen zichtbaar en de voortgang wordt niet verborgen.',
-    I: 'Het team inspecteert samen de voortgang richting het Sprint Doel. Ze kijken naar de verhoudingen op het Scrum Board (hoeveel stories zijn \u201cIn Progress\u201d vs. \u201cDone\u201d?) en de trend op de burndown chart.',
-    A: 'Als iemand geblokkeerd is of de voortgang achterblijft, past het team direct het dagplan aan. Werk wordt herverdeeld, hulp wordt aangeboden, of de Scrum Master wordt ingeschakeld om impediments op te lossen.'
+    T: 'Elk teamlid <mark>deelt openlijk</mark> wat hij of zij gisteren deed, vandaag gaat doen, en <mark>welke obstakels</mark> er zijn. Het Scrum Board en de burndown chart zijn <mark>voor iedereen zichtbaar</mark> en de voortgang wordt <mark>niet verborgen</mark>.',
+    I: 'Het team <mark>inspecteert samen de voortgang</mark> richting het Sprint Doel. Ze <mark>kijken naar</mark> de verhoudingen op het Scrum Board (hoeveel stories zijn \u201cIn Progress\u201d vs. \u201cDone\u201d?) en <mark>de trend</mark> op de burndown chart.',
+    A: 'Als iemand geblokkeerd is of de voortgang achterblijft, <mark>past het team direct het dagplan aan</mark>. <mark>Werk wordt herverdeeld</mark>, <mark>hulp wordt aangeboden</mark>, of de Scrum Master wordt ingeschakeld om <mark>impediments op te lossen</mark>.'
   },
   {
     name: 'Sprint Review', icon: '\u{1F3AF}',
-    T: 'Het team demonstreert het werkende increment aan stakeholders. Wat er gebouwd is (en wat niet) wordt transparant getoond: geen PowerPoint, maar werkende software. Ook de status van de Product Backlog wordt besproken.',
-    I: 'Stakeholders inspecteren het increment: voldoet het aan hun verwachtingen? Is het bruikbaar? Ze geven feedback op basis van wat ze zien en ervaren, niet op basis van abstracte plannen.',
-    A: 'Op basis van de feedback past de Product Owner de Product Backlog aan. Nieuwe items worden toegevoegd, prioriteiten verschuiven, en het plan voor de volgende Sprint wordt bijgestuurd. De roadmap evolueert.'
+    T: 'Het team <mark>demonstreert het werkende increment</mark> aan stakeholders. Wat er gebouwd is (<mark>en wat niet</mark>) wordt <mark>transparant getoond</mark>: geen PowerPoint, maar werkende software. Ook de status van de Product Backlog wordt besproken.',
+    I: 'Stakeholders <mark>inspecteren het increment</mark>: <mark>voldoet het aan hun verwachtingen</mark>? Is het bruikbaar? Ze <mark>geven feedback op basis van wat ze zien</mark> en ervaren, niet op basis van abstracte plannen.',
+    A: 'Op basis van de feedback <mark>past de Product Owner de Product Backlog aan</mark>. Nieuwe items worden toegevoegd, <mark>prioriteiten verschuiven</mark>, en het plan voor de volgende Sprint wordt <mark>bijgestuurd</mark>. De roadmap <mark>evolueert</mark>.'
   },
   {
     name: 'Sprint Retrospective', icon: '\u{1F6E0}\uFE0F',
-    T: 'Het team bespreekt openlijk wat goed ging, wat beter kon, en hoe de samenwerking verliep. Iedereen mag vrijuit spreken. Psychologische veiligheid is essentieel. Problemen worden niet onder het tapijt geveegd.',
-    I: 'Het team inspecteert hun eigen werkproces: hoe effectief waren de Daily Scrums? Was de communicatie helder? Waren de schattingen accuraat? Ze analyseren patronen en zoeken naar de grondoorzaken van problemen.',
-    A: 'Het team kiest concrete verbeteracties voor de volgende Sprint. Bijvoorbeeld: \u201cWe gaan pair programming invoeren voor complexe stories\u201d of \u201cWe verkorten de Daily Scrum door ons strikt aan het format te houden.\u201d'
+    T: 'Het team <mark>bespreekt openlijk</mark> wat goed ging, wat beter kon, en hoe de samenwerking verliep. Iedereen mag <mark>vrijuit spreken</mark>. Psychologische veiligheid is essentieel. Problemen worden <mark>niet onder het tapijt geveegd</mark>.',
+    I: 'Het team <mark>inspecteert hun eigen werkproces</mark>: hoe effectief waren de Daily Scrums? Was de communicatie helder? Waren de schattingen accuraat? Ze <mark>analyseren patronen</mark> en zoeken naar de <mark>grondoorzaken</mark> van problemen.',
+    A: 'Het team <mark>kiest concrete verbeteracties</mark> voor de volgende Sprint. Bijvoorbeeld: \u201cWe gaan pair programming invoeren voor complexe stories\u201d of \u201cWe verkorten de Daily Scrum door ons strikt aan het format te houden.\u201d'
   }
 ];
 
@@ -1247,7 +1263,7 @@ function empirClickPillar(pillar) {
   var label = pillar === 'T' ? 'Transparantie' : (pillar === 'I' ? 'Inspectie' : 'Aanpassing');
   var text = EMPIR_EVENTS[empirActive][pillar];
   document.getElementById('empir-pillar-detail').innerHTML =
-    '<div class="empir-explanation">' +
+    '<div class="empir-explanation" data-pillar="' + pillar + '">' +
       '<div class="empir-explanation-title" data-pillar="' + pillar + '">' + label + '</div>' +
       '<p>' + text + '</p>' +
     '</div>';
