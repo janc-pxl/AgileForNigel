@@ -84,7 +84,7 @@ section + section { border-top: 1px solid var(--border); }
 }
 h2 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
 p { color: var(--text); margin-bottom: 1rem; }
-.lead { font-size: 1.08rem; color: var(--muted); margin-bottom: 1.25rem; }
+.lead { font-size: 1.08rem; color: var(--muted); margin-bottom: 1.25rem; max-width: 72ch; }
 .callout {
   border-left: 4px solid var(--gold); background: var(--gold-bg);
   padding: .9rem 1.2rem; margin: 1.5rem 0; border-radius: 0 4px 4px 0;
@@ -101,111 +101,211 @@ footer .f-inner a:hover { color: var(--gold); }
 
 /* ── EMPIRISME ─────────────────────────────────────────────────────────────── */
 
-/* Layout */
-.empir-layout { display: grid; grid-template-columns: 260px 1fr; gap: 2rem; margin-top: 1rem; align-items: start; }
+/* Pillar ink: darker tints of the pillar colors so text passes 4.5:1 on white */
+#empirisme, #empirisme-events {
+  --t-ink: #46668c;
+  --i-ink: #7a6535;
+  --a-ink: #1f776c;
+}
+[data-pillar="T"], [data-answer="T"] { --pillar: var(--t-ink); }
+[data-pillar="I"], [data-answer="I"] { --pillar: var(--i-ink); }
+[data-pillar="A"], [data-answer="A"] { --pillar: var(--a-ink); }
+@keyframes empirIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
 h3.empir-subtitle {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.15rem;
-  color: var(--primary); margin: 2.5rem 0 .75rem; padding-top: 1.5rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.3rem;
+  color: var(--primary); margin: 3rem 0 .75rem; padding-top: 2rem;
   border-top: 1px solid var(--border);
 }
-h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 1.5rem; }
+h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 2rem; }
 
-/* Event cards (left column) */
-.empir-events { display: flex; flex-direction: column; gap: 6px; }
-.empir-event-card {
-  background: var(--card); border: 1.5px solid var(--border); border-radius: 8px;
-  padding: .65rem .85rem; cursor: pointer; display: flex; align-items: center; gap: .6rem;
-  transition: border-color .15s, background .15s, box-shadow .15s;
+/* Cycle diagram: T → I → A → again */
+.empir-cycle { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-top: 1.75rem; }
+.empir-cycle > li {
+  position: relative; background: var(--card); border: 1.5px solid var(--border);
+  border-top: 4px solid var(--pillar); border-radius: 10px; padding: 1.1rem 1.25rem 1.2rem;
 }
-.empir-event-card:hover { border-color: #bbb; background: #fafaf8; }
-.empir-event-card.active { border-color: var(--gold); background: rgba(174,154,100,.15); box-shadow: 0 2px 8px rgba(0,0,0,.06); }
-.empir-event-card.complete { border-color: var(--gold); background: rgba(174,154,100,.06); }
-.empir-event-card.complete::after { content: ' \2713'; color: var(--gold); font-weight: 800; margin-left: auto; font-size: .85rem; }
-.empir-event-icon { font-size: 1.1rem; flex-shrink: 0; }
-.empir-event-name { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .88rem; color: var(--primary); }
+.empir-cycle > li + li::before {
+  content: ''; position: absolute; left: -2.2rem; top: 2.1rem; width: 1.6rem; height: 2px; background: #a39c8d;
+}
+.empir-cycle > li + li::after {
+  content: ''; position: absolute; left: -.75rem; top: calc(2.1rem - 5px);
+  border: 6px solid transparent; border-left: 8px solid #a39c8d; border-right: 0;
+}
+.empir-cycle-name {
+  font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.25rem; color: var(--pillar);
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .4rem;
+}
+.empir-cycle-name small { font-family: Arial, system-ui, sans-serif; font-weight: 400; font-size: .9rem; color: var(--muted); }
+.empir-cycle-def { font-weight: 700; color: var(--primary); margin: .35rem 0 .6rem; }
+.empir-cycle-points { list-style: none; }
+.empir-cycle-points li { position: relative; padding-left: 1rem; font-size: .95rem; margin-bottom: .25rem; }
+.empir-cycle-points li::before {
+  content: ''; position: absolute; left: 0; top: .6em; width: 6px; height: 6px; border-radius: 50%; background: var(--pillar);
+}
+.empir-cycle-loop {
+  position: relative; height: 22px; margin: .5rem 16.5% 1.75rem;
+  border: 2px solid #a39c8d; border-top: none; border-radius: 0 0 14px 14px;
+}
+.empir-cycle-loop::before {
+  content: ''; position: absolute; left: -7px; top: -9px;
+  border: 6px solid transparent; border-bottom: 9px solid #a39c8d; border-top: 0;
+}
+.empir-cycle-loop span {
+  position: absolute; left: 50%; bottom: -.75rem; transform: translateX(-50%);
+  background: var(--bg); padding: 0 .75rem; white-space: nowrap;
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .9rem; color: var(--muted);
+}
 
-/* Detail panel (right column) */
-.empir-detail { min-height: 260px; position: sticky; top: 70px; }
-.empir-placeholder {
-  height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem;
-  color: var(--muted); font-size: .92rem; border: 2px dashed var(--border); border-radius: 10px;
-  background: white; text-align: center; padding: 2rem;
+/* Answer choices (shared by example, event scanner and scenario quiz) */
+.empir-choice-row, .scenario-btn-row { display: flex; flex-wrap: wrap; gap: .5rem; }
+.empir-choice, .scenario-btn {
+  display: inline-flex; align-items: center; gap: .5rem; min-height: 44px;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .9rem;
+  padding: .5rem 1.1rem; border-radius: 6px; cursor: pointer;
+  border: 2px solid var(--border); background: white; color: var(--text);
+  transition: border-color .15s, background .15s, color .15s;
 }
-.empir-placeholder-icon { width: 38px; height: 38px; opacity: .5; display: block; color: var(--muted); }
+.empir-choice::before, .scenario-btn::before {
+  content: ''; width: .6rem; height: .6rem; border-radius: 50%; background: var(--pillar); flex-shrink: 0;
+}
+.empir-choice:hover, .scenario-btn:hover { border-color: var(--pillar); background: #fafaf8; }
+.scenario-btn.correct { border-color: var(--pillar); background: var(--pillar); color: white; cursor: default; }
+.scenario-btn.correct::before { background: white; }
+.empir-choice.wrong, .scenario-btn.wrong {
+  border-color: var(--accent); background: rgba(230,57,70,.06); color: #b3202c;
+  text-decoration: line-through; cursor: default;
+}
+.scenario-btn.disabled { opacity: .4; pointer-events: none; }
+.empir-feedback, .scenario-feedback {
+  font-size: .95rem; line-height: 1.5; padding: .75rem 1rem; border-radius: 6px;
+  margin-top: .75rem; animation: empirIn .25s ease;
+}
+.empir-feedback.hint, .scenario-feedback.hint { background: rgba(174,154,100,.12); border: 1px solid rgba(174,154,100,.5); color: var(--primary); }
+.scenario-feedback.success { background: rgba(42,157,143,.08); border: 1px solid rgba(31,119,108,.35); color: var(--text); }
+.empir-tag {
+  display: inline-flex; align-items: center; gap: .45rem; margin-bottom: .35rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .82rem;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--pillar);
+}
+.empir-tag::before { content: ''; width: .6rem; height: .6rem; border-radius: 50%; background: var(--pillar); }
 
-/* Pillar buttons */
-.empir-pillar-row { display: flex; gap: .5rem; margin-bottom: 1rem; }
-.empir-pillar-btn {
-  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem;
-  padding: .45rem 1rem; border-radius: 5px; cursor: pointer;
-  min-height: 44px; display: inline-flex; align-items: center;
-  border: 2px solid; transition: background .15s, color .15s, box-shadow .15s;
-  position: relative;
+/* Worked example: PXL photo app stepper */
+.empir-ex { list-style: none; margin-top: 1.25rem; }
+.empir-ex-step { position: relative; display: grid; grid-template-columns: 2.25rem 1fr; gap: 1rem; padding-bottom: 1.25rem; }
+.empir-ex-step:not(:last-child)::before {
+  content: ''; position: absolute; left: calc(1.125rem - 1px); top: 2.25rem; bottom: 0; width: 2px; background: var(--border);
 }
-.empir-pillar-btn[data-pillar="T"] { border-color: var(--sprint-blue); color: var(--sprint-blue); background: white; }
-.empir-pillar-btn[data-pillar="T"]:hover,
-.empir-pillar-btn[data-pillar="T"].active { background: var(--sprint-blue); color: white; }
-.empir-pillar-btn[data-pillar="I"] { border-color: var(--gold); color: #7a6535; background: white; }
-.empir-pillar-btn[data-pillar="I"]:hover,
-.empir-pillar-btn[data-pillar="I"].active { background: var(--gold); color: white; }
-.empir-pillar-btn[data-pillar="A"] { border-color: var(--green); color: var(--green); background: white; }
-.empir-pillar-btn[data-pillar="A"]:hover,
-.empir-pillar-btn[data-pillar="A"].active { background: var(--green); color: white; }
-.empir-pillar-btn.visited::after { content: ' \2713'; font-size: .7rem; margin-left: 2px; }
-
-/* Pillar explanation card */
-@keyframes empirIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-.empir-explanation {
-  background: white; border: 1.5px solid var(--border); border-radius: 10px;
-  padding: 1.1rem; animation: empirIn .25s ease;
+.empir-ex-num {
+  width: 2.25rem; height: 2.25rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-family: 'Raleway', sans-serif; font-weight: 800; background: white;
+  border: 2px solid var(--primary); color: var(--primary);
 }
-.empir-explanation-title {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem;
-  letter-spacing: .06em; text-transform: uppercase; margin-bottom: .5rem;
+.empir-ex-step.solved .empir-ex-num { background: var(--pillar); border-color: var(--pillar); color: white; }
+.empir-ex-body {
+  background: var(--card); border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 1rem 1.25rem; animation: empirIn .25s ease;
 }
-.empir-explanation-title[data-pillar="T"] { color: var(--sprint-blue); }
-.empir-explanation-title[data-pillar="I"] { color: var(--gold); }
-.empir-explanation-title[data-pillar="A"] { color: var(--green); }
-.empir-explanation p { font-size: .9rem; line-height: 1.55; color: var(--text); margin: 0; }
+.empir-ex-text, .empir-act-text { font-weight: 600; font-size: 1.02rem; color: var(--primary); margin: 0 0 .85rem; }
+.empir-ex-step.solved .empir-ex-text, .empir-act.solved .empir-act-text { margin-bottom: .5rem; }
+.empir-ex-expl, .empir-act-expl { font-size: .95rem; margin: 0; }
 
 /* Kernwoorden: geanimeerde markeerstift in de pijlerkleur */
-.empir-explanation[data-pillar="T"] { --empir-hl: rgba(91,127,166,.38); }
-.empir-explanation[data-pillar="I"] { --empir-hl: rgba(174,154,100,.5); }
-.empir-explanation[data-pillar="A"] { --empir-hl: rgba(42,157,143,.38); }
-.empir-explanation mark {
+[data-pillar="T"] { --empir-hl: rgba(91,127,166,.38); }
+[data-pillar="I"] { --empir-hl: rgba(174,154,100,.5); }
+[data-pillar="A"] { --empir-hl: rgba(42,157,143,.38); }
+.empir-act-expl mark {
   color: inherit; font-weight: 700; padding: 0 1px;
   background: linear-gradient(transparent 55%, var(--empir-hl) 55%) no-repeat 0 0 / 0% 100%;
   animation: empirHighlight .6s ease .3s forwards;
 }
-.empir-explanation mark:nth-of-type(2) { animation-delay: .8s; }
-.empir-explanation mark:nth-of-type(3) { animation-delay: 1.3s; }
-.empir-explanation mark:nth-of-type(4) { animation-delay: 1.8s; }
-.empir-explanation mark:nth-of-type(n+5) { animation-delay: 2.3s; }
+.empir-act-expl mark:nth-of-type(2) { animation-delay: .8s; }
+.empir-act-expl mark:nth-of-type(n+3) { animation-delay: 1.3s; }
 @keyframes empirHighlight { to { background-size: 100% 100%; } }
+.empir-ex-done {
+  display: none; margin: .25rem 0 0 3.25rem; padding: 1rem 1.25rem; border-radius: 10px;
+  background: var(--gold-bg); border: 1.5px solid var(--gold); animation: empirIn .4s ease;
+}
+.empir-ex-done.visible { display: block; }
+.empir-ex-done p { margin: 0; color: var(--primary); }
 
-/* Progress matrix (3×5 grid) */
-.empir-matrix { display: grid; grid-template-columns: 100px repeat(5, 1fr); gap: 3px; margin-top: 1.5rem; }
-.empir-matrix-header {
-  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .68rem;
-  text-align: center; padding: .3rem .2rem; color: var(--muted);
-  letter-spacing: .04em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+/* Pillar legend next to the quiz */
+.empir-legend {
+  display: flex; flex-wrap: wrap; gap: .4rem 1.75rem; margin: .25rem 0 1rem; padding: .75rem 1rem;
+  background: var(--card); border: 1.5px solid var(--border); border-radius: 8px; font-size: .95rem;
 }
+.empir-legend span { display: inline-flex; align-items: center; gap: .45rem; }
+.empir-legend span::before { content: ''; width: .6rem; height: .6rem; border-radius: 50%; background: var(--pillar); }
+.empir-legend strong { color: var(--pillar); }
+
+/* Bridge to the Sprint timeline */
+.empir-bridge {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem;
+  margin-top: 3rem; padding: 1.25rem 1.5rem; border-radius: 10px; background: var(--primary);
+}
+.empir-bridge p { margin: 0; color: #e8e4da; max-width: 62ch; }
+.empir-bridge p strong { color: white; }
+.empir-bridge a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: .6rem 1.25rem; border-radius: 6px;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; white-space: nowrap;
+  background: var(--gold); color: var(--primary); text-decoration: none; transition: background .15s;
+}
+.empir-bridge a:hover { background: #c2b07f; }
+
+/* Event scanner (#empirisme-events) */
+.empir-tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.5rem 0 1rem; }
+.empir-tab {
+  display: inline-flex; align-items: center; gap: .55rem; min-height: 44px; padding: .5rem 1rem;
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .95rem;
+  border: 1.5px solid var(--border); border-radius: 6px; background: white; color: var(--primary); cursor: pointer;
+  transition: border-color .15s, background .15s, color .15s;
+}
+.empir-tab:hover { border-color: #a39c8d; }
+.empir-tab[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: white; }
+.empir-tab-count { font-size: .8rem; color: var(--muted); }
+.empir-tab[aria-pressed="true"] .empir-tab-count { color: #c9c4b8; }
+.empir-tab.done .empir-tab-count { color: var(--a-ink); font-weight: 800; }
+.empir-tab.done[aria-pressed="true"] .empir-tab-count { color: #8fd8cc; }
+.empir-acts { display: grid; gap: .75rem; scroll-margin-top: 70px; }
+.empir-act {
+  background: var(--card); border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 1rem 1.25rem; animation: empirIn .25s ease;
+}
+.empir-act.solved { border-color: var(--pillar); }
+.empir-next {
+  justify-self: start; min-height: 44px; padding: .55rem 1.2rem; border-radius: 6px; cursor: pointer;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .92rem;
+  background: var(--primary); color: white; border: 2px solid var(--primary);
+}
+.empir-next:hover { background: #222; }
+
+/* Overview matrix: 3 pillars × 5 events, cells fill with keywords */
+.empir-matrix-wrap { overflow-x: auto; padding-bottom: .25rem; }
+.empir-matrix { display: grid; grid-template-columns: 130px repeat(5, minmax(100px, 1fr)); gap: 4px; min-width: 660px; }
+.empir-matrix-head {
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .85rem; line-height: 1.25;
+  color: var(--primary); background: none; border: none; border-radius: 4px;
+  padding: .45rem .25rem; cursor: pointer; text-align: center;
+}
+.empir-matrix-head:hover { background: rgba(0,0,0,.04); }
+.empir-matrix-head.active { box-shadow: inset 0 -3px 0 var(--primary); }
 .empir-matrix-label {
-  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .72rem;
-  display: flex; align-items: center; padding: .2rem .4rem; border-radius: 3px;
+  display: flex; align-items: center; padding: .2rem .4rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .88rem; color: var(--pillar);
 }
-.empir-matrix-label[data-pillar="T"] { color: var(--sprint-blue); }
-.empir-matrix-label[data-pillar="I"] { color: #7a6535; }
-.empir-matrix-label[data-pillar="A"] { color: var(--green); }
 .empir-matrix-cell {
-  height: 26px; border-radius: 4px; border: 1.5px solid var(--border);
-  background: white; transition: background .3s, border-color .3s;
+  min-height: 54px; padding: .35rem .45rem; border-radius: 6px; cursor: pointer;
+  border: 1.5px dashed var(--border); background: white; color: var(--muted);
+  font-family: Arial, system-ui, sans-serif; font-size: .85rem; line-height: 1.25;
+  transition: background .3s, border-color .3s;
 }
-.empir-matrix-cell.filled-T { background: rgba(91,127,166,.2); border-color: var(--sprint-blue); }
-.empir-matrix-cell.filled-I { background: rgba(174,154,100,.2); border-color: var(--gold); }
-.empir-matrix-cell.filled-A { background: rgba(42,157,143,.2); border-color: var(--green); }
+.empir-matrix-cell:hover { border-color: #a39c8d; }
+.empir-matrix-cell.filled {
+  border-style: solid; border-color: var(--pillar); color: var(--primary); font-weight: 700;
+  background: color-mix(in srgb, var(--pillar) 12%, white);
+}
 .empir-progress-text {
-  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem;
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .9rem;
   color: var(--muted); text-align: center; margin-top: .75rem;
 }
 
@@ -216,10 +316,10 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 }
 .empir-summary.visible { display: block; }
 .empir-summary h4 {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.05rem;
   color: var(--primary); margin-bottom: .5rem;
 }
-.empir-summary p { font-size: .92rem; color: var(--text); margin: 0; line-height: 1.5; }
+.empir-summary p { font-size: .95rem; color: var(--text); margin: 0; line-height: 1.55; }
 
 /* ── SCENARIO SORTER ──────────────────────────────────────────────────────── */
 
@@ -228,43 +328,24 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   padding: 1.5rem; min-height: 220px; animation: empirIn .25s ease;
 }
 .scenario-number {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .7rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .78rem;
   letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem;
 }
 .scenario-text {
-  font-size: 1.05rem; font-weight: 600; color: var(--primary); line-height: 1.5;
+  font-size: 1.1rem; font-weight: 600; color: var(--primary); line-height: 1.5;
   margin-bottom: 1.25rem; min-height: 2.5em;
 }
-.scenario-btn-row { display: flex; gap: .5rem; margin-bottom: 1rem; }
-.scenario-btn {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem;
-  padding: .5rem 1.2rem; border-radius: 5px; cursor: pointer;
-  min-height: 44px; display: inline-flex; align-items: center;
-  border: 2px solid var(--border); background: white; color: var(--text);
-  transition: all .2s;
-}
-.scenario-btn:hover { border-color: #aaa; background: #fafaf8; }
-.scenario-btn.correct { border-color: var(--green); background: rgba(42,157,143,.12); color: var(--green); cursor: default; }
-.scenario-btn.wrong { border-color: var(--accent); background: rgba(230,57,70,.06); color: var(--accent); cursor: default; }
-.scenario-btn.disabled { opacity: .4; pointer-events: none; }
-.scenario-feedback {
-  font-size: .9rem; line-height: 1.5; padding: .75rem 1rem; border-radius: 6px;
-  margin-top: .5rem; animation: empirIn .25s ease;
-}
-.scenario-feedback.hint { background: rgba(174,154,100,.1); border-left: 3px solid var(--gold); color: var(--primary); }
-.scenario-feedback.success { background: rgba(42,157,143,.08); border-left: 3px solid var(--green); color: var(--text); }
 
 /* Scenario nav */
 .scenario-nav-row {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-top: 1.25rem; gap: 1rem;
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+  margin-top: 1.25rem; gap: .75rem;
 }
-.scenario-counter { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: var(--muted); }
 .scenario-btn-nav {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem;
-  padding: .45rem 1.2rem; background: var(--primary); color: white;
-  border: 2px solid var(--primary); border-radius: 5px;
-  min-height: 44px; cursor: pointer; transition: background .12s;
+  min-height: 44px; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .9rem;
+  padding: .5rem 1.2rem; background: var(--primary); color: white;
+  border: 2px solid var(--primary); border-radius: 6px;
+  cursor: pointer; transition: background .12s;
 }
 .scenario-btn-nav:hover { background: #222; }
 .scenario-btn-nav:disabled { opacity: .35; cursor: not-allowed; }
@@ -275,7 +356,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 .scenario-progress { display: flex; align-items: center; gap: .75rem; margin: .75rem 0; }
 .scenario-progress-track { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
 .scenario-progress-fill { height: 100%; width: 0; background: var(--green); border-radius: 3px; transition: width .3s; }
-.scenario-progress-label { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .78rem; color: var(--muted); white-space: nowrap; }
+.scenario-progress-label { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .85rem; color: var(--muted); white-space: nowrap; }
 
 /* Scenario summary */
 .scenario-summary {
@@ -284,10 +365,10 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 }
 .scenario-summary.visible { display: block; }
 .scenario-summary h4 {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.05rem;
   color: var(--primary); margin-bottom: .5rem;
 }
-.scenario-summary p { font-size: .92rem; color: var(--text); margin: 0 0 .25rem; line-height: 1.5; }
+.scenario-summary p { font-size: .95rem; color: var(--text); margin: 0 0 .25rem; line-height: 1.5; }
 
 /* ── SPRINT TIMELINE ───────────────────────────────────────────────────────── */
 
@@ -755,11 +836,19 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   outline: 2px solid var(--gold);
   outline-offset: 2px;
 }
-/* Empirisme: event-cards en pijlerknoppen */
-.empir-event-card:focus-visible,
-.empir-pillar-btn:focus-visible {
+/* Empirisme: antwoordknoppen, voorbeeldstappen, event-knoppen en overzichtstabel */
+.empir-choice:focus-visible,
+.empir-tab:focus-visible,
+.empir-next:focus-visible,
+.empir-matrix-head:focus-visible,
+.empir-matrix-cell:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+/* Empirisme: brug naar de Sprint staat op een donkere achtergrond */
+.empir-bridge a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 /* Scenario-quiz: antwoordknoppen en navigatieknoppen */
 .scenario-btn:focus-visible,
@@ -797,14 +886,18 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
     transition-duration: .01ms !important;
     scroll-behavior: auto !important;
   }
-  .empir-explanation mark { animation-delay: 0s !important; }
+  .empir-act-expl mark { animation-delay: 0s !important; }
 }
 
 /* Responsive */
 @media (max-width: 820px) {
-  .empir-layout { grid-template-columns: 1fr; }
-  .empir-detail { position: static; }
-  .empir-matrix { grid-template-columns: 80px repeat(5, 1fr); }
+  .empir-cycle { grid-template-columns: 1fr; gap: 1.75rem; }
+  .empir-cycle > li + li::before { left: 2rem; top: -1.5rem; width: 2px; height: 1.1rem; }
+  .empir-cycle > li + li::after { left: calc(2rem - 5px); top: -.6rem; border: 6px solid transparent; border-top: 8px solid #a39c8d; border-bottom: 0; }
+  .empir-cycle-loop { height: auto; margin: .75rem 0 1.5rem; border: none; text-align: center; }
+  .empir-cycle-loop::before { display: none; }
+  .empir-cycle-loop span { position: static; transform: none; padding: 0; }
+  .empir-ex-done { margin-left: 0; }
   .sprint-layout { grid-template-columns: 1fr; }
   .sprint-detail { position: static; }
   .sprint-mode-toggle { flex-wrap: wrap; }
@@ -831,6 +924,7 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   <div class="nav-dropdown" id="nav-dropdown">
     <a href="#empirisme" onclick="navClose()">Empirisme</a>
     <a href="#sprint-events" onclick="navClose()">Scrum Events</a>
+    <a href="#empirisme-events" onclick="navClose()">Pijlers per Event</a>
     <a href="#poker-planning" onclick="navClose()">Planning Poker</a>
     <a href="#retrospectives" onclick="navClose()">Retrospectives</a>
   </div>
@@ -841,63 +935,87 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 <section id="empirisme">
   <div class="badge">Empirische Procescontrole</div>
   <h2>Transparantie, Inspectie &amp; Aanpassing</h2>
-  <div style="display:flex;gap:2rem;align-items:center;margin:1rem 0 1.75rem;flex-wrap:wrap;">
-    <img src="img/empirisme.jpg" alt="Empirisme: de basis van de drie pijlers van Scrum (Transparantie, Inspectie, Aanpassing)" style="width:320px;flex-shrink:0;border-radius:6px;box-shadow:0 2px 12px rgba(0,0,0,.12);" />
+  <div style="display:flex;gap:2rem;align-items:center;margin:1rem 0 .5rem;flex-wrap:wrap;">
+    <img src="img/empirisme.jpg" alt="Empirisme: de basis van de drie pijlers van Scrum (Transparantie, Inspectie, Aanpassing)" style="width:320px;max-width:100%;flex-shrink:0;border-radius:6px;box-shadow:0 2px 12px rgba(0,0,0,.12);" />
     <div style="flex:1;min-width:200px;display:flex;flex-direction:column;gap:1rem;">
-      <p class="lead" style="margin:0;">Scrum is gebouwd op <strong>empirisme</strong>: leren door te doen en te observeren. Drie pijlers vormen het fundament van alles wat je in Scrum tegenkomt. Als je deze drie principes begrijpt, begrijp je <em>waarom</em> Scrum werkt zoals het werkt.</p>
-      <div class="callout" style="margin:0;"><p>De drie pijlers (Transparantie, Inspectie en Aanpassing) zijn geen losse concepten. Ze zijn verweven in elk Scrum Event. Ontdek hieronder waar ze zich manifesteren.</p></div>
+      <p class="lead" style="margin:0;">Scrum is gebaseerd op een simpel idee: je leert het best door dingen te doen en te kijken wat er gebeurt. Dat heet <strong>empirisme</strong>. Je volgt niet blindelings een plan, maar kijkt steeds of wat je doet echt werkt. Drie principes brengen dat in de praktijk.</p>
+      <div class="callout" style="margin:0;"><p>Elke pijler heeft de vorige nodig. Zonder transparantie valt er niets te inspecteren, en zonder inspectie weet je niet wat je moet aanpassen.</p></div>
     </div>
   </div>
 
-  <!-- Subsectie A: Scrum Event Scanner -->
-  <h3 class="empir-subtitle">Ontdek de drie pijlers in elk Scrum Event</h3>
-  <p>Klik op een Scrum Event en gebruik de drie knoppen om te ontdekken hoe Transparantie, Inspectie en Aanpassing zich in dat event manifesteren.</p>
+  <!-- De cyclus: T → I → A → opnieuw -->
+  <ol class="empir-cycle">
+    <li data-pillar="T">
+      <div class="empir-cycle-name">Transparantie</div>
+      <p class="empir-cycle-def">Iedereen ziet wat er gebeurt.</p>
+      <ul class="empir-cycle-points">
+        <li>We zijn eerlijk over hoe het werk vordert.</li>
+        <li>We verbergen geen problemen.</li>
+      </ul>
+    </li>
+    <li data-pillar="I">
+      <div class="empir-cycle-name">Inspectie</div>
+      <p class="empir-cycle-def">We kijken regelmatig hoe het gaat.</p>
+      <ul class="empir-cycle-points">
+        <li>We checken vaak of we op de goede weg zijn.</li>
+        <li>We vragen feedback, bijvoorbeeld aan de klant.</li>
+      </ul>
+    </li>
+    <li data-pillar="A">
+      <div class="empir-cycle-name">Aanpassing <small>(Adaptatie)</small></div>
+      <p class="empir-cycle-def">We passen ons aan als dat nodig is.</p>
+      <ul class="empir-cycle-points">
+        <li>Werkt iets niet, dan veranderen we onze aanpak.</li>
+        <li>We verbeteren continu hoe we werken.</li>
+      </ul>
+    </li>
+  </ol>
+  <div class="empir-cycle-loop" aria-hidden="true"><span>en dan opnieuw</span></div>
 
-  <div class="empir-layout">
-    <div class="empir-events" id="empir-events">
-      <!-- JS renders event cards -->
-    </div>
-    <div class="empir-detail" id="empir-detail">
-      <!-- JS renders placeholder / detail -->
-    </div>
+  <!-- Stap 1: uitgewerkt voorbeeld -->
+  <h3 class="empir-subtitle">Voorbeeld: een foto-app voor PXL</h3>
+  <p>Je ontwikkelt voor PXL een app om foto's te delen. In plaats van maanden te plannen, ga je stap voor stap te werk. Welke pijler herken je in elke stap?</p>
+  <ol class="empir-ex" id="empir-ex">
+    <!-- JS renders steps -->
+  </ol>
+  <div class="empir-ex-done" id="empir-ex-done">
+    <p><strong>Zie je de cyclus?</strong> Zichtbaar maken, bekijken, aanpassen, en dan opnieuw. Scrum doet precies hetzelfde, maar in een vast ritme: elke dag en elke Sprint.</p>
   </div>
 
-  <!-- Progress matrix -->
-  <div id="empir-matrix">
-    <!-- JS renders 3×5 grid -->
+  <!-- Stap 2: oefenen -->
+  <h3 class="empir-subtitle">Test jezelf: herken de pijlers in Scrum</h3>
+  <p>Lees elk scenario en beslis welke pijler je herkent. Twijfel je? Gebruik de geheugensteun.</p>
+  <div class="empir-legend">
+    <span data-pillar="T"><strong>Transparantie</strong> iets zichtbaar maken</span>
+    <span data-pillar="I"><strong>Inspectie</strong> iets bekijken of beoordelen</span>
+    <span data-pillar="A"><strong>Aanpassing</strong> iets veranderen</span>
   </div>
-  <div class="empir-progress-text" id="empir-progress-text">0 / 15 combinaties ontdekt</div>
-
-  <!-- Scanner summary -->
-  <div class="empir-summary" id="empir-summary">
-    <h4>Alle 15 combinaties ontdekt!</h4>
-    <p>Zie je het patroon? <strong>Elk Scrum Event is ontworpen rond dezelfde drie empirische pijlers.</strong> Transparantie maakt zichtbaar, Inspectie controleert, en Aanpassing past aan. Dit is geen toeval, het is het fundament waarop heel Scrum gebouwd is.</p>
-  </div>
-
-  <!-- Subsectie B: Scenario Sorter -->
-  <h3 class="empir-subtitle">Test jezelf: herken de pijlers in de praktijk</h3>
-  <p>Lees elk scenario en beslis: is dit een voorbeeld van Transparantie, Inspectie of Aanpassing?</p>
 
   <!-- Scenario progress -->
   <div class="scenario-progress">
     <div class="scenario-progress-track"><div class="scenario-progress-fill" id="scenario-fill"></div></div>
-    <span class="scenario-progress-label" id="scenario-progress-label">0 / 12 scenario's</span>
+    <span class="scenario-progress-label" id="scenario-progress-label">0 / 12 beantwoord</span>
   </div>
 
-  <div id="scenario-card">
+  <div id="scenario-card" aria-live="polite">
     <!-- JS renders scenario -->
   </div>
 
   <!-- Scenario nav -->
   <div class="scenario-nav-row">
     <button class="scenario-btn-nav outline" id="scenario-prev" onclick="scenarioPrev()" disabled>&larr; Vorig scenario</button>
-    <span class="scenario-counter" id="scenario-counter"></span>
     <button class="scenario-btn-nav" id="scenario-next" onclick="scenarioNext()">Volgend scenario &rarr;</button>
   </div>
 
   <!-- Scenario summary -->
   <div class="scenario-summary" id="scenario-summary">
     <!-- JS fills -->
+  </div>
+
+  <!-- Brug naar de Sprint -->
+  <div class="empir-bridge">
+    <p><strong>Scrum bouwt deze cyclus in elk event in.</strong> Doorloop eerst een volledige Sprint. Daarna zoek je zelf de drie pijlers in elk Scrum Event.</p>
+    <a href="#sprint-events">Naar de Sprint &rarr;</a>
   </div>
 </section>
 
@@ -972,6 +1090,32 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   </div>
 </section>
 
+<section id="empirisme-events">
+  <div class="badge">Empirisme in de Scrum Events</div>
+  <h2>Vind de drie pijlers in elk event</h2>
+  <p class="lead">Je kent nu de vijf Scrum Events. Komen Transparantie, Inspectie en Aanpassing in elk van die events terug? Kies bij elke activiteit welke pijler je herkent. Elke juiste keuze vult je overzichtstabel aan.</p>
+
+  <div class="empir-tabs" id="empir-tabs">
+    <!-- JS renders event buttons -->
+  </div>
+  <div class="empir-acts" id="empir-acts">
+    <!-- JS renders the three activities of the selected event -->
+  </div>
+
+  <h3 class="empir-subtitle">Je overzicht: 5 events, 3 pijlers</h3>
+  <div class="empir-matrix-wrap">
+    <div class="empir-matrix" id="empir-matrix">
+      <!-- JS renders 3×5 grid -->
+    </div>
+  </div>
+  <div class="empir-progress-text" id="empir-progress-text" aria-live="polite">0 / 15 gevonden</div>
+
+  <div class="empir-summary" id="empir-summary">
+    <h4>Je overzicht is compleet</h4>
+    <p><strong>Elk Scrum Event bevat alle drie de pijlers.</strong> Elk event maakt iets zichtbaar, bekijkt het kritisch en stuurt bij. Daarom noemen we Scrum een empirisch raamwerk. Deze tabel is meteen je samenvatting voor het examen.</p>
+  </div>
+</section>
+
 <section id="poker-planning">
   <div class="badge">Planning Poker</div>
   <h2>Storypunten inschatten met Planning Poker</h2>
@@ -1033,47 +1177,97 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 // Gedeeld SVG-cursor-icoon voor alle empty-state placeholders
 var PLACEHOLDER_ICON = '<svg class="PREFIX-placeholder-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 2.5 L5 18.5 L8.8 14.7 L11.6 21 L13.7 20.1 L10.9 13.8 L16 13.8 Z"/></svg>';
 
-// ── Empirisme: Scrum Event Scanner ──────────────────────────────────────────
+// ── Empirisme ───────────────────────────────────────────────────────────────
 
-var EMPIR_EVENTS = [
+var EMPIR_PILLARS = { T: 'Transparantie', I: 'Inspectie', A: 'Aanpassing' };
+
+// Worked example from the lesson text: the PXL photo-sharing app
+var EMPIR_EXAMPLE = [
   {
-    name: 'De Sprint', icon: '\u{1F504}',
-    T: 'Het Sprint Doel en de Sprint Backlog zijn voor iedereen <mark>zichtbaar</mark> en toegankelijk. Het hele team en de stakeholders weten wat er deze Sprint wordt nagestreefd. Er zijn <mark>geen verborgen</mark> agenda\u2019s. De scope, het doel en de voortgang liggen <mark>open op tafel</mark>.',
-    I: 'Tijdens de Sprint wordt de voortgang <mark>continu ge\u00efnspecteerd</mark>. Het team <mark>bekijkt dagelijks</mark> het Scrum Board en de burndown chart om te <mark>controleren</mark> of ze op koers liggen richting het Sprint Doel. Elke <mark>afwijking wordt snel opgemerkt</mark>.',
-    A: 'Het team <mark>past dagelijks het plan van aanpak aan</mark>: ze <mark>beslissen zelf</mark> hoe ze het werk het beste aanpakken om het Sprint Doel te bereiken. Belangrijk hierbij: het Sprint Doel staat vast en kan tijdens de Sprint niet worden gewijzigd. De scope mag alleen worden <mark>heronderhandeld</mark> met de Product Owner als het Sprint Doel in gevaar komt, en dat is een uitzonderlijke situatie. Niemand buiten het Scrum Team mag het team dwingen om extra werk op te nemen. Alleen als het Sprint Doel echt achterhaald is (bv. door een technologiewijziging of marktverandering), kan de Product Owner de <mark>Sprint vroegtijdig annuleren</mark> (Sprint cancellation), maar dat gebeurt zelden.'
+    text: 'Je bouwt eerst een eenvoudige versie van de app die alleen foto’s kan uploaden. Iedereen kan die versie bekijken en uitproberen.',
+    correct: 'T',
+    hint: 'Er wordt hier nog niets beoordeeld of veranderd. Wat levert een eerste werkende versie vooral op?',
+    explanation: 'Een werkende versie maakt zichtbaar waar je staat: iedereen kan zien wat er al is. Dat is <strong>transparantie</strong>.'
   },
   {
-    name: 'Sprint Planning', icon: '\u{1F4CB}',
-    T: 'De Product Backlog is <mark>transparant</mark> en geprioriteerd: <mark>iedereen ziet</mark> welke items bovenaan staan. Het team bespreekt <mark>openlijk</mark> hoeveel werk ze aankunnen (capaciteit) en welke afhankelijkheden er zijn. <mark>Niets wordt achtergehouden</mark>.',
-    I: 'Het team <mark>inspecteert de Product Backlog items</mark>: zijn ze duidelijk genoeg? Zijn de acceptatiecriteria helder? <mark>Kloppen de schattingen</mark>? Het team <mark>beoordeelt</mark> ook eerdere velocity om een realistische Sprint Backlog samen te stellen.',
-    A: 'Op basis van de inspectie <mark>past het team het plan aan</mark>: items worden <mark>opgesplitst, herschat, of teruggeplaatst</mark> op de backlog als ze te groot zijn. Het <mark>Sprint Doel wordt geformuleerd</mark> als gezamenlijke focus. Dit stuurt alle beslissingen.'
+    text: 'Een kleine groep studenten test de app. Jij kijkt hoe ze de app gebruiken en vraagt wat ze ervan vinden.',
+    correct: 'I',
+    hint: 'Je verandert nog niets. Je kijkt en luistert. Welke pijler is dat?',
+    explanation: 'Je observeert hoe de app in de praktijk wordt gebruikt en vraagt om feedback. Dat is <strong>inspectie</strong>.'
   },
   {
-    name: 'Daily Scrum', icon: '\u{1F4AC}',
-    T: 'Elk teamlid <mark>deelt openlijk</mark> wat hij of zij gisteren deed, vandaag gaat doen, en <mark>welke obstakels</mark> er zijn. Het Scrum Board en de burndown chart zijn <mark>voor iedereen zichtbaar</mark> en de voortgang wordt <mark>niet verborgen</mark>.',
-    I: 'Het team <mark>inspecteert samen de voortgang</mark> richting het Sprint Doel. Ze <mark>kijken naar</mark> de verhoudingen op het Scrum Board (hoeveel stories zijn \u201cIn Progress\u201d vs. \u201cDone\u201d?) en <mark>de trend</mark> op de burndown chart.',
-    A: 'Als iemand geblokkeerd is of de voortgang achterblijft, <mark>past het team direct het dagplan aan</mark>. <mark>Werk wordt herverdeeld</mark>, <mark>hulp wordt aangeboden</mark>, of de Scrum Master wordt ingeschakeld om <mark>impediments op te lossen</mark>.'
+    text: 'De testers willen filters gebruiken voor ze een foto uploaden. Je voegt een eenvoudige filterfunctie toe.',
+    correct: 'A',
+    hint: 'Er verandert hier iets aan de app, op basis van wat je geleerd hebt.',
+    explanation: 'Je past de app aan op basis van de feedback. Dat is <strong>aanpassing</strong> (in de Scrum Guide: adaptatie).'
   },
   {
-    name: 'Sprint Review', icon: '\u{1F3AF}',
-    T: 'Het team <mark>demonstreert het werkende increment</mark> aan stakeholders. Wat er gebouwd is (<mark>en wat niet</mark>) wordt <mark>transparant getoond</mark>: geen PowerPoint, maar werkende software. Ook de status van de Product Backlog wordt besproken.',
-    I: 'Stakeholders <mark>inspecteren het increment</mark>: <mark>voldoet het aan hun verwachtingen</mark>? Is het bruikbaar? Ze <mark>geven feedback op basis van wat ze zien</mark> en ervaren, niet op basis van abstracte plannen.',
-    A: 'Op basis van de feedback <mark>past de Product Owner de Product Backlog aan</mark>. Nieuwe items worden toegevoegd, <mark>prioriteiten verschuiven</mark>, en het plan voor de volgende Sprint wordt <mark>bijgestuurd</mark>. De roadmap <mark>evolueert</mark>.'
-  },
-  {
-    name: 'Sprint Retrospective', icon: '\u{1F6E0}\uFE0F',
-    T: 'Het team <mark>bespreekt openlijk</mark> wat goed ging, wat beter kon, en hoe de samenwerking verliep. Iedereen mag <mark>vrijuit spreken</mark>. Psychologische veiligheid is essentieel. Problemen worden <mark>niet onder het tapijt geveegd</mark>.',
-    I: 'Het team <mark>inspecteert hun eigen werkproces</mark>: hoe effectief waren de Daily Scrums? Was de communicatie helder? Waren de schattingen accuraat? Ze <mark>analyseren patronen</mark> en zoeken naar de <mark>grondoorzaken</mark> van problemen.',
-    A: 'Het team <mark>kiest concrete verbeteracties</mark> voor de volgende Sprint. Bijvoorbeeld: \u201cWe gaan pair programming invoeren voor complexe stories\u201d of \u201cWe verkorten de Daily Scrum door ons strikt aan het format te houden.\u201d'
+    text: 'Je laat dezelfde studenten de nieuwe versie met filters opnieuw testen.',
+    correct: 'I',
+    hint: 'Dit is dezelfde soort stap als stap 2. Wat doe je opnieuw?',
+    explanation: 'De cyclus begint opnieuw: je <strong>inspecteert</strong> de nieuwe versie, leert en past weer aan. Dat herhalen heet iteratie.'
   }
 ];
 
+// Event scanner: per event one activity per pillar (act), a matrix keyword (key) and a short explanation (text).
+// Key words in text are wrapped in <mark> and get a highlighter stripe in the pillar color.
+var EMPIR_EVENTS = [
+  {
+    name: 'De Sprint',
+    T: { act: 'Het Sprint Doel en de Sprint Backlog zijn voor iedereen zichtbaar.', key: 'Doel zichtbaar',
+         text: 'Team en stakeholders <mark>weten wat er deze Sprint wordt nagestreefd</mark>. Scope, doel en voortgang liggen <mark>open op tafel</mark>.' },
+    I: { act: 'Het team controleert elke dag of het nog op koers ligt richting het Sprint Doel.', key: 'Koers controleren',
+         text: 'De voortgang wordt <mark>continu bekeken</mark> via het Scrum Board en de burndown chart. Zo valt <mark>elke afwijking snel op</mark>.' },
+    A: { act: 'Het team kiest zelf een andere aanpak om het Sprint Doel toch te halen.', key: 'Aanpak bijsturen',
+         text: 'Het Sprint Doel staat vast, maar <mark>hoe het team het bereikt mag elke dag veranderen</mark>. Komt het doel in gevaar, dan <mark>bespreekt het team de scope</mark> met de Product Owner.' }
+  },
+  {
+    name: 'Sprint Planning',
+    T: { act: 'Het team zegt eerlijk hoeveel werk het deze Sprint aankan.', key: 'Capaciteit delen',
+         text: 'De Product Backlog is geprioriteerd en <mark>voor iedereen zichtbaar</mark>. Het team is <mark>open over capaciteit</mark> en afhankelijkheden.' },
+    I: { act: 'Het team bekijkt of de backlog items duidelijk genoeg zijn en of de schattingen kloppen.', key: 'Items beoordelen',
+         text: 'Zijn de <mark>acceptatiecriteria helder</mark>? Is de <mark>schatting realistisch</mark>, gezien wat het team vorige Sprints haalde?' },
+    A: { act: 'Een te groot item wordt opgesplitst of terug op de Product Backlog gezet.', key: 'Plan aanpassen',
+         text: 'Op basis van wat het team zag, <mark>past het het plan aan</mark>: items worden <mark>opgesplitst of herschat</mark>. Het Sprint Doel geeft daarna richting aan elke beslissing.' }
+  },
+  {
+    name: 'Daily Scrum',
+    T: { act: 'Elk teamlid vertelt openlijk wat het gisteren deed, vandaag doet en waar het vastzit.', key: 'Status delen',
+         text: '<mark>Niemand verbergt</mark> hoe het werk vordert. Het Scrum Board en de burndown chart zijn <mark>voor iedereen zichtbaar</mark>.' },
+    I: { act: 'Het team vergelijkt de voortgang met wat nodig is om het Sprint Doel te halen.', key: 'Voortgang checken',
+         text: 'Hoeveel stories staan nog op “In Progress” en hoeveel op “Done”? <mark>De trend op de burndown chart</mark> toont of het team <mark>op koers ligt</mark>.' },
+    A: { act: 'Een geblokkeerd teamlid krijgt hulp en het werk wordt herverdeeld.', key: 'Dagplan bijsturen',
+         text: 'Zit iemand vast of loopt de voortgang achter, dan <mark>past het team meteen het plan voor vandaag aan</mark>. De Scrum Master helpt <mark>obstakels weg te werken</mark>.' }
+  },
+  {
+    name: 'Sprint Review',
+    T: { act: 'Het team toont werkende software aan de stakeholders, en zegt ook wat niet af raakte.', key: 'Increment tonen',
+         text: 'Geen PowerPoint, maar <mark>het echte resultaat</mark>. Ook de stand van de Product Backlog wordt <mark>open besproken</mark>.' },
+    I: { act: 'Stakeholders proberen het increment uit en geven feedback.', key: 'Feedback stakeholders',
+         text: 'Stakeholders <mark>beoordelen of het resultaat bruikbaar is</mark> en aan hun verwachtingen voldoet. Ze <mark>reageren op wat ze zien</mark>, niet op plannen.' },
+    A: { act: 'De Product Owner zet nieuwe items op de Product Backlog en verschuift prioriteiten.', key: 'Backlog bijsturen',
+         text: 'De feedback <mark>verandert het plan voor de volgende Sprint</mark>. Zo <mark>groeit het product mee</mark> met wat gebruikers echt nodig hebben.' }
+  },
+  {
+    name: 'Sprint Retrospective',
+    T: { act: 'Teamleden zeggen eerlijk wat er misliep in de samenwerking.', key: 'Eerlijk praten',
+         text: 'Iedereen mag <mark>vrijuit spreken</mark> en problemen worden <mark>niet onder de mat geveegd</mark>. Daarvoor is psychologische veiligheid nodig.' },
+    I: { act: 'Het team zoekt de oorzaak van de problemen in zijn manier van werken.', key: 'Proces analyseren',
+         text: 'Waren de Daily Scrums nuttig? Klopten de schattingen? Het team <mark>zoekt patronen</mark> en <mark>grondoorzaken</mark>.' },
+    A: { act: 'Het team spreekt af om volgende Sprint pair programming te proberen.', key: 'Verbeteractie kiezen',
+         text: 'Het team <mark>kiest een of twee concrete verbeteracties</mark> voor de volgende Sprint, en <mark>voert ze ook echt uit</mark>.' }
+  }
+];
+
+// Activity order per event, so the answer is never simply T, I, A from top to bottom
+var EMPIR_ORDERS = [['I', 'A', 'T'], ['A', 'T', 'I'], ['T', 'A', 'I'], ['A', 'I', 'T'], ['I', 'T', 'A']];
+
 var EMPIR_SCENARIOS = [
   {
-    scenario: 'Het team toont de burndown chart tijdens de Daily Scrum.',
+    scenario: 'Het team werkt de burndown chart elke dag bij en hangt hem op waar iedereen hem kan zien.',
     correct: 'T',
-    hint: 'Denk na: wordt hier iets zichtbaar gemaakt, bekeken, of aangepast?',
-    explanation: 'De burndown chart zichtbaar maken is <strong>transparantie</strong>: het team maakt voortgang open en beschikbaar voor iedereen. Iedereen kan zien hoe het ervoor staat.'
+    hint: 'Gaat het hier om iets beoordelen, iets veranderen, of iets zichtbaar maken?',
+    explanation: 'De burndown chart bijwerken en ophangen is <strong>transparantie</strong>: de echte voortgang is voor iedereen zichtbaar. Pas daarna kan het team hem inspecteren.'
   },
   {
     scenario: 'De Product Owner past de prioriteit van backlog items aan na de Sprint Review.',
@@ -1100,10 +1294,10 @@ var EMPIR_SCENARIOS = [
     explanation: 'Een procesverbetering doorvoeren is <strong>aanpassing</strong>: het team past hun werkwijze aan op basis van wat ze geleerd hebben in de Retrospective.'
   },
   {
-    scenario: 'De Scrum Master controleert of het team de Definition of Done naleeft.',
+    scenario: 'Voor een story naar Done gaat, kijkt een teamlid na of alle afspraken gehaald zijn: getest, gereviewd en gedocumenteerd.',
     correct: 'I',
-    hint: 'Er wordt hier iets gecontroleerd of beoordeeld. Wat voor principe is dat?',
-    explanation: 'Controleren of kwaliteitsstandaarden worden nageleefd is <strong>inspectie</strong>: de Scrum Master verifieert of het werk aan de afgesproken normen voldoet.'
+    hint: 'Er wordt hier iets nagekeken. Wordt er al iets veranderd?',
+    explanation: 'Het werk nakijken tegen de afspraken is <strong>inspectie</strong>. Pas als er iets niet klopt, volgt een aanpassing.'
   },
   {
     scenario: 'Tijdens Sprint Planning bespreekt het team openlijk hoeveel werk ze aankunnen.',
@@ -1144,9 +1338,10 @@ var EMPIR_SCENARIOS = [
 ];
 
 // State
-var empirActive = null;       // currently selected event index
-var empirPillar = null;        // currently selected pillar (T/I/A)
-var empirVisited = new Set();  // "idx-T", "idx-I", "idx-A"
+var exStep = 0;                // furthest unlocked step of the worked example
+var exSolved = new Set();      // solved example step indexes
+var empirActive = 0;           // selected event in the scanner
+var empirSolved = new Set();   // "idx-T", "idx-I", "idx-A"
 
 var scenarioActive = 0;
 var scenarioAnswered = new Set();
@@ -1156,136 +1351,151 @@ var scenarioAttempted = {};    // idx -> true if already attempted wrong
 // ── Empirisme: Init ─────────────────────────────────────────────────────────
 
 (function empirInit() {
-  var container = document.getElementById('empir-events');
-  EMPIR_EVENTS.forEach(function(ev, idx) {
-    var card = document.createElement('div');
-    card.className = 'empir-event-card';
-    card.setAttribute('data-idx', idx);
-    card.innerHTML = '<span class="empir-event-icon">' + ev.icon + '</span>' +
-      '<span class="empir-event-name">' + ev.name + '</span>';
-    card.onclick = function() { empirClickEvent(idx); };
-    container.appendChild(card);
-  });
+  exRender();
+  empirRender();
 
-  // Build matrix
-  buildEmpirMatrix();
-
-  // Render placeholder
-  empirRenderPlaceholder();
-
-  // Init scenario
   scenarioRender(0);
   scenarioUpdateNav();
 })();
 
-function buildEmpirMatrix() {
-  var matrix = document.getElementById('empir-matrix');
-  matrix.className = 'empir-matrix';
-  var pillars = [
-    { key: 'T', label: 'Transparantie' },
-    { key: 'I', label: 'Inspectie' },
-    { key: 'A', label: 'Aanpassing' }
-  ];
+// Three pillar buttons; call is the handler prefix, e.g. "exAnswer(this, 0, "
+function empirChoices(call) {
+  var html = '<div class="empir-choice-row">';
+  ['T', 'I', 'A'].forEach(function(p) {
+    html += '<button class="empir-choice" data-answer="' + p + '" onclick="' + call + '\'' + p + '\')">' + EMPIR_PILLARS[p] + '</button>';
+  });
+  return html + '</div>';
+}
 
-  // Header row: empty corner + 5 event names
-  var html = '<div class="empir-matrix-header"></div>';
-  EMPIR_EVENTS.forEach(function(ev) {
-    html += '<div class="empir-matrix-header">' + ev.icon + ' ' + ev.name.replace('Sprint ', 'S. ') + '</div>';
+function empirMarkWrong(btn, feedbackId, hint) {
+  btn.classList.add('wrong');
+  btn.disabled = true;
+  document.getElementById(feedbackId).innerHTML = '<div class="empir-feedback hint"><strong>Hint:</strong> ' + hint + '</div>';
+}
+
+// ── Empirisme: worked example ───────────────────────────────────────────────
+
+function exRender() {
+  var html = '';
+  EMPIR_EXAMPLE.forEach(function(step, idx) {
+    if (idx > exStep) return;
+    var solved = exSolved.has(idx);
+    html += '<li class="empir-ex-step' + (solved ? ' solved' : '') + '" data-pillar="' + step.correct + '">';
+    html += '<div class="empir-ex-num">' + (idx + 1) + '</div>';
+    html += '<div class="empir-ex-body"><p class="empir-ex-text">' + step.text + '</p>';
+    if (solved) {
+      html += '<div class="empir-tag">' + EMPIR_PILLARS[step.correct] + '</div>';
+      html += '<p class="empir-ex-expl">' + step.explanation + '</p>';
+    } else {
+      html += empirChoices('exAnswer(this, ' + idx + ', ');
+      html += '<div id="empir-ex-feedback" aria-live="polite"></div>';
+    }
+    html += '</div></li>';
+  });
+  document.getElementById('empir-ex').innerHTML = html;
+  document.getElementById('empir-ex-done').classList.toggle('visible', exSolved.size === EMPIR_EXAMPLE.length);
+}
+
+function exAnswer(btn, idx, answer) {
+  var step = EMPIR_EXAMPLE[idx];
+  if (answer !== step.correct) {
+    empirMarkWrong(btn, 'empir-ex-feedback', step.hint);
+    return;
+  }
+  exSolved.add(idx);
+  if (exStep < EMPIR_EXAMPLE.length - 1) exStep++;
+  exRender();
+  var next = document.querySelector('#empir-ex .empir-choice');
+  if (next) next.focus({ preventScroll: true });
+}
+
+// ── Empirisme: event scanner ────────────────────────────────────────────────
+
+function empirCount(idx) {
+  return ['T', 'I', 'A'].filter(function(p) { return empirSolved.has(idx + '-' + p); }).length;
+}
+
+function empirRender() {
+  empirRenderTabs();
+  empirRenderActs();
+  empirRenderMatrix();
+}
+
+function empirRenderTabs() {
+  var html = '';
+  EMPIR_EVENTS.forEach(function(ev, idx) {
+    var n = empirCount(idx);
+    html += '<button class="empir-tab' + (n === 3 ? ' done' : '') + '" aria-pressed="' + (idx === empirActive) + '" onclick="empirSelect(' + idx + ')">' +
+      ev.name + ' <span class="empir-tab-count">' + n + '/3</span></button>';
+  });
+  document.getElementById('empir-tabs').innerHTML = html;
+}
+
+function empirRenderActs() {
+  var ev = EMPIR_EVENTS[empirActive];
+  var html = '';
+  EMPIR_ORDERS[empirActive].forEach(function(p) {
+    var key = empirActive + '-' + p;
+    if (empirSolved.has(key)) {
+      html += '<div class="empir-act solved" data-pillar="' + p + '">' +
+        '<p class="empir-act-text">' + ev[p].act + '</p>' +
+        '<div class="empir-tag">' + EMPIR_PILLARS[p] + '</div>' +
+        '<p class="empir-act-expl">' + ev[p].text + '</p></div>';
+    } else {
+      html += '<div class="empir-act"><p class="empir-act-text">' + ev[p].act + '</p>' +
+        empirChoices('empirAnswer(this, \'' + p + '\', ') +
+        '<div id="empir-fb-' + key + '" aria-live="polite"></div></div>';
+    }
   });
 
-  // 3 rows (T, I, A) × 5 cells
-  pillars.forEach(function(p) {
-    html += '<div class="empir-matrix-label" data-pillar="' + p.key + '">' + p.label + '</div>';
+  // Offer the next unfinished event once this one is complete
+  if (empirCount(empirActive) === 3 && empirSolved.size < 15) {
+    for (var i = 1; i < EMPIR_EVENTS.length; i++) {
+      var nextIdx = (empirActive + i) % EMPIR_EVENTS.length;
+      if (empirCount(nextIdx) < 3) {
+        html += '<button class="empir-next" onclick="empirSelect(' + nextIdx + ')">Volgend event: ' + EMPIR_EVENTS[nextIdx].name + ' &rarr;</button>';
+        break;
+      }
+    }
+  }
+  document.getElementById('empir-acts').innerHTML = html;
+}
+
+function empirRenderMatrix() {
+  var html = '<div></div>';
+  EMPIR_EVENTS.forEach(function(ev, idx) {
+    html += '<button class="empir-matrix-head' + (idx === empirActive ? ' active' : '') + '" onclick="empirSelect(' + idx + ', true)">' + ev.name + '</button>';
+  });
+  ['T', 'I', 'A'].forEach(function(p) {
+    html += '<div class="empir-matrix-label" data-pillar="' + p + '">' + EMPIR_PILLARS[p] + '</div>';
     EMPIR_EVENTS.forEach(function(ev, idx) {
-      var id = 'empir-cell-' + idx + '-' + p.key;
-      var filled = empirVisited.has(idx + '-' + p.key) ? ' filled-' + p.key : '';
-      html += '<div class="empir-matrix-cell' + filled + '" id="' + id + '"></div>';
+      var filled = empirSolved.has(idx + '-' + p);
+      var label = ev.name + ', ' + EMPIR_PILLARS[p] + ': ' + (filled ? ev[p].key : 'nog niet gevonden');
+      html += '<button class="empir-matrix-cell' + (filled ? ' filled' : '') + '" data-pillar="' + p + '" aria-label="' + label + '" onclick="empirSelect(' + idx + ', true)">' +
+        (filled ? ev[p].key : '?') + '</button>';
     });
   });
-
-  matrix.innerHTML = html;
+  document.getElementById('empir-matrix').innerHTML = html;
+  document.getElementById('empir-progress-text').textContent = empirSolved.size + ' / 15 gevonden';
+  document.getElementById('empir-summary').classList.toggle('visible', empirSolved.size >= 15);
 }
 
-function empirRenderPlaceholder() {
-  document.getElementById('empir-detail').innerHTML =
-    '<div class="empir-placeholder">' +
-      PLACEHOLDER_ICON.replace('PREFIX', 'empir') +
-      '<div>Klik op een Scrum Event om de drie empirische pijlers te ontdekken.</div>' +
-    '</div>';
-}
-
-function empirClickEvent(idx) {
+function empirSelect(idx, scroll) {
   empirActive = idx;
-  empirPillar = null;
-
-  // Update active states on cards
-  var cards = document.querySelectorAll('.empir-event-card');
-  cards.forEach(function(c, i) {
-    c.classList.toggle('active', i === idx);
-    // Check if all 3 pillars visited for this event
-    var allVisited = empirVisited.has(i + '-T') && empirVisited.has(i + '-I') && empirVisited.has(i + '-A');
-    c.classList.toggle('complete', allVisited && i !== idx);
-  });
-
-  // Render pillar buttons + placeholder
-  var ev = EMPIR_EVENTS[idx];
-  var html = '<div style="margin-bottom:.75rem;">' +
-    '<span style="font-family:Raleway,sans-serif;font-weight:800;font-size:1.1rem;">' + ev.icon + ' ' + ev.name + '</span>' +
-    '</div>';
-  html += '<div class="empir-pillar-row">';
-  ['T', 'I', 'A'].forEach(function(p) {
-    var label = p === 'T' ? 'Transparantie' : (p === 'I' ? 'Inspectie' : 'Aanpassing');
-    var visited = empirVisited.has(idx + '-' + p) ? ' visited' : '';
-    html += '<button class="empir-pillar-btn' + visited + '" data-pillar="' + p + '" onclick="empirClickPillar(\'' + p + '\')">' + label + '</button>';
-  });
-  html += '</div>';
-  html += '<div id="empir-pillar-detail"><div style="color:var(--muted);font-size:.9rem;font-style:italic;padding:1rem 0;">Klik op een pijler hierboven om de uitleg te zien.</div></div>';
-
-  document.getElementById('empir-detail').innerHTML = html;
+  empirRender();
+  if (scroll) document.getElementById('empir-acts').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-function empirClickPillar(pillar) {
-  if (empirActive === null) return;
-  empirPillar = pillar;
-
-  var key = empirActive + '-' + pillar;
-  empirVisited.add(key);
-
-  // Update button states
-  var buttons = document.querySelectorAll('.empir-pillar-btn');
-  buttons.forEach(function(btn) {
-    var p = btn.getAttribute('data-pillar');
-    btn.classList.toggle('active', p === pillar);
-    if (empirVisited.has(empirActive + '-' + p)) btn.classList.add('visited');
-  });
-
-  // Show explanation
-  var label = pillar === 'T' ? 'Transparantie' : (pillar === 'I' ? 'Inspectie' : 'Aanpassing');
-  var text = EMPIR_EVENTS[empirActive][pillar];
-  document.getElementById('empir-pillar-detail').innerHTML =
-    '<div class="empir-explanation" data-pillar="' + pillar + '">' +
-      '<div class="empir-explanation-title" data-pillar="' + pillar + '">' + label + '</div>' +
-      '<p>' + text + '</p>' +
-    '</div>';
-
-  // Update matrix cell
-  var cell = document.getElementById('empir-cell-' + empirActive + '-' + pillar);
-  if (cell) cell.className = 'empir-matrix-cell filled-' + pillar;
-
-  // Update progress
-  document.getElementById('empir-progress-text').textContent = empirVisited.size + ' / 15 combinaties ontdekt';
-
-  // Check event completion
-  var cards = document.querySelectorAll('.empir-event-card');
-  cards.forEach(function(c, i) {
-    var allVisited = empirVisited.has(i + '-T') && empirVisited.has(i + '-I') && empirVisited.has(i + '-A');
-    c.classList.toggle('complete', allVisited && i !== empirActive);
-  });
-
-  // Check overall completion
-  if (empirVisited.size >= 15) {
-    document.getElementById('empir-summary').classList.add('visible');
+function empirAnswer(btn, actual, answer) {
+  var key = empirActive + '-' + actual;
+  if (answer !== actual) {
+    empirMarkWrong(btn, 'empir-fb-' + key, 'Kijk naar wat er gebeurt: wordt er iets zichtbaar gemaakt, beoordeeld of veranderd?');
+    return;
   }
+  empirSolved.add(key);
+  empirRender();
+  var next = document.querySelector('#empir-acts .empir-choice, #empir-acts .empir-next');
+  if (next) next.focus({ preventScroll: true });
 }
 
 // ── Scenario Sorter ─────────────────────────────────────────────────────────
@@ -1296,15 +1506,14 @@ function scenarioRender(idx) {
 
   var html = '<div class="scenario-card">';
   html += '<div class="scenario-number">Scenario ' + (idx + 1) + ' van ' + EMPIR_SCENARIOS.length + '</div>';
-  html += '<div class="scenario-text">\u201c' + s.scenario + '\u201d</div>';
+  html += '<div class="scenario-text">“' + s.scenario + '”</div>';
   html += '<div class="scenario-btn-row">';
 
   ['T', 'I', 'A'].forEach(function(p) {
-    var label = p === 'T' ? 'Transparantie' : (p === 'I' ? 'Inspectie' : 'Aanpassing');
     var cls = 'scenario-btn';
     if (answered && p === s.correct) cls += ' correct';
     if (answered && p !== s.correct) cls += ' disabled';
-    html += '<button class="' + cls + '" data-answer="' + p + '" onclick="scenarioAnswer(' + idx + ',\'' + p + '\')"' + (answered ? ' disabled' : '') + '>' + label + '</button>';
+    html += '<button class="' + cls + '" data-answer="' + p + '" onclick="scenarioAnswer(' + idx + ',\'' + p + '\')"' + (answered ? ' disabled' : '') + '>' + EMPIR_PILLARS[p] + '</button>';
   });
   html += '</div>';
 
@@ -1334,10 +1543,10 @@ function scenarioAnswer(idx, answer) {
       scenarioShowSummary();
     }
   } else {
-    // Wrong — show hint
+    // Wrong: show hint
     scenarioAttempted[idx] = true;
     var feedbackEl = document.getElementById('scenario-feedback-' + idx);
-    feedbackEl.innerHTML = '<div class="scenario-feedback hint">\u{1F4A1} <strong>Hint:</strong> ' + s.hint + '</div>';
+    feedbackEl.innerHTML = '<div class="scenario-feedback hint"><strong>Hint:</strong> ' + s.hint + '</div>';
 
     // Mark clicked button as wrong
     var buttons = document.querySelectorAll('.scenario-btn[data-answer="' + answer + '"]');
@@ -1365,20 +1574,14 @@ function scenarioPrev() {
 }
 
 function scenarioUpdateNav() {
-  var prev = document.getElementById('scenario-prev');
-  var next = document.getElementById('scenario-next');
-  var counter = document.getElementById('scenario-counter');
-
-  prev.disabled = scenarioActive <= 0;
-  next.disabled = scenarioActive >= EMPIR_SCENARIOS.length - 1;
-
-  counter.textContent = scenarioAnswered.size + ' / ' + EMPIR_SCENARIOS.length + ' correct beantwoord';
+  document.getElementById('scenario-prev').disabled = scenarioActive <= 0;
+  document.getElementById('scenario-next').disabled = scenarioActive >= EMPIR_SCENARIOS.length - 1;
 }
 
 function scenarioUpdateProgress() {
   var pct = (scenarioAnswered.size / EMPIR_SCENARIOS.length * 100).toFixed(0);
   document.getElementById('scenario-fill').style.width = pct + '%';
-  document.getElementById('scenario-progress-label').textContent = scenarioAnswered.size + ' / ' + EMPIR_SCENARIOS.length + ' scenario\'s';
+  document.getElementById('scenario-progress-label').textContent = scenarioAnswered.size + ' / ' + EMPIR_SCENARIOS.length + ' beantwoord';
 }
 
 function scenarioShowSummary() {
@@ -1386,7 +1589,7 @@ function scenarioShowSummary() {
   var pct = Math.round(scenarioScore / EMPIR_SCENARIOS.length * 100);
   el.innerHTML = '<h4>Alle scenario\'s beantwoord!</h4>' +
     '<p><strong>' + scenarioScore + ' van de ' + EMPIR_SCENARIOS.length + '</strong> scenario\'s correct bij de eerste poging (' + pct + '%).</p>' +
-    '<p>De drie pijlers van empirische procescontrole (Transparantie, Inspectie en Aanpassing) zijn overal in Scrum aanwezig. Hoe beter je ze herkent, hoe beter je begrijpt <em>waarom</em> elk Scrum Event bestaat.</p>';
+    '<p>De drie pijlers zitten overal in Scrum. Hoe beter je ze herkent, hoe beter je begrijpt <em>waarom</em> elk Scrum Event bestaat. Na de Sprint zoek je ze zelf terug in elk event.</p>';
   el.classList.add('visible');
 }
 
