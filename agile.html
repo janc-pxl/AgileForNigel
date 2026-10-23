@@ -638,156 +638,202 @@ h3.sprint-subtitle {
 .sprint-bridge a:hover { background: #c2b07f; }
 /* ── POKER PLANNING SECTION ─────────────────────────────────────────────── */
 
-/* Story cards */
-.poker-stories { display: flex; flex-direction: column; gap: .5rem; margin: 1.25rem 0; }
-.poker-story-card {
-  background: var(--card); border: 1.5px solid var(--border); border-radius: 8px;
-  padding: .85rem 1.1rem; cursor: pointer; transition: border-color .15s, background .15s, box-shadow .15s;
-}
-.poker-story-card:hover { border-color: #bbb; background: #fafaf8; }
-.poker-story-card.active { border-color: var(--gold); background: rgba(174,154,100,.12); box-shadow: 0 2px 8px rgba(0,0,0,.06); }
-.poker-story-card.estimated { border-left: 4px solid var(--green); }
-.poker-story-card.estimated .poker-story-sp { display: inline-block; }
-.poker-story-id {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .7rem;
-  letter-spacing: .08em; text-transform: uppercase; color: var(--gold); margin-bottom: .15rem;
-}
-.poker-story-title {
-  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .88rem; color: var(--primary);
-}
-.poker-story-sp {
-  display: none; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .72rem;
-  background: var(--green); color: white; padding: 1px 8px; border-radius: 3px; margin-left: .5rem;
-  vertical-align: middle;
-}
-
-/* Layout */
-.poker-layout {
-  display: grid; grid-template-columns: 300px 1fr; gap: 1.5rem; margin: 1.25rem 0;
-  align-items: start;
-}
-
-/* Detail panel */
-.poker-detail { min-height: 300px; position: sticky; top: 70px; }
-.poker-placeholder {
-  height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem;
-  color: var(--muted); font-size: .92rem; border: 2px dashed var(--border); border-radius: 10px;
-  background: white; text-align: center; padding: 2rem;
-}
-.poker-placeholder-icon { width: 38px; height: 38px; opacity: .5; display: block; color: var(--muted); }
-
-/* Story detail card */
 @keyframes pokerIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-.poker-detail-card {
-  background: white; border: 1.5px solid var(--border); border-radius: 10px;
-  overflow: hidden; animation: pokerIn .25s ease;
-}
-.poker-detail-header {
-  padding: .85rem 1.1rem; border-bottom: 1px solid var(--border);
-  background: var(--gold-bg);
-}
-.poker-detail-header h4 {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem;
-  color: var(--primary); margin: 0;
-}
-.poker-detail-header .poker-story-format {
-  font-size: .85rem; color: var(--text); margin-top: .35rem; line-height: 1.5;
-  font-style: italic;
-}
-.poker-detail-body { padding: .9rem 1.1rem; }
-.poker-detail-body h5 {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .78rem;
-  letter-spacing: .06em; text-transform: uppercase; color: var(--gold);
-  margin: .75rem 0 .35rem; padding: 0;
-}
-.poker-detail-body h5:first-child { margin-top: 0; }
-.poker-detail-body ul { list-style: none; padding: 0; margin: 0; }
-.poker-detail-body ul li {
-  font-size: .85rem; color: var(--text); padding: .25rem 0 .25rem 1.1rem;
-  position: relative; line-height: 1.45;
-}
-.poker-detail-body ul li::before {
-  content: ''; position: absolute; left: 0; top: .5rem;
-  width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
-}
 
-/* Poker cards row */
-.poker-cards-section { margin-top: 1rem; padding-top: .75rem; border-top: 1px solid var(--border); }
-.poker-team-row {
-  display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; margin: .5rem 0;
+/* The procedure: six steps, in order */
+.poker-steps { list-style: none; display: grid; grid-template-columns: repeat(6, 1fr); gap: .5rem; margin: 1.5rem 0 .5rem; counter-reset: pstep; }
+.poker-steps li {
+  counter-increment: pstep; position: relative; padding: 2.4rem .7rem .7rem;
+  background: var(--card); border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: .9rem; line-height: 1.4; color: var(--text);
 }
-.poker-member {
-  display: flex; flex-direction: column; align-items: center; gap: .2rem;
-}
-.poker-member-name {
-  font-size: .65rem; color: var(--muted); font-weight: 600;
-}
-.poker-card {
-  width: 42px; height: 58px; border-radius: 5px;
+.poker-steps li::before {
+  content: counter(pstep); position: absolute; top: .6rem; left: .7rem;
+  width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--primary); color: var(--gold);
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1rem;
-  border: 2px solid var(--border); background: white; color: var(--primary);
-  transition: transform .2s, border-color .2s, background .2s;
+  font-family: 'Raleway', sans-serif; font-weight: 900; font-size: .8rem;
 }
-.poker-card.hidden {
-  background: var(--primary); color: transparent; border-color: var(--primary);
-  cursor: pointer;
-}
-.poker-card.revealed { border-color: var(--gold); }
-.poker-card.outlier-low { border-color: var(--accent); background: rgba(230,57,70,.06); color: var(--accent); }
-.poker-card.outlier-high { border-color: var(--accent); background: rgba(230,57,70,.06); color: var(--accent); }
-.poker-card.consensus { border-color: var(--green); background: rgba(42,157,143,.08); color: var(--green); }
-
-/* Scenario explanation */
-.poker-scenario {
-  border-left: 3px solid var(--gold); background: var(--gold-bg);
-  padding: .6rem 1rem; font-size: .85rem; font-style: italic;
-  color: var(--primary); border-radius: 0 4px 4px 0; margin-top: .75rem;
-  animation: pokerIn .3s ease; line-height: 1.55;
-}
-.poker-scenario strong { font-style: normal; }
-
-/* Reveal button */
-.poker-reveal-btn {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .82rem;
-  padding: .4rem 1rem; background: var(--primary); color: white;
-  border: 2px solid var(--primary); border-radius: 5px;
-  min-height: 44px; cursor: pointer; transition: background .12s; margin-top: .5rem;
-}
-.poker-reveal-btn:hover { background: #222; }
-.poker-reveal-btn:disabled { opacity: .4; cursor: not-allowed; }
-.poker-result-btn {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .82rem;
-  padding: .4rem 1rem; background: var(--green); color: white;
-  border: 2px solid var(--green); border-radius: 5px;
-  min-height: 44px; cursor: pointer; transition: background .12s; margin-left: .5rem;
-}
-.poker-result-btn:hover { background: #238a7e; }
-
-/* Fibonacci reference */
-.poker-fib-row {
-  display: flex; gap: 4px; flex-wrap: wrap; margin: .75rem 0;
-}
-.poker-fib-card {
-  width: 34px; height: 46px; border-radius: 4px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .82rem;
-  border: 1.5px solid var(--border); background: white; color: var(--muted);
-}
-.poker-fib-card.too-big { border-color: var(--accent); color: var(--accent); background: rgba(230,57,70,.04); }
-
-/* Nav row */
-.poker-nav-row {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-top: 1.25rem; gap: 1rem;
-}
-.poker-counter { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: var(--muted); }
+.poker-steps strong { color: var(--primary); }
+.poker-deck-note { font-size: .92rem; color: var(--muted); margin: .5rem 0 0; }
 
 /* Progress */
-.poker-progress { display: flex; align-items: center; gap: .75rem; margin: .75rem 0; }
+.poker-progress { display: flex; align-items: center; gap: .75rem; margin: 1.5rem 0 .75rem; }
 .poker-progress-track { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
 .poker-progress-fill { height: 100%; width: 0; background: var(--green); border-radius: 3px; transition: width .3s; }
-.poker-progress-label { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .78rem; color: var(--muted); white-space: nowrap; }
+.poker-progress-label { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .88rem; color: var(--muted); white-space: nowrap; }
+
+/* Story picker */
+.poker-tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+.poker-tab {
+  display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: .45rem .9rem;
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .92rem;
+  border: 1.5px solid var(--border); border-radius: 6px; background: white; color: var(--primary); cursor: pointer;
+  transition: border-color .15s, background .15s, color .15s;
+}
+.poker-tab:hover { border-color: #a39c8d; }
+.poker-tab[aria-current="true"] { background: var(--primary); border-color: var(--primary); color: white; }
+.poker-tab-badge { font-size: .78rem; font-weight: 800; padding: 1px 7px; border-radius: 10px; background: rgba(42,157,143,.14); color: #1e7a6e; }
+.poker-tab-badge.stop { background: rgba(230,57,70,.1); color: #b3202c; }
+.poker-tab[aria-current="true"] .poker-tab-badge { background: rgba(255,255,255,.16); color: white; }
+
+/* Story */
+.poker-story {
+  background: var(--card); border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 1.25rem 1.4rem 1.4rem; animation: pokerIn .25s ease; scroll-margin-top: 70px;
+}
+.poker-story-id { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .8rem; letter-spacing: .08em; color: #7a6535; }
+.poker-story h4 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.3rem; color: var(--primary); margin: .1rem 0 .4rem; }
+.poker-story-text { font-size: 1.02rem; font-style: italic; color: var(--text); margin: 0 0 .6rem; max-width: 75ch; }
+.poker-ac summary {
+  cursor: pointer; min-height: 44px; display: inline-flex; align-items: center;
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .92rem; color: var(--primary);
+}
+.poker-ac ul { list-style: none; margin: .1rem 0 .4rem; }
+.poker-ac li { position: relative; padding: .2rem 0 .2rem 1.1rem; font-size: .93rem; }
+.poker-ac li::before { content: ''; position: absolute; left: 0; top: .65rem; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+
+/* The table: six seats, light project-room surface */
+.poker-table {
+  position: relative; margin-top: .75rem; padding: 1.25rem 1rem 1rem; border-radius: 14px;
+  background: radial-gradient(ellipse at 50% 40%, rgba(174,154,100,.16), transparent 70%), var(--bg);
+  border: 1.5px solid var(--border);
+}
+.poker-round { position: absolute; top: .6rem; right: .9rem; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .82rem; color: #7a6535; }
+.poker-seats { display: flex; justify-content: center; gap: 1rem; flex-wrap: nowrap; }
+.poker-seat { display: flex; flex-direction: column; align-items: center; gap: .35rem; min-width: 0; }
+.poker-tag {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .75rem; color: var(--primary);
+  background: var(--gold); padding: 1px 8px; border-radius: 10px; visibility: hidden; white-space: nowrap;
+}
+.poker-tag.show { visibility: visible; animation: pokerIn .25s ease; }
+.poker-avatar {
+  width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .78rem; color: var(--primary); background: var(--gold-bg);
+  border: 1.5px solid rgba(174,154,100,.5);
+}
+.poker-seat.you .poker-avatar { background: var(--primary); color: var(--gold); border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold-bg); }
+.poker-name { font-size: .82rem; font-weight: 600; color: var(--muted); }
+.poker-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* A card: 5:7, back and face, flips in 3D */
+.poker-card { --w: 72px; width: var(--w); aspect-ratio: 5 / 7; perspective: 600px; flex-shrink: 0; }
+.poker-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+.poker-card.flipped .poker-card-inner { transform: rotateY(180deg); }
+.poker-card-back, .poker-card-face {
+  position: absolute; inset: 0; border-radius: calc(var(--w) * .1); backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  box-shadow: 0 1px 2px rgba(3,2,3,.14), 0 4px 10px rgba(3,2,3,.08);
+}
+.poker-card-back {
+  background:
+    url('pxl-logo-64.png') center / 42% no-repeat,
+    repeating-linear-gradient(45deg, rgba(174,154,100,.22) 0 1px, transparent 1px 7px),
+    var(--primary);
+  border: 1px solid var(--primary);
+}
+.poker-card-back::after { content: ''; position: absolute; inset: 7%; border: 1px solid rgba(174,154,100,.6); border-radius: calc(var(--w) * .06); }
+.poker-card-face {
+  transform: rotateY(180deg); background: var(--card); border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.poker-card-face::after { content: ''; position: absolute; inset: 7%; border: 1px solid rgba(174,154,100,.4); border-radius: calc(var(--w) * .06); }
+.poker-val { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: calc(var(--w) * .42); color: var(--primary); line-height: 1; }
+.poker-card.wide .poker-val { font-size: calc(var(--w) * .3); }
+.poker-idx { position: absolute; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: calc(var(--w) * .17); color: #7a6535; line-height: 1; }
+.poker-idx.tl { top: 10%; left: 12%; }
+.poker-idx.br { bottom: 10%; right: 12%; transform: rotate(180deg); }
+.poker-card.big .poker-card-face { border-color: rgba(230,57,70,.55); }
+.poker-card.big .poker-card-face::before {
+  content: ''; position: absolute; top: 0; right: 0; width: 0; height: 0;
+  border-top: calc(var(--w) * .28) solid var(--accent); border-left: calc(var(--w) * .28) solid transparent;
+  border-top-right-radius: calc(var(--w) * .1);
+}
+.poker-card.explain .poker-card-face { box-shadow: 0 0 0 3px var(--gold), 0 4px 10px rgba(3,2,3,.12); }
+.poker-card.match .poker-card-face { box-shadow: 0 0 0 3px var(--green), 0 4px 10px rgba(3,2,3,.12); }
+.poker-card.dim { opacity: .6; transition: opacity .3s; }
+.poker-slot {
+  width: 72px; aspect-ratio: 5 / 7; border-radius: 7px; border: 2px dashed #b5ae9f;
+  display: flex; align-items: center; justify-content: center; text-align: center; padding: .3rem;
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .72rem; line-height: 1.2; color: var(--muted);
+}
+
+/* Your hand */
+.poker-hand-wrap { margin-top: 1.1rem; }
+.poker-hand-label { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; color: var(--primary); margin: 0 0 .5rem; }
+.poker-hand { display: flex; justify-content: center; padding: .5rem 0 .25rem; }
+.poker-hand-card .poker-card { --w: 58px; }
+.poker-hand-card {
+  margin: 0 -6px; padding: 0; border: none; background: none; cursor: pointer;
+  transition: transform .12s ease; position: relative;
+}
+.poker-hand-card:nth-child(odd) { transform: rotate(-2deg); }
+.poker-hand-card:nth-child(even) { transform: rotate(2deg); }
+.poker-hand-card:hover, .poker-hand-card:focus-visible { transform: translateY(-10px); z-index: 2; }
+.poker-hand-card[aria-pressed="true"] { transform: translateY(-14px); z-index: 3; }
+.poker-hand-card[aria-pressed="true"] .poker-card-face { box-shadow: 0 0 0 3px var(--primary), 0 6px 14px rgba(3,2,3,.18); }
+.poker-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .75rem; margin-top: 1rem; }
+.poker-reveal-btn {
+  min-height: 44px; padding: .55rem 1.4rem; border-radius: 6px; cursor: pointer;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem;
+  background: var(--primary); color: white; border: 2px solid var(--primary); transition: background .12s;
+}
+.poker-reveal-btn:hover:not(:disabled) { background: #222; }
+.poker-reveal-btn:disabled { background: transparent; color: var(--muted); border-color: var(--border); cursor: default; }
+
+/* After the reveal */
+.poker-after { margin-top: 1.1rem; }
+.poker-you-note { font-size: .98rem; margin: 0 0 .9rem; padding: .7rem 1rem; border-radius: 8px; background: var(--gold-bg); border: 1px solid rgba(174,154,100,.45); }
+.poker-question h5 { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.05rem; color: var(--primary); margin: 0 0 .6rem; }
+.poker-question h5:focus { outline: none; }
+.poker-options { display: flex; flex-direction: column; gap: .5rem; }
+.poker-option {
+  text-align: left; min-height: 44px; padding: .6rem 1rem; border-radius: 6px; cursor: pointer;
+  font: inherit; font-size: .97rem; color: var(--text); background: white; border: 1.5px solid var(--border);
+  transition: border-color .15s, background .15s;
+}
+.poker-option:hover:not(:disabled) { border-color: var(--primary); background: #fafaf8; }
+.poker-option.wrong { border-color: var(--accent); color: #b3202c; background: rgba(230,57,70,.05); text-decoration: line-through; cursor: default; }
+.poker-option.right { border-color: var(--green); background: rgba(42,157,143,.1); color: #1e7a6e; font-weight: 700; cursor: default; }
+.poker-feedback { margin-top: .6rem; padding: .7rem 1rem; border-radius: 6px; font-size: .95rem; animation: pokerIn .25s ease; background: rgba(174,154,100,.12); border: 1px solid rgba(174,154,100,.5); }
+.poker-scenario { margin-top: .9rem; padding: .9rem 1.1rem; border-radius: 8px; font-size: .97rem; line-height: 1.55; background: var(--bg); border: 1px solid var(--border); animation: pokerIn .3s ease; }
+.poker-scenario:focus { outline: none; }
+.poker-result {
+  display: inline-block; margin-top: .75rem; padding: .3rem .9rem; border-radius: 14px;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem;
+  background: rgba(42,157,143,.12); color: #1e7a6e; border: 1px solid rgba(31,119,108,.35);
+}
+.poker-result.stop { background: rgba(230,57,70,.08); color: #b3202c; border-color: rgba(230,57,70,.35); }
+
+/* Story nav */
+.poker-nav-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem; margin-top: 1rem; }
+.poker-nav-btn {
+  min-height: 44px; padding: .5rem 1.2rem; border-radius: 6px; cursor: pointer;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .9rem;
+  background: var(--primary); color: white; border: 2px solid var(--primary);
+}
+.poker-nav-btn.outline { background: transparent; color: var(--primary); }
+.poker-nav-btn:disabled { opacity: .3; cursor: default; }
+
+/* Summary + bridge */
+.poker-summary { display: none; margin-top: 2rem; padding: 1.4rem 1.6rem; border-radius: 10px; background: var(--gold-bg); border: 2px solid var(--gold); }
+.poker-summary.visible { display: block; animation: pokerIn .4s ease; }
+.poker-summary h3 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.15rem; color: var(--primary); margin-bottom: .6rem; }
+.poker-summary ol { margin: 0 0 1rem 1.2rem; }
+.poker-summary li { margin-bottom: .3rem; }
+.poker-backlog { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .35rem 1.5rem; margin: .4rem 0 0 !important; }
+.poker-backlog li { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px dashed rgba(174,154,100,.5); padding: .25rem 0; font-size: .93rem; }
+.poker-backlog strong { white-space: nowrap; }
+.poker-bridge {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem;
+  margin-top: 2rem; padding: 1.25rem 1.5rem; border-radius: 10px; background: var(--primary);
+}
+.poker-bridge p { margin: 0; color: #e8e4da; max-width: 62ch; }
+.poker-bridge p strong { color: white; }
+.poker-bridge a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: .6rem 1.25rem; border-radius: 6px;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; white-space: nowrap;
+  background: var(--gold); color: var(--primary); text-decoration: none; transition: background .15s;
+}
+.poker-bridge a:hover { background: #c2b07f; }
 
 /* ── RETROSPECTIVE SECTION ──────────────────────────────────────────────────── */
 .retro-tabs { display: flex; gap: .6rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
@@ -910,12 +956,19 @@ h3.sprint-subtitle {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
 }
-/* Planning Poker: story-kaarten, reveal-knop en resultaatknop */
-.poker-story-card:focus-visible,
+/* Planning Poker: stories, kaarten, knoppen en antwoorden */
+.poker-tab:focus-visible,
+.poker-hand-card:focus-visible,
 .poker-reveal-btn:focus-visible,
-.poker-result-btn:focus-visible {
+.poker-option:focus-visible,
+.poker-nav-btn:focus-visible,
+.poker-ac summary:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+.poker-bridge a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 /* Retrospective: tabs, knoppen en klikbaar bord */
 .retro-tab:focus-visible,
@@ -954,13 +1007,31 @@ h3.sprint-subtitle {
   .sprint-layout { grid-template-columns: 1fr; }
   .sprint-overview-list { grid-template-columns: 1fr 1fr; }
   .sprint-compare, .sprint-summary-grid { grid-template-columns: 1fr; }
-  .poker-layout { grid-template-columns: 1fr; }
-  .poker-detail { position: static; }
+  .poker-steps { grid-template-columns: repeat(3, 1fr); }
+  .poker-backlog { grid-template-columns: 1fr; }
+  .poker-card { --w: 60px; }
+  .poker-slot { width: 60px; }
+  .poker-seats { gap: .6rem; }
 }
 @media (max-width: 620px) {
   .sprint-overview-list { grid-template-columns: 1fr; }
   h2 { font-size: 1.5rem; }
   .nav-sep, .nav-page { display: none; }
+  .poker-steps { grid-template-columns: repeat(2, 1fr); }
+  .poker-card { --w: 40px; }
+  .poker-slot { width: 40px; font-size: 0; }
+  .poker-seats { gap: .5rem; }
+  .poker-table { padding: 1rem .35rem .8rem; }
+  .poker-avatar { width: 1.75rem; height: 1.75rem; font-size: .75rem; }
+  .poker-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .poker-tag { font-size: .75rem; padding: 1px 5px; }
+  .poker-hand { justify-content: flex-start; overflow-x: auto; padding: 1rem .25rem .5rem; scroll-snap-type: x proximity; }
+  .poker-hand-card { margin: 0 3px; scroll-snap-align: start; }
+  .poker-hand-card:nth-child(odd), .poker-hand-card:nth-child(even) { transform: none; }
+  .poker-hand-card:hover, .poker-hand-card:focus-visible { transform: translateY(-6px); }
+  .poker-hand-card[aria-pressed="true"] { transform: translateY(-8px); }
+  .poker-hand-card .poker-card { --w: 50px; }
+  .poker-story { padding: 1rem; }
   .empir-event-head img { width: 112px; }
   .sprint-day { min-height: 56px; padding: .35rem .2rem .3rem; }
   .sprint-day .day-num { font-size: .8rem; }
@@ -1201,26 +1272,55 @@ h3.sprint-subtitle {
 <section id="poker-planning">
   <div class="badge">Planning Poker</div>
   <h2>Storypunten inschatten met Planning Poker</h2>
-  <p class="lead">Bij Planning Poker schat het Scrum Team samen de omvang van User Stories in met behulp van kaarten op basis van de Fibonacci-reeks. Het gaat niet om exacte tijd, maar om een <strong>relatieve inschatting</strong> van hoeveelheid werk, complexiteit en onzekerheid.</p>
+  <p class="lead">Bij Planning Poker schat het Scrum Team samen de omvang van User Stories in met kaarten uit de Fibonacci-reeks. Het gaat niet om exacte tijd, maar om een <strong>relatieve inschatting</strong> van hoeveelheid werk, complexiteit en onzekerheid.</p>
 
   <div class="callout">
-    <p><strong>Project: Campi, de campusapp voor PXL-studenten.</strong> Een team van vier PXL-Digital studenten ontwikkelt een mobiele app die alles bundelt wat een student dagelijks nodig heeft: het persoonlijke lesrooster, campusnieuws, een interactief plattegrond en het dagmenu van PXL Catering. Klik op een User Story om de Planning Poker sessie te simuleren.</p>
+    <p><strong>Project: Campi, de campusapp voor PXL-studenten.</strong> Een team van vijf PXL-Digital studenten bouwt een app met het persoonlijke lesrooster, campusnieuws, een interactieve plattegrond en het dagmenu van PXL Catering. Jij schuift aan als zesde teamlid: kies bij elke story eerst zelf een kaart.</p>
   </div>
 
-  <!-- Fibonacci reference -->
-  <p style="font-size:.82rem;color:var(--muted);margin:.75rem 0 .25rem;"><strong>Fibonacci-reeks (kaartwaarden):</strong></p>
-  <div class="poker-fib-row" id="poker-fib-row"></div>
+  <!-- De procedure -->
+  <ol class="poker-steps">
+    <li><strong>Lees</strong> de story en de acceptatiecriteria.</li>
+    <li><strong>Stel vragen</strong> aan de Product Owner.</li>
+    <li><strong>Kies in stilte</strong> een kaart.</li>
+    <li><strong>Draai</strong> alle kaarten tegelijk om.</li>
+    <li>De <strong>hoogste en laagste</strong> leggen uit.</li>
+    <li>Kies samen een <strong>kaartwaarde</strong>, nooit een gemiddelde.</li>
+  </ol>
+  <p class="poker-deck-note">De kaarten: 1, 2, 3, 5, 8, 13, 20, 40 en 100. Een 20, 40 of 100 betekent vooral: deze story is te groot, splits hem op. De ?-kaart betekent: ik begrijp de story nog niet goed genoeg.</p>
 
   <!-- Progress -->
   <div class="poker-progress">
     <div class="poker-progress-track"><div class="poker-progress-fill" id="poker-fill"></div></div>
-    <span class="poker-progress-label" id="poker-progress-label">0 / 8 stories ingeschat</span>
+    <span class="poker-progress-label" id="poker-progress-label" aria-live="polite">0 / 6 stories besproken</span>
   </div>
 
-  <!-- Layout: story list + detail -->
-  <div class="poker-layout">
-    <div class="poker-stories" id="poker-stories"></div>
-    <div class="poker-detail" id="poker-detail"></div>
+  <div class="poker-tabs" id="poker-tabs" aria-label="User Stories"></div>
+  <div id="poker-detail"></div>
+
+  <!-- Story nav -->
+  <div class="poker-nav-row">
+    <button class="poker-nav-btn outline" id="poker-prev" onclick="pokerGo(-1)">&larr; Vorige story</button>
+    <button class="poker-nav-btn" id="poker-next" onclick="pokerGo(1)">Volgende story &rarr;</button>
+  </div>
+
+  <!-- Summary -->
+  <div class="poker-summary" id="poker-summary">
+    <h3>Wat heb je geleerd?</h3>
+    <ol>
+      <li>Iedereen kiest <strong>in stilte</strong> een kaart, en alle kaarten gaan <strong>tegelijk</strong> om.</li>
+      <li>Bij grote verschillen leggen de <strong>hoogste en laagste</strong> uit, daarna stemt het team eventueel opnieuw.</li>
+      <li>Het team kiest altijd een <strong>kaartwaarde</strong>, nooit een gemiddelde.</li>
+      <li>Een 20, 40 of 100 betekent <strong>opsplitsen</strong>, veel ?-kaarten betekenen <strong>eerst verduidelijken</strong>.</li>
+    </ol>
+    <h3>Jullie Product Backlog</h3>
+    <ul class="poker-backlog" id="poker-backlog"></ul>
+  </div>
+
+  <!-- Brug naar Retrospectives -->
+  <div class="poker-bridge">
+    <p><strong>De stories zijn ingeschat en de Sprint kan beginnen.</strong> Aan het einde van elke Sprint blikt het team terug. Hoe pak je zo'n Retrospective aan?</p>
+    <a href="#retrospectives">Naar Retrospectives &rarr;</a>
   </div>
 </section>
 
@@ -2351,353 +2451,408 @@ function renderSummary() {
 // ══════════════════════════════════════════════════════════════════════════════
 
 var POKER_TEAM = ['Leen', 'Stef', 'Arnaud', 'Sara', 'Mohammed'];
-var POKER_FIB = [1, 2, 3, 5, 8, 13, 20, 40, 100];
+var POKER_DECK = [1, 2, 3, 5, 8, 13, 20, 40, 100, '?'];
+var POKER_AVG = 'Nee: het team kiest altijd een waarde die op een kaart staat, nooit een gemiddelde.';
 
+// Six stories in teaching order. explain: team members who explain after round 1 (highest/lowest);
+// revote: round-2 votes after the explanation; result: null when the story is not estimated.
 var POKER_STORIES = [
   {
-    id: 'US-01',
-    title: 'Persoonlijk lesrooster bekijken',
-    story: 'Als PXL-student wil ik mijn persoonlijk lesrooster kunnen bekijken in de app, zodat ik altijd weet wanneer en waar mijn lessen plaatsvinden.',
+    id: 'US-04',
+    title: 'Dagmenu PXL Catering',
+    story: 'Als PXL-student wil ik het dagmenu van PXL Catering kunnen bekijken, zodat ik weet wat er vandaag te eten is voordat ik naar de campus ga.',
     acceptance: [
-      'Het rooster toont alle lessen van de huidige week met vak, tijdstip en lokaal',
-      'De student kan doorbladeren naar volgende/vorige weken',
-      'Wijzigingen in het rooster (bv. lokaalwissel) worden automatisch bijgewerkt',
-      'Het rooster is ook offline beschikbaar na eerste synchronisatie'
+      'Het menu van vandaag toont gerecht, prijs en allergenen',
+      'De student kan het menu van de hele week bekijken',
+      'Vegetarische en veganistische opties zijn duidelijk gemarkeerd',
+      'Het menu wordt elke dag vóór 9:00 bijgewerkt'
     ],
-    tasks: [
-      'API-koppeling met het PXL-roosterssysteem bouwen',
-      'Weekoverzicht UI-component ontwikkelen',
-      'Offline caching implementeren met local storage',
-      'Push-notificatie bij roosterwijziging toevoegen'
-    ],
-    votes: [5, 5, 8, 5, 5],
-    result: 5,
-    scenario: 'consensus',
-    explanation: '<strong>Scenario: Bijna consensus.</strong> Vier van de vijf teamleden schatten een 5. Arnaud schatte een 8 omdat hij rekening hield met de complexiteit van de offline caching. Na een korte discussie legt Arnaud uit dat hij dit als extra risico ziet, maar het team oordeelt dat dit onderdeel beperkt is. <strong>Het team kiest 5.</strong>'
+    votes: [3, 3, 3, 2, 3],
+    explain: [],
+    question: {
+      prompt: 'De kaarten liggen dicht bij elkaar. Welke waarde schrijft het team bij de story?',
+      options: [
+        { text: '3', correct: true },
+        { text: '2,8 (het gemiddelde)', feedback: POKER_AVG + ' 2,8 bestaat niet in het spel.' },
+        { text: '2', feedback: 'Sara speelde 2, maar de vier anderen kozen 3. Waarom zou het team voor de uitzondering kiezen?' }
+      ]
+    },
+    result: 3,
+    resultLabel: 'Het team kiest 3 storypunten',
+    explanation: '<strong>Consensus.</strong> Vier teamleden kiezen 3, Sara kiest 2. De waarden liggen zo dicht bij elkaar dat er geen discussie nodig is. <strong>Het team kiest 3.</strong>'
   },
   {
     id: 'US-02',
     title: 'Campusnieuws lezen',
     story: 'Als PXL-student wil ik het laatste campusnieuws kunnen lezen in de app, zodat ik op de hoogte blijf van evenementen, deadlines en aankondigingen.',
     acceptance: [
-      'Nieuwsberichten worden getoond in een scrollbare lijst met titel, datum en samenvatting',
-      'Klikken op een bericht opent het volledige artikel',
-      'Nieuwe berichten worden gemarkeerd met een badge',
+      'Nieuwsberichten verschijnen in een lijst met titel, datum en samenvatting',
+      'Een bericht aantikken opent het volledige artikel',
+      'Nieuwe berichten krijgen een badge',
       'De student kan filteren op categorie (evenementen, deadlines, algemeen)'
     ],
-    tasks: [
-      'Nieuws-API endpoint aansluiten',
-      'Nieuwslijst UI-component bouwen',
-      'Detailpagina voor artikels ontwikkelen',
-      'Filter- en zoekfunctie implementeren'
-    ],
     votes: [3, 3, 5, 3, 3],
+    explain: [],
+    question: {
+      prompt: 'Arnaud speelde 5, de rest 3. Dit team heeft afgesproken: bij kleine verschillen kiezen we de meest voorkomende waarde. Wat wordt het?',
+      options: [
+        { text: '3', correct: true },
+        { text: '5', feedback: 'Dat zou de afspraak “kies de hoogste waarde” zijn. Sommige teams doen dat als veilige marge, maar dit team kiest de meest voorkomende waarde.' },
+        { text: '3,4 (het gemiddelde)', feedback: POKER_AVG }
+      ]
+    },
     result: 3,
-    scenario: 'near-consensus',
-    explanation: '<strong>Scenario: Waarden liggen dicht bij elkaar.</strong> De meeste teamleden schatten 3. Arnaud schatte een 5 omdat hij dacht aan de filterfunctie. Het team bespreekt kort en beslist dat filteren niet zo complex is. <strong>Afspraak in dit team: bij kleine verschillen kiezen we de meest voorkomende waarde \u2192 3.</strong> Merk op: sommige teams kiezen altijd de hoogste waarde als veilige marge.'
-  },
-  {
-    id: 'US-03',
-    title: 'Interactief campusplan',
-    story: 'Als PXL-student wil ik een interactief plattegrond van de campus kunnen gebruiken, zodat ik snel de weg vind naar lokalen, diensten en faciliteiten.',
-    acceptance: [
-      'De kaart toont alle PXL-gebouwen met labels',
-      'De student kan inzoomen en pannen op de kaart',
-      'Zoekfunctie: typ een lokaalnummer en het wordt gemarkeerd op de kaart',
-      'Routebeschrijving van huidige locatie naar bestemming op de campus'
-    ],
-    tasks: [
-      'Campuskaart SVG/afbeelding maken of inladen',
-      'Interactieve zoom- en panfunctie implementeren',
-      'Lokaal-database aanmaken met co\u00f6rdinaten',
-      'Zoekfunctie met autocomplete bouwen',
-      'Routeberekening op campus implementeren'
-    ],
-    votes: [8, 13, 8, 13, 20],
-    result: null,
-    scenario: 'too-big',
-    explanation: '<strong>Scenario: Te hoge waarden: story is te groot!</strong> De schattingen lopen van 8 tot 20. Dit is een duidelijk signaal: de story is te groot en te complex om in \u00e9\u00e9n Sprint af te ronden. Mohammed (20) wijst op de routeberekening als groot risico. <strong>Het team beslist de story op te splitsen</strong> in kleinere stories: (1) statische kaart met zoom, (2) zoekfunctie voor lokalen, (3) routeberekening. Elke deelstory wordt apart ingeschat.'
-  },
-  {
-    id: 'US-04',
-    title: 'Dagmenu PXL Catering bekijken',
-    story: 'Als PXL-student wil ik het dagmenu van PXL Catering kunnen bekijken, zodat ik weet wat er vandaag te eten is voordat ik naar de campus ga.',
-    acceptance: [
-      'Het menu van vandaag wordt overzichtelijk weergegeven met gerecht, prijs en allergenen',
-      'De student kan het menu van de hele week bekijken',
-      'Vegetarische/veganistische opties worden duidelijk gemarkeerd',
-      'Het menu wordt dagelijks bijgewerkt v\u00f3\u00f3r 9:00'
-    ],
-    tasks: [
-      'Catering-API of webscraperverbinding opzetten',
-      'Dagmenu UI-component ontwikkelen',
-      'Weekoverzicht met tabbladen bouwen',
-      'Allergenen-iconen en dieetfilter toevoegen'
-    ],
-    votes: [3, 3, 3, 2, 3],
-    result: 3,
-    scenario: 'consensus',
-    explanation: '<strong>Scenario: Consensus!</strong> Vier teamleden schatten 3, \u00e9\u00e9n schat 2. De waarden liggen zo dicht bij elkaar dat het team direct tot een compromis komt. <strong>Het team kiest 3</strong>. De meest voorkomende waarde. Er is geen verdere discussie nodig.'
-  },
-  {
-    id: 'US-05',
-    title: 'Push-notificaties voor roosterwijzigingen',
-    story: 'Als PXL-student wil ik een push-notificatie ontvangen wanneer mijn lesrooster wijzigt, zodat ik niet verrast word door een lokaalwissel of lesuitval.',
-    acceptance: [
-      'De student ontvangt een notificatie bij elke wijziging in zijn/haar rooster',
-      'De notificatie bevat het vak, het type wijziging en het nieuwe tijdstip/lokaal',
-      'Notificaties kunnen per vak aan/uit gezet worden in de instellingen',
-      'Notificaties werken ook als de app niet geopend is'
-    ],
-    tasks: [
-      'Push-notificatie service (Firebase/APNs) integreren',
-      'Backend: wijzigingsdetectie in roosterdata bouwen',
-      'Notificatie-instellingen UI maken',
-      'Achtergrond-synchronisatie implementeren'
-    ],
-    votes: [5, 8, 8, 5, 8],
-    result: 8,
-    scenario: 'discussion',
-    explanation: '<strong>Scenario: Discussie nodig.</strong> Het team is verdeeld: 5 vs. 8. Leen en Sara (5) denken dat Firebase dit eenvoudig maakt. Stef, Arnaud en Mohammed (8) wijzen op de complexiteit van achtergrond-synchronisatie en per-vak instellingen. Na discussie erkent het team dat achtergrondprocessen vaak voor verrassingen zorgen. <strong>Het team kiest 8. De hogere waarde vanwege de onzekerheid.</strong>'
-  },
-  {
-    id: 'US-06',
-    title: 'Favoriete lokalen opslaan',
-    story: 'Als PXL-student wil ik veelgebruikte lokalen als favoriet kunnen opslaan, zodat ik ze snel terugvind op de campuskaart.',
-    acceptance: [
-      'De student kan een lokaal markeren als favoriet via een ster-icoon',
-      'Favorieten verschijnen bovenaan in de zoekresultaten',
-      'Favorieten worden bewaard tussen sessies',
-      'Maximaal 10 favorieten'
-    ],
-    tasks: [
-      'Favoriet-toggle toevoegen aan lokaalkaart',
-      'Lokale opslag (local storage) voor favorieten',
-      'Favorieten-lijst in zoekresultaten integreren'
-    ],
-    votes: [1, 2, 1, 1, 2],
-    result: 1,
-    scenario: 'consensus',
-    explanation: '<strong>Scenario: Snel consensus.</strong> Iedereen is het erover eens: dit is een kleine, overzichtelijke story. Puur lokale opslag, geen server-integratie. <strong>Het team kiest 1</strong>. De kleinst mogelijke waarde. Dit is een typische \u201cquick win\u201d.'
+    resultLabel: 'Het team kiest 3 storypunten',
+    explanation: '<strong>Kleine spreiding, vaste afspraak.</strong> Arnaud dacht aan de filterfunctie en speelde 5. Het team bespreekt dat kort en volgt zijn afspraak: bij kleine verschillen de meest voorkomende waarde. <strong>Het team kiest 3.</strong> Een ander team kan afspreken om altijd de hoogste waarde te nemen, zolang het dat maar consequent doet.'
   },
   {
     id: 'US-07',
     title: 'Inloggen met PXL-account',
     story: 'Als PXL-student wil ik kunnen inloggen met mijn PXL Microsoft-account (Single Sign-On), zodat ik geen apart wachtwoord hoef te onthouden.',
     acceptance: [
-      'De student kan inloggen via de PXL Microsoft SSO-pagina',
-      'Na succesvolle login wordt de student doorgestuurd naar het startscherm',
-      'De sessie blijft 30 dagen actief (tenzij uitgelogd)',
+      'De student logt in via de PXL Microsoft-loginpagina',
+      'Na een geslaagde login komt de student op het startscherm',
+      'De sessie blijft 30 dagen actief, tenzij de student uitlogt',
       'Bij een mislukte login verschijnt een duidelijke foutmelding'
     ],
-    tasks: [
-      'Microsoft SSO (OAuth2/OIDC) integratie opzetten',
-      'Token-beheer en sessie-opslag implementeren',
-      'Login-scherm UI bouwen',
-      'Foutafhandeling en retry-logica toevoegen'
-    ],
     votes: [1, 5, 3, 8, 3],
+    explain: [0, 3],
+    revote: [3, 3, 3, 5, 3],
+    question: {
+      prompt: 'De kaarten lopen van 1 tot 8. Wat gebeurt er nu?',
+      options: [
+        { text: 'Leen (1) en Sara (8) leggen uit, daarna stemt het team opnieuw', correct: true },
+        { text: 'Het team neemt het gemiddelde: 4', feedback: POKER_AVG + ' Bovendien verbergt een gemiddelde net het probleem: het team begrijpt de story niet op dezelfde manier.' },
+        { text: 'Arnaud en Mohammed (3) beslissen, want zij zitten in het midden', feedback: 'In het midden zitten zegt niets. Juist de hoogste en de laagste hebben iets gezien wat de anderen misten: zij leggen eerst uit.' }
+      ]
+    },
     result: 3,
-    scenario: 'big-spread',
-    explanation: '<strong>Scenario: Grote spreiding: het team begrijpt de story niet gelijk!</strong> De waarden vari\u00ebren van 1 tot 8. De Scrum Master vraagt Leen (1) en Sara (8) om uitleg. Leen: \u201cIk heb al eens SSO gedaan, het is een standaard library.\u201d Sara: \u201cIk heb nog nooit met OAuth gewerkt, ik zie veel risico.\u201d Dit verschil in ervaring is cruciaal. Na een uitgebreide uitleg door Leen beseft het team dat het met een library inderdaad haalbaar is. <strong>Het team herschat: 3 \u2013 3 \u2013 3 \u2013 5 \u2013 3 \u2192 het team kiest 3.</strong><br><br><strong>\u26A0 Belangrijk: Definition of Ready!</strong> Het team merkt op dat er eerst een afspraak met de PXL IT-dienst moet gemaakt worden om toegang te krijgen tot de Microsoft SSO-integratie (API-sleutels, tenant-configuratie). Zonder die toegang kan deze story niet eens beginnen. Dit is een typisch voorbeeld van de <em>Definition of Ready</em>: een story is pas \u201cready\u201d voor de Sprint als alle voorwaarden vervuld zijn. De Product Owner neemt als actie mee om dit te regelen v\u00f3\u00f3r de volgende Sprint Planning.'
+    resultLabel: 'Het team kiest 3 storypunten',
+    explanation: '<strong>Grote spreiding: het team begrijpt de story niet op dezelfde manier.</strong> Leen: “Ik heb al eens Single Sign-On gebouwd, met een standaard library is dat haalbaar.” Sara: “Ik heb nog nooit met OAuth gewerkt, ik zie veel risico.” Na de uitleg stemt het team opnieuw: 3, 3, 3, 5, 3. <strong>Het team kiest 3.</strong>'
   },
   {
-    id: 'US-08',
-    title: 'Donkere modus (dark mode)',
-    story: 'Als PXL-student wil ik de app in een donkere modus kunnen gebruiken, zodat ik \u2019s avonds comfortabel de app kan raadplegen zonder verblind te worden.',
+    id: 'US-05',
+    title: 'Meldingen bij roosterwijzigingen',
+    story: 'Als PXL-student wil ik een melding krijgen wanneer mijn lesrooster wijzigt, zodat ik niet verrast word door een lokaalwissel of lesuitval.',
     acceptance: [
-      'Een toggle in de instellingen schakelt tussen licht en donker thema',
-      'Alle schermen passen zich aan aan het gekozen thema',
-      'De voorkeur wordt onthouden bij volgende sessies',
-      'Het thema volgt optioneel de systeeminstelling van het toestel'
+      'De student krijgt een melding bij elke wijziging in zijn of haar rooster',
+      'De melding toont het vak, het soort wijziging en het nieuwe tijdstip of lokaal',
+      'Meldingen kunnen per vak aan of uit gezet worden',
+      'Meldingen komen ook binnen als de app gesloten is'
     ],
-    tasks: [
-      'CSS-variabelen voor donker thema defini\u00ebren',
-      'Theme-toggle component bouwen',
-      'Alle schermen testen en aanpassen voor donker thema',
-      'Systeeminstelling-detectie implementeren'
+    votes: [5, 8, 8, 5, 8],
+    explain: [],
+    question: {
+      prompt: 'Het team is verdeeld tussen 5 en 8. Hoe komt het team tot een waarde?',
+      options: [
+        { text: 'Beide kanten leggen uit, daarna kiest het team samen een kaartwaarde', correct: true },
+        { text: 'Het team neemt het gemiddelde: 6,8', feedback: POKER_AVG },
+        { text: 'De Product Owner beslist hoeveel punten het wordt', feedback: 'Nee: de Developers schatten in, want zij doen het werk. De Product Owner beantwoordt vragen over de story, maar kiest geen punten.' }
+      ]
+    },
+    result: 8,
+    resultLabel: 'Het team kiest 8 storypunten',
+    explanation: '<strong>Discussie nodig.</strong> Leen en Sara (5) denken dat een meldingendienst zoals Firebase dit eenvoudig maakt. Stef, Arnaud en Mohammed (8) wijzen op het werk op de achtergrond en de instellingen per vak. Het team erkent dat zulke achtergrondprocessen vaak voor verrassingen zorgen: de <em>onzekerheid</em> is groot. <strong>Het team kiest 8.</strong>'
+  },
+  {
+    id: 'US-03',
+    title: 'Interactieve campusplattegrond',
+    story: 'Als PXL-student wil ik een interactieve plattegrond van de campus gebruiken, zodat ik snel de weg vind naar lokalen, diensten en faciliteiten.',
+    acceptance: [
+      'De kaart toont alle PXL-gebouwen met labels',
+      'De student kan inzoomen en verschuiven',
+      'Typ een lokaalnummer en het lokaal wordt gemarkeerd',
+      'Routebeschrijving van je huidige plek naar je bestemming op de campus'
     ],
-    votes: [3, 5, 3, 3, 5],
-    result: 3,
-    scenario: 'near-consensus',
-    explanation: '<strong>Scenario: Kleine spreiding.</strong> Drie teamleden schatten 3, twee schatten 5. Stef en Mohammed (5) houden rekening met het testen van alle schermen. Het team bespreekt dat CSS-variabelen dit grotendeels automatiseren. <strong>Het team kiest 3</strong> omdat het grootste werk (de variabelen) eenmalig is. De testfase is routine.'
+    votes: [20, 40, 13, 20, 40],
+    explain: [2],
+    question: {
+      prompt: 'Bijna iedereen speelt 20 of 40. Wat doet het team met deze story?',
+      options: [
+        { text: 'De story opsplitsen in kleinere stories en die apart inschatten', correct: true },
+        { text: 'Kies 40, want dat werd het vaakst gespeeld', feedback: 'Een 20, 40 of 100 is vooral een signaal: deze story is te groot voor één Sprint. Zo’n waarde neem je niet over, je splitst de story op.' },
+        { text: 'Neem het gemiddelde: 26,6', feedback: POKER_AVG }
+      ]
+    },
+    result: null,
+    resultShort: 'Splitsen',
+    resultLabel: 'Opsplitsen in kleinere stories',
+    explanation: '<strong>Te groot: opsplitsen.</strong> De hoge kaarten zijn een signaal. Arnaud (13) legt uit waarom hij de story kleiner zag: hij dacht alleen aan een kaart met zoomfunctie. Het team beseft dat dit eigenlijk drie stories zijn: (1) een kaart met zoomfunctie, (2) lokalen zoeken, (3) een routebeschrijving. <strong>Het team splitst de story op</strong> en schat elke deelstory apart in.'
+  },
+  {
+    id: 'US-01',
+    title: 'Persoonlijk lesrooster',
+    story: 'Als PXL-student wil ik mijn persoonlijk lesrooster bekijken in de app, zodat ik altijd weet wanneer en waar mijn lessen plaatsvinden.',
+    acceptance: [
+      'Het rooster toont alle lessen van deze week met vak, tijdstip en lokaal',
+      'De student kan naar de vorige en volgende weken bladeren',
+      'Wijzigingen in het rooster worden automatisch bijgewerkt',
+      'Het rooster is ook offline beschikbaar na de eerste synchronisatie'
+    ],
+    votes: ['?', 8, '?', 5, '?'],
+    explain: [],
+    question: {
+      prompt: 'Drie teamleden spelen een ?-kaart. Wat betekent dat?',
+      options: [
+        { text: 'De story is nog niet duidelijk genoeg: eerst de vragen beantwoorden', correct: true },
+        { text: 'Kies 8, de hoogste waarde die gespeeld werd', feedback: 'Met drie ?-kaarten weet het team te weinig om in te schatten. Een getal kiezen zou gokken zijn.' },
+        { text: 'De ?-kaarten tellen niet mee, dus het gemiddelde van 8 en 5: 6,5', feedback: POKER_AVG + ' En de ?-kaarten negeren is gevaarlijk: drie teamleden zeggen dat ze iets niet weten.' }
+      ]
+    },
+    result: null,
+    resultShort: 'Niet Ready',
+    resultLabel: 'Nog niet Ready: eerst verduidelijken',
+    explanation: '<strong>Nog niet Ready.</strong> Leen, Arnaud en Mohammed weten niet of de app het rooster mag ophalen uit het PXL-roostersysteem: daarvoor is toegang nodig van de PXL IT-dienst. Zonder die toegang kan het team niet beginnen. De story voldoet dus nog niet aan de <em>Definition of Ready</em>: alle voorwaarden om eraan te werken moeten vervuld zijn. <strong>De Product Owner regelt de toegang</strong>, en het team schat de story opnieuw in bij de volgende Refinement.'
   }
 ];
 
-var pokerActive = null;
-var pokerEstimated = new Set();
-
-// ── Build Fibonacci reference ──────────────────────────────────────────────
+var pokerActive = 0;
+var pokerState = POKER_STORIES.map(function() {
+  return { pick: null, revealed: false, answered: false, round2: false, wrong: [], feedback: null };
+});
 
 (function pokerInit() {
-  // Fibonacci cards
-  var fibRow = document.getElementById('poker-fib-row');
-  POKER_FIB.forEach(function(n) {
-    var card = document.createElement('div');
-    card.className = 'poker-fib-card' + (n >= 20 ? ' too-big' : '');
-    card.textContent = n;
-    fibRow.appendChild(card);
-  });
-
-  // Story list
-  var list = document.getElementById('poker-stories');
-  POKER_STORIES.forEach(function(s, idx) {
-    var card = document.createElement('div');
-    card.className = 'poker-story-card';
-    card.id = 'poker-story-' + idx;
-    card.onclick = function() { pokerClick(idx); };
-    card.innerHTML =
-      '<div class="poker-story-id">' + s.id + '</div>' +
-      '<div class="poker-story-title">' + s.title + '<span class="poker-story-sp" id="poker-sp-' + idx + '"></span></div>';
-    list.appendChild(card);
-  });
-
-  // Placeholder
-  pokerRenderPlaceholder();
+  pokerRender();
 })();
 
-function pokerClick(idx) {
-  pokerActive = idx;
-
-  // Update card states
-  POKER_STORIES.forEach(function(_, i) {
-    var card = document.getElementById('poker-story-' + i);
-    card.className = 'poker-story-card' +
-      (pokerEstimated.has(i) ? ' estimated' : '') +
-      (i === idx ? ' active' : '');
-  });
-
-  // Render detail
-  pokerRenderDetail(idx);
+function pokerDone(i) {
+  var st = pokerState[i];
+  return st.answered && (!POKER_STORIES[i].revote || st.round2);
 }
 
-function pokerRenderPlaceholder() {
-  document.getElementById('poker-detail').innerHTML =
-    '<div class="poker-placeholder">' +
-      PLACEHOLDER_ICON.replace('PREFIX', 'poker') +
-      '<div>Klik op een User Story in de lijst om de Planning Poker sessie te starten.</div>' +
-    '</div>';
+function pokerCardHtml(value, cls) {
+  var big = typeof value === 'number' && value >= 20;
+  var wide = String(value).length > 2;
+  return '<div class="poker-card' + (big ? ' big' : '') + (wide ? ' wide' : '') + (cls ? ' ' + cls : '') + '" aria-hidden="true">' +
+    '<div class="poker-card-inner"><div class="poker-card-back"></div>' +
+    '<div class="poker-card-face"><span class="poker-idx tl">' + value + '</span><span class="poker-val">' + value + '</span><span class="poker-idx br">' + value + '</span></div>' +
+    '</div></div>';
 }
 
-function pokerRenderDetail(idx) {
-  var s = POKER_STORIES[idx];
-  var detail = document.getElementById('poker-detail');
+function pokerNumbers(list) {
+  return list.filter(function(v) { return typeof v === 'number'; });
+}
 
-  var acHtml = '<ul>' + s.acceptance.map(function(a) { return '<li>' + a + '</li>'; }).join('') + '</ul>';
-  var taskHtml = '<ul>' + s.tasks.map(function(t) { return '<li>' + t + '</li>'; }).join('') + '</ul>';
+// Your card is outside the team's range in round 1: you explain too
+function pokerYouExplains(idx) {
+  var p = pokerState[idx].pick;
+  var nums = pokerNumbers(POKER_STORIES[idx].votes);
+  if (typeof p !== 'number' || !nums.length) return false;
+  return p > Math.max.apply(null, nums) || p < Math.min.apply(null, nums);
+}
 
-  // Team cards — initially hidden
-  var cardsHtml = '<div class="poker-cards-section">' +
-    '<h5>Planning Poker: Team schat in</h5>' +
-    '<div class="poker-team-row" id="poker-team-row-' + idx + '">';
+function pokerSeatsHtml(idx, teamFaceDown) {
+  var s = POKER_STORIES[idx], st = pokerState[idx];
+  var votes = st.round2 ? s.revote : s.votes;
+  var settled = pokerDone(idx) && s.result !== null;
+  var html = st.round2 ? '<span class="poker-round">Ronde 2</span>' : '';
 
   POKER_TEAM.forEach(function(name, mi) {
-    var isRevealed = pokerEstimated.has(idx);
-    var val = s.votes[mi];
-    var cardClass = isRevealed ? pokerCardClass(s, mi) : 'hidden';
-    cardsHtml +=
-      '<div class="poker-member">' +
-        '<div class="poker-card ' + cardClass + '" id="poker-card-' + idx + '-' + mi + '">' +
-          (isRevealed ? val : '?') +
-        '</div>' +
-        '<div class="poker-member-name">' + name + '</div>' +
-      '</div>';
-  });
-
-  cardsHtml += '</div>';
-
-  if (!pokerEstimated.has(idx)) {
-    cardsHtml += '<button class="poker-reveal-btn" id="poker-reveal-' + idx + '" onclick="pokerReveal(' + idx + ')">Draai de kaarten om \u{1F0CF}</button>';
-  } else {
-    cardsHtml += pokerResultHtml(s);
-  }
-
-  cardsHtml += '</div>';
-
-  detail.innerHTML =
-    '<div class="poker-detail-card">' +
-      '<div class="poker-detail-header">' +
-        '<div class="poker-story-id">' + s.id + '</div>' +
-        '<h4>' + s.title + '</h4>' +
-        '<div class="poker-story-format">\u201cAls PXL-student wil ik ' + s.story.split('wil ik ')[1] + '</div>' +
-      '</div>' +
-      '<div class="poker-detail-body">' +
-        '<h5>Acceptatiecriteria</h5>' + acHtml +
-        '<h5>Taken</h5>' + taskHtml +
-        cardsHtml +
-      '</div>' +
+    var cls = st.revealed && !teamFaceDown ? 'flipped' : '';
+    var tag = st.revealed && !st.round2 && s.explain.indexOf(mi) !== -1;
+    if (tag) cls += ' explain';
+    if (settled) cls += votes[mi] === s.result ? ' match' : ' dim';
+    html += '<div class="poker-seat">' +
+      '<span class="poker-tag' + (tag ? ' show' : '') + '">Leg uit</span>' +
+      pokerCardHtml(votes[mi], cls) +
+      '<span class="poker-avatar" aria-hidden="true">' + name.slice(0, 2) + '</span>' +
+      '<span class="poker-name">' + name +
+        '<span class="poker-sr">' + (st.revealed && !teamFaceDown ? ': ' + votes[mi] : ': kaart ligt nog verborgen') + '</span></span>' +
     '</div>';
-}
-
-function pokerCardClass(story, memberIdx) {
-  var val = story.votes[memberIdx];
-  var min = Math.min.apply(null, story.votes);
-  var max = Math.max.apply(null, story.votes);
-  var spread = max - min;
-
-  if (story.scenario === 'too-big' || story.scenario === 'big-spread') {
-    if (val === min) return 'revealed outlier-low';
-    if (val === max) return 'revealed outlier-high';
-    return 'revealed';
-  }
-
-  if (spread <= 3) {
-    if (val === story.result) return 'revealed consensus';
-    return 'revealed';
-  }
-
-  if (val === min && spread > 3) return 'revealed outlier-low';
-  if (val === max && spread > 3) return 'revealed outlier-high';
-  return 'revealed';
-}
-
-function pokerReveal(idx) {
-  var s = POKER_STORIES[idx];
-  pokerEstimated.add(idx);
-
-  // Animate cards
-  POKER_TEAM.forEach(function(_, mi) {
-    var card = document.getElementById('poker-card-' + idx + '-' + mi);
-    card.className = 'poker-card ' + pokerCardClass(s, mi);
-    card.textContent = s.votes[mi];
   });
 
-  // Replace reveal button with result
-  var btn = document.getElementById('poker-reveal-' + idx);
-  var parent = btn.parentNode;
-  btn.remove();
-
-  var resultDiv = document.createElement('div');
-  resultDiv.innerHTML = pokerResultHtml(s);
-  while (resultDiv.firstChild) parent.appendChild(resultDiv.firstChild);
-
-  // Update story card
-  var storyCard = document.getElementById('poker-story-' + idx);
-  storyCard.classList.add('estimated');
-
-  // Update SP badge
-  var spBadge = document.getElementById('poker-sp-' + idx);
-  if (s.result !== null) {
-    spBadge.textContent = s.result + ' SP';
-  } else {
-    spBadge.textContent = 'Splitsen';
-    spBadge.style.background = 'var(--accent)';
-  }
-
-  // Update progress
-  var total = POKER_STORIES.length;
-  document.getElementById('poker-fill').style.width = (pokerEstimated.size / total * 100) + '%';
-  document.getElementById('poker-progress-label').textContent = pokerEstimated.size + ' / ' + total + ' stories ingeschat';
+  var youTag = st.revealed && !st.round2 && pokerYouExplains(idx);
+  var youCls = st.revealed ? 'flipped' : '';
+  if (youTag) youCls += ' explain';
+  if (settled && typeof st.pick === 'number') youCls += st.pick === s.result ? ' match' : ' dim';
+  html += '<div class="poker-seat you">' +
+    '<span class="poker-tag' + (youTag ? ' show' : '') + '">Leg uit</span>' +
+    (st.pick === null ? '<div class="poker-slot">Jouw kaart</div>' : pokerCardHtml(st.pick, youCls)) +
+    '<span class="poker-avatar" aria-hidden="true">Jij</span>' +
+    '<span class="poker-name">Jij<span class="poker-sr">' +
+      (st.pick === null ? ': nog geen kaart gekozen' : (st.revealed ? ': ' + st.pick : ': kaart ligt klaar')) + '</span></span>' +
+  '</div>';
+  return html;
 }
 
-function pokerResultHtml(s) {
-  var html = '<div class="poker-scenario">' + s.explanation + '</div>';
-  if (s.result !== null) {
-    html += '<div style="margin-top:.6rem;font-family:Raleway,sans-serif;font-weight:800;font-size:.85rem;color:var(--green);">\u2713 Resultaat: ' + s.result + ' storypunten</div>';
+function pokerHandHtml(idx) {
+  var st = pokerState[idx];
+  var html = '<div class="poker-hand-wrap" id="poker-hand-wrap">' +
+    '<p class="poker-hand-label" id="poker-hand-label">Jouw kaarten: kies in stilte</p>' +
+    '<div class="poker-hand" role="group" aria-labelledby="poker-hand-label">';
+  POKER_DECK.forEach(function(v) {
+    var arg = typeof v === 'number' ? v : '\'?\'';
+    html += '<button class="poker-hand-card" aria-pressed="' + (st.pick === v) + '" aria-label="Kaart ' + v + '" onclick="pokerPick(' + arg + ')">' +
+      pokerCardHtml(v, 'flipped') + '</button>';
+  });
+  html += '</div><div class="poker-actions"><button class="poker-reveal-btn" id="poker-reveal" onclick="pokerReveal()"' +
+    (st.pick === null ? ' disabled>Kies eerst je kaart' : '>Draai alle kaarten om') + '</button></div></div>';
+  return html;
+}
+
+function pokerYouNote(idx) {
+  var p = pokerState[idx].pick;
+  var nums = pokerNumbers(POKER_STORIES[idx].votes);
+  var text;
+  if (p === '?') {
+    text = 'Jij koos <strong>?</strong>: je begrijpt de story nog niet goed genoeg. Dat mag. In een echte sessie stel je nu je vragen aan de Product Owner.';
+  } else if (nums.length && p > Math.max.apply(null, nums)) {
+    text = 'Jij koos <strong>' + p + '</strong>, hoger dan de rest van het team. In een echte sessie leg jij nu uit waarom: wat zag jij dat de anderen misten?';
+  } else if (nums.length && p < Math.min.apply(null, nums)) {
+    text = 'Jij koos <strong>' + p + '</strong>, lager dan de rest van het team. In een echte sessie leg jij nu uit waarom: wat maakt het volgens jou eenvoudig?';
   } else {
-    html += '<div style="margin-top:.6rem;font-family:Raleway,sans-serif;font-weight:800;font-size:.85rem;color:var(--accent);">\u26A0 Story moet opgesplitst worden, niet ingeschat</div>';
+    text = 'Jij koos <strong>' + p + '</strong>: je zit binnen de waarden van het team.';
+  }
+  return '<p class="poker-you-note">' + text + '</p>';
+}
+
+function pokerAfterHtml(idx) {
+  var s = POKER_STORIES[idx], st = pokerState[idx];
+  var html = pokerYouNote(idx);
+  html += '<div class="poker-question"><h5 id="poker-q" tabindex="-1">' + s.question.prompt + '</h5><div class="poker-options">';
+  s.question.options.forEach(function(o, j) {
+    var cls = st.answered && o.correct ? ' right' : (st.wrong.indexOf(j) !== -1 ? ' wrong' : '');
+    var off = st.answered || st.wrong.indexOf(j) !== -1;
+    html += '<button class="poker-option' + cls + '" onclick="pokerAnswer(' + j + ')"' + (off ? ' disabled' : '') + '>' + o.text + '</button>';
+  });
+  html += '</div>';
+  if (!st.answered && st.feedback) html += '<div class="poker-feedback"><strong>Niet helemaal.</strong> ' + st.feedback + '</div>';
+  html += '</div>';
+
+  if (st.answered) {
+    if (s.revote && !st.round2) {
+      html += '<div class="poker-actions"><button class="poker-reveal-btn" id="poker-round2" onclick="pokerRound2()">Ronde 2: iedereen kiest opnieuw</button></div>';
+    } else {
+      html += '<div class="poker-scenario" id="poker-scenario" tabindex="-1">' + s.explanation + '</div>' +
+        '<span class="poker-result' + (s.result === null ? ' stop' : '') + '">' + s.resultLabel + '</span>';
+    }
   }
   return html;
+}
+
+function pokerRender() {
+  var idx = pokerActive, s = POKER_STORIES[idx], st = pokerState[idx];
+  var html = '<article class="poker-story" id="poker-story">' +
+    '<div class="poker-story-id">' + s.id + '</div>' +
+    '<h4>' + s.title + '</h4>' +
+    '<p class="poker-story-text">“' + s.story + '”</p>' +
+    '<details class="poker-ac"' + (idx === 0 ? ' open' : '') + '><summary>Acceptatiecriteria (' + s.acceptance.length + ')</summary><ul>' +
+      s.acceptance.map(function(a) { return '<li>' + a + '</li>'; }).join('') + '</ul></details>' +
+    '<div class="poker-table"><div class="poker-seats" id="poker-seats">' + pokerSeatsHtml(idx) + '</div></div>' +
+    (st.revealed ? '' : pokerHandHtml(idx)) +
+    '<div class="poker-after" id="poker-after" aria-live="polite">' + (st.revealed ? pokerAfterHtml(idx) : '') + '</div>' +
+  '</article>';
+  document.getElementById('poker-detail').innerHTML = html;
+  pokerUpdate();
+}
+
+function pokerUpdate() {
+  var doneCount = 0;
+  var tabs = '';
+  var backlog = '';
+  POKER_STORIES.forEach(function(s, i) {
+    var done = pokerDone(i);
+    if (done) doneCount++;
+    var badge = s.result === null ? s.resultShort : s.result + ' SP';
+    tabs += '<button class="poker-tab" aria-current="' + (i === pokerActive) + '" onclick="pokerSelect(' + i + ', false)">' +
+      (i + 1) + '. ' + s.title +
+      (done ? '<span class="poker-tab-badge' + (s.result === null ? ' stop' : '') + '">' + badge + '</span>' : '') +
+    '</button>';
+    if (done) backlog += '<li><span>' + s.id + ' ' + s.title + '</span><strong>' + badge + '</strong></li>';
+  });
+  document.getElementById('poker-tabs').innerHTML = tabs;
+  document.getElementById('poker-backlog').innerHTML = backlog;
+
+  var total = POKER_STORIES.length;
+  document.getElementById('poker-fill').style.width = (doneCount / total * 100) + '%';
+  document.getElementById('poker-progress-label').textContent = doneCount + ' / ' + total + ' stories besproken';
+  document.getElementById('poker-prev').disabled = pokerActive === 0;
+  document.getElementById('poker-next').disabled = pokerActive === total - 1;
+  document.getElementById('poker-summary').classList.toggle('visible', doneCount === total);
+}
+
+function pokerSelect(idx, scroll) {
+  pokerActive = idx;
+  pokerRender();
+  if (scroll) document.getElementById('poker-story').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function pokerGo(step) {
+  var next = pokerActive + step;
+  if (next >= 0 && next < POKER_STORIES.length) pokerSelect(next, true);
+}
+
+function pokerPick(value) {
+  var st = pokerState[pokerActive];
+  if (st.revealed) return;
+  st.pick = value;
+  document.getElementById('poker-seats').innerHTML = pokerSeatsHtml(pokerActive);
+  document.querySelectorAll('#poker-hand-wrap .poker-hand-card').forEach(function(btn, i) {
+    btn.setAttribute('aria-pressed', String(POKER_DECK[i] === value));
+  });
+  var reveal = document.getElementById('poker-reveal');
+  reveal.disabled = false;
+  reveal.textContent = 'Draai alle kaarten om';
+}
+
+// All cards flip together: that is the point of the ritual
+function pokerReveal() {
+  var idx = pokerActive, st = pokerState[idx];
+  if (st.pick === null || st.revealed) return;
+  st.revealed = true;
+  document.getElementById('poker-hand-wrap').remove();
+  document.querySelectorAll('#poker-seats .poker-card').forEach(function(card, i) {
+    setTimeout(function() { card.classList.add('flipped'); }, i * 30);
+  });
+  setTimeout(function() {
+    document.getElementById('poker-seats').innerHTML = pokerSeatsHtml(idx);
+    document.getElementById('poker-after').innerHTML = pokerAfterHtml(idx);
+    document.getElementById('poker-q').focus({ preventScroll: true });
+  }, 550);
+}
+
+function pokerAnswer(j) {
+  var idx = pokerActive, s = POKER_STORIES[idx], st = pokerState[idx];
+  var option = s.question.options[j];
+  if (option.correct) {
+    st.answered = true;
+    st.feedback = null;
+  } else {
+    st.wrong.push(j);
+    st.feedback = option.feedback;
+  }
+  document.getElementById('poker-seats').innerHTML = pokerSeatsHtml(idx);
+  document.getElementById('poker-after').innerHTML = pokerAfterHtml(idx);
+  pokerUpdate();
+  var focus = st.answered
+    ? document.getElementById('poker-round2') || document.getElementById('poker-scenario')
+    : document.querySelector('#poker-after .poker-option:not(:disabled)');
+  if (focus) focus.focus({ preventScroll: true });
+}
+
+// Round 2: the team's cards go face down, everyone picks again, all flip together
+function pokerRound2() {
+  var idx = pokerActive, st = pokerState[idx];
+  document.getElementById('poker-round2').disabled = true;
+  document.querySelectorAll('#poker-seats .poker-seat:not(.you) .poker-card').forEach(function(card) {
+    card.classList.remove('flipped');
+  });
+  setTimeout(function() {
+    st.round2 = true;
+    var seats = document.getElementById('poker-seats');
+    seats.innerHTML = pokerSeatsHtml(idx, true);
+    setTimeout(function() {
+      seats.querySelectorAll('.poker-seat:not(.you) .poker-card').forEach(function(card, i) {
+        setTimeout(function() { card.classList.add('flipped'); }, i * 30);
+      });
+    }, 60);
+    setTimeout(function() {
+      seats.innerHTML = pokerSeatsHtml(idx);
+      document.getElementById('poker-after').innerHTML = pokerAfterHtml(idx);
+      pokerUpdate();
+      document.getElementById('poker-scenario').focus({ preventScroll: true });
+    }, 700);
+  }, 450);
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
