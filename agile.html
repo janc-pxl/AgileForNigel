@@ -741,7 +741,7 @@ h3.sprint-subtitle {
 }
 .poker-tab:hover { border-color: #a39c8d; }
 .poker-tab[aria-current="true"] { background: var(--primary); border-color: var(--primary); color: white; }
-.poker-tab-badge { font-size: .78rem; font-weight: 800; padding: 1px 7px; border-radius: 10px; background: rgba(42,157,143,.14); color: #1e7a6e; }
+.poker-tab-badge { font-size: .78rem; font-weight: 800; padding: 1px 7px; border-radius: 10px; background: rgba(42,157,143,.14); color: #155f55; }
 .poker-tab-badge.stop { background: rgba(230,57,70,.1); color: #b3202c; }
 .poker-tab[aria-current="true"] .poker-tab-badge { background: rgba(255,255,255,.16); color: white; }
 
@@ -904,6 +904,115 @@ h3.sprint-subtitle {
 }
 .poker-bridge a:hover { background: #c2b07f; }
 
+/* ── SPRINT REVIEW SECTION ──────────────────────────────────────────────────── */
+@keyframes reviewIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+.review-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 1.5rem 2rem; align-items: center; margin: 1rem 0 .5rem; }
+.review-intro .lead { margin: 0 0 .75rem; }
+.review-intro figure { margin: 0; }
+.review-intro img { width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.12); display: block; }
+.review-intro figcaption { font-size: .88rem; color: var(--muted); margin-top: .4rem; }
+
+/* The Review in four facts */
+.review-facts { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; margin-top: 1.5rem; }
+.review-facts li { background: var(--card); border: 1.5px solid var(--border); border-radius: 8px; padding: .85rem .95rem; font-size: .93rem; line-height: 1.45; }
+.review-facts strong { display: block; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .98rem; color: var(--primary); margin-bottom: .2rem; }
+
+/* Steps */
+.review-step { margin-top: 2.5rem; }
+.review-step h3 {
+  display: flex; align-items: center; gap: .65rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--primary); margin-bottom: .4rem;
+}
+.review-step h3 span {
+  width: 1.8rem; height: 1.8rem; border-radius: 50%; flex-shrink: 0; background: var(--primary); color: var(--gold);
+  display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: .95rem;
+}
+.review-step > p { max-width: 72ch; }
+
+/* Step 1: which stories may be shown */
+.review-stories { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6rem; margin-top: 1rem; }
+.review-story {
+  display: flex; align-items: flex-start; gap: .7rem; text-align: left; min-height: 44px;
+  padding: .75rem 1rem; border-radius: 8px; cursor: pointer;
+  font: inherit; color: var(--text); background: white; border: 1.5px solid var(--border);
+  transition: border-color .15s, background .15s;
+}
+.review-story::before {
+  content: ''; flex-shrink: 0; width: 1.1rem; height: 1.1rem; margin-top: .2rem; border-radius: 4px; border: 2px solid #8a8478; background: white;
+}
+.review-story:hover:not(:disabled) { border-color: var(--primary); }
+.review-story[aria-pressed="true"] { border-color: var(--primary); background: #fafaf8; }
+.review-story[aria-pressed="true"]::before { background: var(--primary); border-color: var(--primary); box-shadow: inset 0 0 0 2px white; }
+.review-story.good { border-color: var(--green); background: rgba(42,157,143,.08); }
+.review-story.bad { border-color: var(--accent); background: rgba(230,57,70,.04); }
+.review-story-id { display: block; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .82rem; color: #7a6535; }
+.review-story-title { display: block; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem; color: var(--primary); }
+.review-story-state { display: block; font-size: .92rem; color: var(--muted); margin-top: .15rem; }
+.review-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; margin-top: .9rem; }
+.review-check {
+  min-height: 44px; padding: .5rem 1.3rem; border-radius: 6px; cursor: pointer;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem;
+  background: var(--primary); color: white; border: 2px solid var(--primary);
+}
+.review-check:disabled { background: transparent; color: var(--muted); border-color: var(--border); cursor: default; }
+
+/* Shared answers + feedback */
+.review-q { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; padding: 1rem 1.15rem 1.1rem; margin-top: 1rem; }
+.review-q-who { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem; color: #7a6535; margin-bottom: .2rem; }
+.review-q-text { font-size: 1.02rem; font-weight: 600; color: var(--primary); margin: 0 0 .75rem; max-width: 75ch; }
+.review-options { display: grid; gap: .5rem; }
+.review-options.row { display: flex; flex-wrap: wrap; }
+.review-option {
+  text-align: left; min-height: 44px; padding: .55rem 1rem; border-radius: 6px; cursor: pointer;
+  font: inherit; font-size: .97rem; color: var(--text); background: white; border: 1.5px solid var(--border);
+  transition: border-color .15s, background .15s;
+}
+.review-options.row .review-option { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .92rem; color: var(--primary); }
+.review-option:hover:not(:disabled) { border-color: var(--primary); background: #fafaf8; }
+.review-option.wrong { border-color: var(--accent); color: #b3202c; background: rgba(230,57,70,.05); text-decoration: line-through; cursor: default; }
+.review-option.right { border-color: var(--green); background: rgba(42,157,143,.1); color: #1e7a6e; font-weight: 700; cursor: default; }
+.review-feedback { margin-top: .6rem; padding: .7rem 1rem; border-radius: 6px; font-size: .95rem; animation: reviewIn .25s ease; }
+.review-feedback.hint { background: rgba(174,154,100,.12); border: 1px solid rgba(174,154,100,.5); }
+.review-feedback.ok { background: rgba(42,157,143,.08); border: 1px solid rgba(31,119,108,.35); }
+
+/* Step 3: stakeholder categories */
+.review-cats { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; margin-top: .9rem; }
+.review-cats li { font-size: .92rem; line-height: 1.45; padding: .7rem .85rem; border-radius: 8px; background: var(--gold-bg); border: 1px solid rgba(174,154,100,.45); }
+.review-cats strong { display: block; font-family: 'Raleway', sans-serif; color: var(--primary); }
+.review-holders { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+
+/* Result: the updated Product Backlog */
+.review-backlog { margin-top: 2.5rem; padding: 1.3rem 1.5rem; border-radius: 10px; background: var(--card); border: 2px solid var(--gold); }
+.review-backlog h3 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.2rem; color: var(--primary); margin-bottom: .3rem; }
+.review-backlog ol { list-style: none; counter-reset: rb; margin-top: .75rem; display: grid; gap: .45rem; }
+.review-backlog li {
+  counter-increment: rb; display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .6rem;
+  padding: .55rem .8rem; border-radius: 6px; background: var(--bg); font-size: .97rem;
+}
+.review-backlog li::before { content: counter(rb) '.'; font-family: 'Raleway', sans-serif; font-weight: 900; color: var(--primary); min-width: 1.4rem; }
+.review-backlog li span:first-of-type { font-weight: 700; color: var(--primary); }
+.review-tag { margin-left: auto; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .8rem; padding: 1px 9px; border-radius: 10px; }
+.review-tag.up { background: rgba(42,157,143,.14); color: #155f55; }
+.review-tag.new { background: var(--gold-bg); color: #7a6535; border: 1px solid rgba(174,154,100,.5); }
+.review-tag.back { background: rgba(230,57,70,.08); color: #b3202c; }
+
+/* Bridge to the Retrospective */
+.review-bridge {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem;
+  margin-top: 2rem; padding: 1.25rem 1.5rem; border-radius: 10px; background: var(--primary);
+}
+.review-bridge p { margin: 0; color: #e8e4da; max-width: 62ch; }
+.review-bridge p strong { color: white; }
+.review-bridge a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: .6rem 1.25rem; border-radius: 6px;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; white-space: nowrap;
+  background: var(--gold); color: var(--primary); text-decoration: none; transition: background .15s;
+}
+.review-bridge a:hover { background: #c2b07f; }
+.review-story:focus-visible, .review-option:focus-visible, .review-check:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.review-bridge a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
 /* ── RETROSPECTIVE SECTION ──────────────────────────────────────────────────── */
 @keyframes retroIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -1033,7 +1142,7 @@ h3.sprint-subtitle {
 }
 .retro-loop a:hover { background: #c2b07f; }
 .retro-recap { margin-top: 2rem; }
-.retro-recap-grid { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: .75rem; }
+.retro-recap-grid { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
 .retro-recap-grid li { background: var(--card); border: 1.5px solid var(--border); border-radius: 8px; padding: .85rem .95rem; font-size: .93rem; line-height: 1.45; }
 .retro-recap-grid a { display: flex; align-items: center; min-height: 44px; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem; color: var(--primary); text-decoration: none; }
 .retro-recap-grid a:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -1145,6 +1254,8 @@ h3.sprint-subtitle {
   .poker-backlog { grid-template-columns: 1fr; }
   .retro-recap-grid { grid-template-columns: 1fr 1fr; }
   .waarde-team { grid-template-columns: 1fr; }
+  .review-intro { grid-template-columns: 1fr; }
+  .review-facts { grid-template-columns: 1fr 1fr; }
   .waarde-values { grid-template-columns: repeat(3, 1fr); }
   .poker-card { --w: 60px; }
   .poker-slot { width: 60px; }
@@ -1159,6 +1270,7 @@ h3.sprint-subtitle {
   .retro-prev { grid-template-columns: 1fr; }
   .retro-recap-grid { grid-template-columns: 1fr; }
   .waarde-values { grid-template-columns: 1fr; }
+  .review-facts, .review-stories, .review-cats, .review-holders { grid-template-columns: 1fr; }
   .retro-intro img { width: 100%; }
   .poker-steps { grid-template-columns: repeat(2, 1fr); }
   .poker-card { --w: 40px; }
@@ -1197,6 +1309,7 @@ h3.sprint-subtitle {
     <a href="#sprint-events" onclick="navClose()">Scrum Events</a>
     <a href="#empirisme-events" onclick="navClose()">Pijlers per Event</a>
     <a href="#poker-planning" onclick="navClose()">Planning Poker</a>
+    <a href="#sprint-review" onclick="navClose()">Sprint Review</a>
     <a href="#retrospectives" onclick="navClose()">Retrospectives</a>
   </div>
 </nav>
@@ -1521,8 +1634,78 @@ h3.sprint-subtitle {
 
   <!-- Brug naar Retrospectives -->
   <div class="poker-bridge">
-    <p><strong>De stories zijn ingeschat en de Sprint kan beginnen.</strong> Aan het einde van elke Sprint blikt het team terug. Hoe pak je zo'n Retrospective aan?</p>
-    <a href="#retrospectives">Naar Retrospectives &rarr;</a>
+    <p><strong>De stories zijn ingeschat en de Sprint kan beginnen.</strong> Twee weken later toont het team het resultaat aan de stakeholders: de Sprint Review.</p>
+    <a href="#sprint-review">Naar de Sprint Review &rarr;</a>
+  </div>
+</section>
+
+<section id="sprint-review">
+  <div class="badge">Sprint Review</div>
+  <h2>Het resultaat tonen aan de stakeholders</h2>
+  <div class="review-intro">
+    <div>
+      <p class="lead">Twee weken later is Sprint 1 van Campi voorbij. In de <strong>Sprint Review</strong> toont het team wat er af is aan de <strong>stakeholders</strong>: de mensen buiten het team die belang hebben bij de app. Hun feedback bepaalt wat er in de volgende Sprint gebeurt.</p>
+      <p>De Review gaat over het <strong>product</strong>: wat hebben we gemaakt, en wat bouwen we nu? Over de manier van werken gaat de Retrospective, straks.</p>
+    </div>
+    <figure>
+      <img src="img/sprint_review.jpg" alt="Leen toont de Campi-app op een groot scherm aan stakeholders rond de tafel" loading="lazy" />
+      <figcaption>Leen toont de app. Aan tafel: Marc (PXL Catering), Nadia (studentenadministratie) en Kevin (student).</figcaption>
+    </figure>
+  </div>
+
+  <ul class="review-facts">
+    <li><strong>Wie?</strong>Het Scrum Team en uitgenodigde stakeholders.</li>
+    <li><strong>Hoe lang?</strong>Maximaal 4 uur (voor een Sprint van een maand).</li>
+    <li><strong>Wat?</strong>Een demo van wat echt af is, feedback, en de stand van de Product Backlog.</li>
+    <li><strong>Resultaat?</strong>Een bijgewerkte Product Backlog.</li>
+  </ul>
+
+  <!-- Stap 1 -->
+  <div class="review-step">
+    <h3><span>1</span> Wat mag het team tonen?</h3>
+    <p>Dit is de stand van de Sprint Backlog op de laatste dag. Duid de stories aan die het team in de demo laat zien.</p>
+    <div class="review-stories" id="review-stories"></div>
+    <div class="review-bar">
+      <button class="review-check" id="review-check" onclick="reviewCheckDemo()">Controleer mijn keuze</button>
+    </div>
+    <div id="review-demo-fb" aria-live="polite"></div>
+  </div>
+
+  <!-- Stap 2 -->
+  <div class="review-step">
+    <h3><span>2</span> Wat gebeurt er met de feedback?</h3>
+    <p>Na de demo reageren de stakeholders. Wat doet het team met hun opmerkingen?</p>
+    <div id="review-feedback-qs"></div>
+  </div>
+
+  <!-- Stap 3 -->
+  <div class="review-step">
+    <h3><span>3</span> Wie is een stakeholder?</h3>
+    <p>Een stakeholder is iemand buiten het Scrum Team met belang bij het product, of met kennis die nodig is om het verder te ontwikkelen. De cursus onderscheidt drie soorten:</p>
+    <ul class="review-cats">
+      <li><strong>Intern</strong>Afdelingen binnen de organisatie. Ze willen vooral dat het project effici&euml;nt of winstgevend verloopt.</li>
+      <li><strong>Extern</strong>De eindgebruikers en klanten. Ze willen dat het product hun behoefte invult.</li>
+      <li><strong>Interface</strong>Partijen met invloed via wet- en regelgeving, zoals de overheid.</li>
+    </ul>
+    <div class="review-holders" id="review-holders"></div>
+  </div>
+
+  <!-- Resultaat -->
+  <div class="review-backlog">
+    <h3>Het resultaat: de bijgewerkte Product Backlog</h3>
+    <p>Na de Review bespreekt de Product Owner de Product Backlog met de stakeholders. Dit staat nu bovenaan voor Sprint 2:</p>
+    <ol>
+      <li><span>US-01 Persoonlijk lesrooster</span><span>de student gebruikt het elke dag</span><span class="review-tag up">hoger</span></li>
+      <li><span>US-05 Meldingen bij roosterwijzigingen</span><span>nog niet Done in Sprint 1</span><span class="review-tag back">terug</span></li>
+      <li><span>US-09 Broodje vooraf bestellen</span><span>idee van Marc, PXL Catering</span><span class="review-tag new">nieuw</span></li>
+      <li><span>US-03a Campusplattegrond met zoom</span><span>eerste deel van de opgesplitste story</span></li>
+    </ol>
+  </div>
+
+  <!-- Brug naar de Retrospective -->
+  <div class="review-bridge">
+    <p><strong>Het product is getoond en de Product Backlog is bijgewerkt.</strong> Nu kijkt het team naar zichzelf: hoe verliep de samenwerking, en wat kan beter?</p>
+    <a href="#retrospectives">Naar de Retrospective &rarr;</a>
   </div>
 </section>
 
@@ -1592,6 +1775,7 @@ h3.sprint-subtitle {
       <li><a href="#scrum-waarden">Scrum Waarden</a>Commitment, focus, openheid, respect en moed: de basis voor goed teamwork.</li>
       <li><a href="#sprint-events">De 5 Scrum Events</a>De Sprint als container, met Planning, Daily Scrum, Review en Retrospective.</li>
       <li><a href="#poker-planning">Planning Poker</a>In stilte kiezen, samen omdraaien, hoogste en laagste leggen uit, nooit een gemiddelde.</li>
+      <li><a href="#sprint-review">Sprint Review</a>Alleen Done-werk tonen, feedback ophalen, en de Product Backlog bijwerken.</li>
       <li><a href="#retrospectives">Retrospective</a>Eerst terugkijken, dan 1 of 2 SMART-actiepunten die het team echt uitvoert.</li>
     </ul>
     <p class="retro-own"><strong>Doe dit in jullie eigen projectteam:</strong> maak je bord en je voortgang zichtbaar, schat samen in met kaarten, en sluit elke Sprint af met een korte Retrospective en hoogstens twee actiepunten.</p>
@@ -3205,6 +3389,167 @@ function pokerRound2() {
       document.getElementById('poker-scenario').focus({ preventScroll: true });
     }, 700);
   }, 450);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── SPRINT REVIEW SECTION ────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+// Step 1: the Sprint Backlog on the last day. Only Done stories may be shown in the demo.
+var REVIEW_STORIES = [
+  { id: 'US-04', title: 'Dagmenu PXL Catering', state: 'Done: getest en nagekeken', done: true },
+  { id: 'US-02', title: 'Campusnieuws lezen', state: 'Done: getest en nagekeken', done: true },
+  { id: 'US-07', title: 'Inloggen met PXL-account', state: 'Done: Leen werkte de tests nog af', done: true },
+  { id: 'US-05', title: 'Meldingen bij roosterwijzigingen', state: 'Code af, de tests ontbreken nog', done: false }
+];
+
+// Step 2: feedback from the stakeholders
+var REVIEW_QS = [
+  {
+    who: 'Marc, diensthoofd PXL Catering',
+    text: '“Kunnen studenten via de app ook vooraf een broodje bestellen?”',
+    options: [
+      { text: 'Stef belooft het in de volgende Sprint te bouwen.', feedback: 'Wat in een Sprint komt, beslist het team samen met de Product Owner in de Sprint Planning. Een belofte aan tafel slaat die stap over.' },
+      { text: 'De Product Owner noteert het als nieuw item op de Product Backlog.', right: true },
+      { text: 'Niets: het hoorde niet bij deze Sprint.', feedback: 'Juist nieuwe ideeën zijn het doel van de Review. Feedback die je negeert, gaat verloren.' }
+    ],
+    why: 'Nieuwe ideeën komen op de Product Backlog. De Product Owner bepaalt later hoe belangrijk ze zijn.'
+  },
+  {
+    who: 'Kevin, student Toegepaste Informatica',
+    text: '“Het lesrooster zou ik elke dag gebruiken. Het campusnieuws bijna nooit.”',
+    options: [
+      { text: 'Het team verwijdert het campusnieuws meteen uit de app.', feedback: 'Één mening is waardevol, maar geen reden om meteen werk weg te gooien. De Product Owner weegt alle feedback af.' },
+      { text: 'Het team verandert niets: het plan ligt vast.', feedback: 'In Scrum ligt het plan niet vast. De Review is net het moment om bij te sturen.' },
+      { text: 'De Product Owner zet het lesrooster hoger op de Product Backlog.', right: true }
+    ],
+    why: 'Feedback van de eindgebruiker verandert de prioriteiten. Zo stuurt de Review het product bij: inspectie en aanpassing.'
+  },
+  {
+    who: 'Nadia, studentenadministratie',
+    text: '“Ik had gehoopt de meldingen bij roosterwijzigingen te zien. Waar zijn die?”',
+    options: [
+      { text: 'Leen legt uit dat die story nog niet Done is en terug op de Product Backlog staat.', right: true },
+      { text: 'Mohammed toont de halve versie toch even.', feedback: 'Een halve story tonen geeft een verkeerd beeld van wat er af is. Alleen Done-werk wordt getoond.' },
+      { text: '“De meldingen zijn af, ze moeten alleen nog getest worden.”', feedback: 'Zonder tests is een story niet Done. Eerlijk zijn over wat af is, hoort bij openheid.' }
+    ],
+    why: 'Het team is open over wat niet af raakte. De story gaat terug naar de Product Backlog en komt in een volgende Sprint opnieuw aan bod.'
+  }
+];
+
+// Step 3: stakeholder categories from the course
+var REVIEW_CATS = { intern: 'Intern', extern: 'Extern', interface: 'Interface' };
+var REVIEW_CAT_HINT = {
+  intern: 'Intern: een afdeling binnen de organisatie, die vooral wil dat alles efficiënt verloopt.',
+  extern: 'Extern: de eindgebruikers en klanten, voor wie het product hun behoefte moet invullen.',
+  interface: 'Interface: partijen met invloed via wet- en regelgeving, zoals de overheid.'
+};
+var REVIEW_HOLDERS = [
+  { who: 'Marc, diensthoofd PXL Catering', note: 'Hij wil minder broodjes weggooien.', cat: 'intern' },
+  { who: 'Kevin, student', note: 'Hij gebruikt de app elke dag.', cat: 'extern' },
+  { who: 'De Gegevensbeschermingsautoriteit', note: 'Ze ziet toe op de privacywet (GDPR).', cat: 'interface' },
+  { who: 'Nadia, studentenadministratie', note: 'Ze levert de roostergegevens aan.', cat: 'intern' }
+];
+
+var reviewPicked = [];
+var reviewDemoDone = false;
+var reviewQState = REVIEW_QS.map(function() { return { done: false, wrong: [] }; });
+var reviewHolderState = REVIEW_HOLDERS.map(function() { return { done: false, wrong: [] }; });
+
+(function reviewInit() {
+  reviewRenderStories();
+  reviewRenderQs();
+  reviewRenderHolders();
+})();
+
+// ── Step 1 ──
+function reviewRenderStories() {
+  document.getElementById('review-stories').innerHTML = REVIEW_STORIES.map(function(s, i) {
+    var on = reviewPicked.indexOf(i) !== -1;
+    var cls = reviewDemoDone ? (s.done ? ' good' : '') : '';
+    return '<button class="review-story' + cls + '" aria-pressed="' + on + '" onclick="reviewPick(' + i + ')"' + (reviewDemoDone ? ' disabled' : '') + '>' +
+      '<span><span class="review-story-id">' + s.id + '</span><span class="review-story-title">' + s.title + '</span>' +
+      '<span class="review-story-state">' + s.state + '</span></span></button>';
+  }).join('');
+  document.getElementById('review-check').disabled = reviewDemoDone;
+}
+
+function reviewPick(i) {
+  var pos = reviewPicked.indexOf(i);
+  if (pos === -1) reviewPicked.push(i); else reviewPicked.splice(pos, 1);
+  document.getElementById('review-demo-fb').innerHTML = '';
+  reviewRenderStories();
+  document.querySelectorAll('#review-stories .review-story')[i].focus({ preventScroll: true });
+}
+
+function reviewCheckDemo() {
+  var notDone = reviewPicked.filter(function(i) { return !REVIEW_STORIES[i].done; });
+  var missing = REVIEW_STORIES.map(function(s, i) { return i; })
+    .filter(function(i) { return REVIEW_STORIES[i].done && reviewPicked.indexOf(i) === -1; });
+  var fb = document.getElementById('review-demo-fb');
+  if (!notDone.length && !missing.length) {
+    reviewDemoDone = true;
+    reviewRenderStories();
+    fb.innerHTML = '<div class="review-feedback ok"><strong>Juist.</strong> Het team toont alleen wat echt Done is. Een halve story tonen zou een verkeerd beeld geven van hoeveel waarde er opgeleverd is. De meldingen gaan terug naar de Product Backlog.</div>';
+    return;
+  }
+  var lines = [];
+  notDone.forEach(function(i) { lines.push(REVIEW_STORIES[i].title + ' is nog niet Done: zonder tests is een story niet af, dus die toon je niet.'); });
+  missing.forEach(function(i) { lines.push(REVIEW_STORIES[i].title + ' is Done: die mag het team zeker tonen.'); });
+  document.querySelectorAll('#review-stories .review-story').forEach(function(btn, i) {
+    btn.classList.toggle('bad', notDone.indexOf(i) !== -1 || missing.indexOf(i) !== -1);
+  });
+  fb.innerHTML = '<div class="review-feedback hint"><strong>Nog niet.</strong> ' + lines.join(' ') + '</div>';
+}
+
+// ── Step 2 ──
+function reviewRenderQs() {
+  document.getElementById('review-feedback-qs').innerHTML = REVIEW_QS.map(function(q, i) {
+    var st = reviewQState[i];
+    var html = '<div class="review-q"><div class="review-q-who">' + q.who + '</div><p class="review-q-text">' + q.text + '</p><div class="review-options">';
+    q.options.forEach(function(o, j) {
+      var cls = st.done && o.right ? ' right' : (st.wrong.indexOf(j) !== -1 ? ' wrong' : '');
+      var off = st.done || st.wrong.indexOf(j) !== -1;
+      html += '<button class="review-option' + cls + '" onclick="reviewAnswer(' + i + ',' + j + ')"' + (off ? ' disabled' : '') + '>' + o.text + '</button>';
+    });
+    html += '</div><div aria-live="polite">';
+    if (st.done) html += '<div class="review-feedback ok">' + q.why + '</div>';
+    else if (st.wrong.length) html += '<div class="review-feedback hint"><strong>Niet helemaal.</strong> ' + q.options[st.wrong[st.wrong.length - 1]].feedback + '</div>';
+    return html + '</div></div>';
+  }).join('');
+}
+
+function reviewAnswer(i, j) {
+  var st = reviewQState[i];
+  if (REVIEW_QS[i].options[j].right) st.done = true; else st.wrong.push(j);
+  reviewRenderQs();
+  var next = st.done ? null : document.querySelectorAll('#review-feedback-qs .review-q')[i].querySelector('.review-option:not(:disabled)');
+  if (next) next.focus({ preventScroll: true });
+}
+
+// ── Step 3 ──
+function reviewRenderHolders() {
+  document.getElementById('review-holders').innerHTML = REVIEW_HOLDERS.map(function(h, i) {
+    var st = reviewHolderState[i];
+    var html = '<div class="review-q"><div class="review-q-who">' + h.who + '</div><p class="review-q-text">' + h.note + '</p><div class="review-options row">';
+    Object.keys(REVIEW_CATS).forEach(function(c) {
+      var cls = st.done && c === h.cat ? ' right' : (st.wrong.indexOf(c) !== -1 ? ' wrong' : '');
+      var off = st.done || st.wrong.indexOf(c) !== -1;
+      html += '<button class="review-option' + cls + '" onclick="reviewClassify(' + i + ',\'' + c + '\')"' + (off ? ' disabled' : '') + '>' + REVIEW_CATS[c] + '</button>';
+    });
+    html += '</div><div aria-live="polite">';
+    if (st.done) html += '<div class="review-feedback ok">' + REVIEW_CAT_HINT[h.cat] + '</div>';
+    else if (st.wrong.length) html += '<div class="review-feedback hint"><strong>Niet helemaal.</strong> ' + REVIEW_CAT_HINT[st.wrong[st.wrong.length - 1]] + ' Past dat hier?</div>';
+    return html + '</div></div>';
+  }).join('');
+}
+
+function reviewClassify(i, c) {
+  var st = reviewHolderState[i];
+  if (REVIEW_HOLDERS[i].cat === c) st.done = true; else st.wrong.push(c);
+  reviewRenderHolders();
+  var next = st.done ? null : document.querySelectorAll('#review-holders .review-q')[i].querySelector('.review-option:not(:disabled)');
+  if (next) next.focus({ preventScroll: true });
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
