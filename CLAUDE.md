@@ -26,6 +26,7 @@ Interactive learning webapp that teaches students Agile (and Scrum). Part of the
 - `source/StartStopContinue.png` - an image of an empty Start Stop Continue retrospective board
 - `source/Sailboat.png` - an image of an empty Sailboat retrospective board
 - `source/empirisme.png` - an image showing an image explaining empirisme
+- `source/team_cast.png` - reference portrait of the recurring Scrum team that appears in all photos (left to right: Leen, Stef, Arnaud, Sara, Mohammed, Pieter the Scrum Master). A realistic mix for a Belgian IT team. Pass it as the first `--ref` when generating new images so the same people return.
 
 ## Requirements
 - Single-page scroll layout (all sections on one page, nav links are anchor scrolls)
