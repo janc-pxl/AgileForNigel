@@ -372,16 +372,54 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 
 /* ── SPRINT TIMELINE ───────────────────────────────────────────────────────── */
 
-/* Progress bar */
-.sprint-progress { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0 2rem; }
-.sprint-progress-track { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+/* Event colors: dot/border color plus a darker ink that passes 4.5:1 for text */
+.sprint-ev-planning   { --ev: var(--sprint-blue); --ev-ink: #3d5f85; --ev-bg: rgba(91,127,166,.12); }
+.sprint-ev-daily      { --ev: var(--green);       --ev-ink: #1e7a6e; --ev-bg: rgba(42,157,143,.12); }
+.sprint-ev-review     { --ev: var(--gold);        --ev-ink: #7a6535; --ev-bg: var(--gold-bg); }
+.sprint-ev-retro      { --ev: var(--accent);      --ev-ink: #b03040; --ev-bg: rgba(230,57,70,.08); }
+.sprint-ev-refinement { --ev: var(--refinement);  --ev-ink: #6d3fc4; --ev-bg: rgba(139,92,246,.12); }
+.sprint-ev-sprint     { --ev: var(--primary);     --ev-ink: var(--primary); --ev-bg: rgba(0,0,0,.06); }
+
+h3.sprint-subtitle {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.3rem;
+  color: var(--primary); margin: 2.5rem 0 .5rem;
+}
+
+/* The 5 events at a glance: the Sprint frames the other four */
+.sprint-overview {
+  position: relative; margin: 2rem 0 .5rem; padding: 1.75rem 1rem 1rem;
+  border: 2.5px solid var(--primary); border-radius: 12px;
+}
+.sprint-overview-label {
+  position: absolute; top: -.8rem; left: 1rem; padding: .1rem .75rem; border-radius: 3px;
+  background: var(--primary); color: white;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .82rem; letter-spacing: .04em;
+}
+.sprint-overview-label span { font-weight: 600; color: #c9c4b8; margin-left: .35rem; }
+.sprint-overview-list { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; }
+.sprint-overview-list li {
+  background: var(--card); border: 1.5px solid var(--border);
+  border-radius: 8px; padding: .75rem .9rem .85rem;
+}
+.sprint-overview-name {
+  display: flex; align-items: center; gap: .45rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .98rem; color: var(--ev-ink);
+}
+.sprint-overview-name::before { content: ''; width: .6rem; height: .6rem; border-radius: 50%; background: var(--ev); flex-shrink: 0; }
+.sprint-overview-box { display: block; font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: var(--muted); margin: .15rem 0 .35rem; }
+.sprint-overview-list p { font-size: .9rem; line-height: 1.45; margin: 0; }
+.sprint-overview-note { font-size: .88rem; color: var(--muted); margin: .85rem .1rem 0; }
+
+/* Progress */
+.sprint-progress { display: flex; align-items: center; gap: 1rem; margin: 1rem 0 1.5rem; }
+.sprint-progress-track { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
 .sprint-progress-fill { height: 100%; background: var(--gold); border-radius: 3px; transition: width .5s ease; width: 0%; }
-.sprint-progress-label { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: var(--muted); white-space: nowrap; }
+.sprint-progress-label { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .88rem; color: var(--muted); white-space: nowrap; }
 
 /* Layout: calendar + detail */
-.sprint-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1rem; align-items: start; }
+.sprint-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1rem; align-items: start; scroll-margin-top: 70px; }
 
-/* Sprint container — shows "De Sprint" as the overarching 5th event */
+/* Sprint container: the calendar sits inside "De Sprint" */
 .sprint-container {
   border: 2.5px solid var(--primary); border-radius: 12px;
   padding: 2rem 1rem 1rem; position: relative; margin-top: .5rem;
@@ -389,147 +427,106 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 .sprint-container-label {
   position: absolute; top: -11px; left: 1.25rem;
   background: var(--primary); color: white;
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .72rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .78rem;
   letter-spacing: .08em; text-transform: uppercase;
   padding: 2px 12px; border-radius: 3px;
 }
-.sprint-container-sub {
-  font-weight: 600; color: #bbb; letter-spacing: .04em; margin-left: 4px;
-}
+.sprint-container-sub { font-weight: 600; color: #c9c4b8; letter-spacing: .04em; margin-left: 4px; }
 
 /* Calendar grid */
 .sprint-calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 .sprint-cal-header {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .72rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .75rem;
   letter-spacing: .06em; text-transform: uppercase;
   text-align: center; padding: .35rem 0; color: var(--muted);
 }
-.sprint-cal-header.weekend { color: #bbb; }
 .sprint-week-label {
   grid-column: 1 / -1;
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .62rem;
-  letter-spacing: .1em; text-transform: uppercase;
-  color: var(--gold); padding: .5rem 0 .15rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .75rem;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: #7a6535; padding: .5rem 0 .15rem;
 }
 
 /* Day cells */
 .sprint-day {
+  font: inherit; color: inherit;
   background: var(--card); border: 1.5px solid var(--border);
   border-radius: 7px; padding: .5rem .35rem .4rem;
   text-align: center; cursor: pointer;
   transition: border-color .15s, background .15s, box-shadow .15s;
   min-height: 68px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
 }
-.sprint-day:hover:not(.weekend) { border-color: #bbb; background: #fafaf8; }
-.sprint-day.weekend:hover { border-color: #bbb; background: #f0ede8; }
-.sprint-day .day-num { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .92rem; color: var(--primary); line-height: 1.1; }
-.sprint-day .day-name { font-size: .68rem; color: var(--muted); font-weight: 600; }
+.sprint-day:hover:not(.weekend) { border-color: #a39c8d; background: #fafaf8; }
+.sprint-day.weekend:hover { border-color: #a39c8d; background: #f0ede8; }
+.sprint-day .day-num { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; color: var(--primary); line-height: 1.1; }
+.sprint-day .day-name { font-size: .75rem; color: var(--muted); font-weight: 600; }
 .sprint-day .day-dots { display: flex; gap: 3px; margin-top: 3px; justify-content: center; }
-.sprint-day .day-dot { width: 7px; height: 7px; border-radius: 50%; }
-.dot-planning { background: var(--sprint-blue); }
-.dot-daily { background: var(--green); }
-.dot-review { background: var(--gold); }
-.dot-retro { background: var(--accent); }
-.dot-refinement { background: var(--refinement); }
+.sprint-day .day-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ev); }
 
-/* Weekend */
-.sprint-day.weekend {
-  background: var(--bg); border-style: dashed; border-color: #ddd; cursor: pointer;
-}
-.sprint-day.weekend .day-num { color: #bbb; font-weight: 700; }
-.sprint-day.weekend .day-name { color: #ccc; }
+/* Weekend: optional, quieter but still legible */
+.sprint-day.weekend { background: var(--bg); border-style: dashed; border-color: #cfcabf; }
+.sprint-day.weekend .day-num { color: #6f6a62; font-weight: 700; }
+.sprint-day.weekend .day-name { color: #6f6a62; }
 
-/* Active & visited */
+/* Active, visited, changed in practice view */
 .sprint-day.visited { border-color: var(--gold); background: rgba(174,154,100,.06); }
-.sprint-day.visited .day-num::after { content: ' \2713'; font-size: .6rem; color: var(--gold); }
-.sprint-day.active { border-color: var(--gold); background: rgba(174,154,100,.18); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
-.sprint-day.active .day-num { color: var(--primary); }
-.sprint-day.weekend.visited { border-color: #ccc; background: rgba(174,154,100,.04); }
-.sprint-day.weekend.active { border-color: var(--gold); background: rgba(174,154,100,.12); }
+.sprint-day.visited .day-num::after { content: ' \2713'; font-size: .7rem; color: #7a6535; }
+.sprint-day.active { border-color: var(--primary); background: rgba(174,154,100,.18); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.sprint-day.weekend.visited { border-color: #b5ae9f; }
+.sprint-day.changed { box-shadow: 0 0 0 2px var(--refinement); }
+.sprint-day.changed.active { box-shadow: 0 0 0 2px var(--refinement), 0 2px 8px rgba(0,0,0,.08); }
+
+/* Ghost cell: Sprint 2 starts right after */
+.sprint-day.ghost { border-style: dashed; border-color: var(--sprint-blue); background: transparent; }
+.sprint-day.ghost .day-name { color: #3d5f85; font-weight: 700; }
 
 /* Detail panel */
-.sprint-detail { min-height: 300px; position: sticky; top: 70px; }
-.sprint-placeholder {
-  height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem;
-  color: var(--muted); font-size: .92rem; border: 2px dashed var(--border); border-radius: 10px;
-  background: white; text-align: center; padding: 2rem;
+.sprint-detail { min-height: 300px; scroll-margin-top: 70px; }
+
+/* Several events on one day: step through them */
+.sprint-substeps { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .75rem; }
+.sprint-substep {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: .4rem .8rem;
+  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .85rem;
+  border: 1.5px solid var(--border); border-radius: 6px; background: white; color: var(--primary); cursor: pointer;
 }
-.sprint-placeholder-icon { width: 38px; height: 38px; opacity: .5; display: block; color: var(--muted); }
+.sprint-substep::before { content: ''; width: .55rem; height: .55rem; border-radius: 50%; background: var(--ev); }
+.sprint-substep[aria-current="step"] { border-color: var(--ev); background: var(--ev-bg); color: var(--ev-ink); }
+.sprint-substep.visited::after { content: '\2713'; font-size: .75rem; color: #7a6535; }
 
 /* Event cards */
 @keyframes sprintIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 .sprint-event-card {
-  background: white; border: 1.5px solid var(--border); border-radius: 10px;
-  overflow: hidden; margin-bottom: .75rem; animation: sprintIn .25s ease;
+  background: white; border: 1.5px solid var(--ev);
+  border-radius: 10px; overflow: hidden; margin-bottom: .75rem; animation: sprintIn .25s ease;
 }
 .sprint-event-header { padding: .85rem 1.1rem .7rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
 .sprint-event-tag {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .67rem;
-  letter-spacing: .1em; text-transform: uppercase;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .78rem;
+  letter-spacing: .08em; text-transform: uppercase;
   display: inline-block; padding: 2px 8px; border-radius: 3px;
+  background: var(--ev-bg); color: var(--ev-ink);
 }
-.sprint-tag-planning { background: rgba(91,127,166,.12); color: #3d5f85; }
-.sprint-tag-daily { background: rgba(42,157,143,.12); color: #1e7a6e; }
-.sprint-tag-review { background: var(--gold-bg); color: #7a6535; }
-.sprint-tag-retro { background: rgba(230,57,70,.08); color: #b03040; }
-.sprint-event-time {
-  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .78rem;
-  color: var(--muted); margin-left: auto;
-}
-.sprint-event-duration {
-  font-size: .7rem; color: #aaa; font-style: italic;
-}
+.sprint-event-time { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .85rem; color: var(--muted); margin-left: auto; }
+.sprint-event-duration { font-size: .82rem; color: var(--muted); font-style: italic; }
 .sprint-event-body { padding: .9rem 1.1rem; }
-.sprint-event-desc { font-size: .9rem; line-height: 1.55; color: var(--text); margin-bottom: .6rem; }
+.sprint-event-desc { font-size: .95rem; line-height: 1.55; color: var(--text); margin-bottom: .6rem; }
 .sprint-event-details { list-style: none; padding: 0; margin: 0; }
-.sprint-event-details li {
-  font-size: .85rem; color: var(--text); padding: .3rem 0 .3rem 1.1rem;
-  position: relative; line-height: 1.45;
+.sprint-event-details li { font-size: .9rem; color: var(--text); padding: .3rem 0 .3rem 1.1rem; position: relative; line-height: 1.45; }
+.sprint-event-details li::before { content: ''; position: absolute; left: 0; top: .6rem; width: 6px; height: 6px; border-radius: 50%; background: var(--ev); }
+.sprint-event-new {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase;
+  color: #6d3fc4; border: 1.5px solid var(--refinement); border-radius: 3px; padding: 1px 6px;
 }
-.sprint-event-details li::before { content: ''; position: absolute; left: 0; top: .55rem; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
-.sprint-event-border-planning { border-left: 4px solid var(--sprint-blue); }
-.sprint-event-border-daily { border-left: 4px solid var(--green); }
-.sprint-event-border-review { border-left: 4px solid var(--gold); }
-.sprint-event-border-retro { border-left: 4px solid var(--accent); }
-.sprint-event-border-refinement { border-left: 4px solid var(--refinement); }
-.sprint-tag-refinement { background: rgba(139,92,246,.12); color: #6d3fc4; }
-
-/* Mode toggle */
-.sprint-mode-toggle {
-  display: flex; align-items: center; gap: .75rem;
-  margin: 1.25rem 0 .25rem; padding: .85rem 1.1rem;
-  background: var(--card); border: 1.5px solid var(--border); border-radius: 8px;
-}
-.sprint-mode-label {
-  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem;
-  color: var(--muted); cursor: pointer; transition: color .15s;
-}
-.sprint-mode-label.active { color: var(--primary); font-weight: 800; }
-.sprint-toggle-track {
-  position: relative; width: 44px; height: 24px; flex-shrink: 0;
-  background: var(--border); border-radius: 12px; cursor: pointer;
-  transition: background .2s;
-}
-.sprint-toggle-track.on { background: var(--refinement); }
-.sprint-toggle-knob {
-  position: absolute; top: 2px; left: 2px;
-  width: 20px; height: 20px; border-radius: 50%;
-  background: white; box-shadow: 0 1px 3px rgba(0,0,0,.2);
-  transition: transform .2s;
-}
-.sprint-toggle-track.on .sprint-toggle-knob { transform: translateX(20px); }
 
 /* Event image */
-.sprint-event-img {
-  width: 100%; max-height: 220px; object-fit: cover;
-  display: block; border-bottom: 1px solid var(--border);
-}
+.sprint-event-img { width: 100%; max-height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border); }
 
 /* Narrative */
 .sprint-narrative {
-  border-left: 3px solid var(--gold); background: var(--gold-bg);
-  padding: .6rem 1rem; font-size: .87rem; font-style: italic;
-  color: var(--primary); border-radius: 0 4px 4px 0; margin-top: .25rem;
+  background: var(--gold-bg); border: 1px solid rgba(174,154,100,.45);
+  padding: .65rem 1rem; font-size: .92rem; font-style: italic;
+  color: var(--primary); border-radius: 6px; margin-top: .25rem;
   animation: sprintIn .3s ease;
 }
 
@@ -538,64 +535,97 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   background: white; border: 2px dashed var(--border); border-radius: 10px;
   overflow: hidden; text-align: center; animation: sprintIn .25s ease;
 }
-.sprint-weekend-img-wrap {
-  position: relative; width: 100%; max-height: 220px; overflow: hidden;
-}
-.sprint-weekend-img, .sprint-weekend-img-hover {
-  width: 100%; max-height: 220px; object-fit: cover; display: block;
-  transition: opacity .3s ease;
-}
-.sprint-weekend-img-hover {
-  position: absolute; top: 0; left: 0; opacity: 0;
-}
+.sprint-weekend-img-wrap { position: relative; width: 100%; max-height: 220px; overflow: hidden; }
+.sprint-weekend-img, .sprint-weekend-img-hover { width: 100%; max-height: 220px; object-fit: cover; display: block; transition: opacity .3s ease; }
+.sprint-weekend-img-hover { position: absolute; top: 0; left: 0; opacity: 0; }
 .sprint-weekend-img-wrap:hover .sprint-weekend-img { opacity: 0; }
 .sprint-weekend-img-wrap:hover .sprint-weekend-img-hover { opacity: 1; }
-.sprint-weekend-body { padding: 1.5rem 2rem; }
-.sprint-weekend-icon { font-size: 2rem; margin-bottom: .5rem; opacity: .5; }
-.sprint-weekend-text { font-size: .92rem; color: var(--muted); }
+.sprint-weekend-body { padding: 1.25rem 2rem; }
+.sprint-weekend-text { font-size: .95rem; color: var(--muted); margin: 0; }
 
-/* Nav row */
-.sprint-nav-row {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-top: 1.5rem; gap: 1rem;
+/* End of the Sprint */
+.sprint-end-card {
+  background: white; border: 2px dashed var(--sprint-blue); border-radius: 10px;
+  padding: 1.4rem 1.5rem; animation: sprintIn .25s ease;
 }
-.sprint-counter { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: var(--muted); }
-.sprint-reset-row { display: flex; justify-content: flex-end; margin-top: .5rem; }
-.sprint-reset-link {
-  background: none; border: none; cursor: pointer; font-family: 'Raleway', sans-serif;
-  font-size: .78rem; font-weight: 700; color: var(--muted); text-decoration: underline;
-  text-underline-offset: 2px; padding: .25rem 0; transition: color .15s;
-}
-.sprint-reset-link:hover { color: var(--gold); }
+.sprint-end-card h4 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.15rem; color: var(--primary); margin-bottom: .4rem; }
+.sprint-end-card p { font-size: .95rem; margin-bottom: .6rem; }
+.sprint-end-card p:last-child { margin-bottom: 0; }
+
+/* Nav row (under the detail panel) */
+.sprint-nav-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-top: 1rem; gap: .75rem; }
 .sprint-btn {
-  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .9rem;
   padding: .45rem 1.2rem; background: var(--primary); color: white;
-  border: 2px solid var(--primary); border-radius: 5px;
+  border: 2px solid var(--primary); border-radius: 6px;
   min-height: 44px; cursor: pointer; transition: background .12s;
 }
 .sprint-btn:hover:not(:disabled) { background: #333; border-color: #333; }
 .sprint-btn:disabled { opacity: .28; cursor: default; }
 .sprint-btn.outline { background: transparent; color: var(--primary); }
 .sprint-btn.outline:hover:not(:disabled) { background: var(--primary); color: white; }
+.sprint-reset-link {
+  background: none; border: none; cursor: pointer; font-family: 'Raleway', sans-serif;
+  font-size: .85rem; font-weight: 700; color: var(--muted); text-decoration: underline;
+  text-underline-offset: 2px; min-height: 44px; padding: 0 .25rem; transition: color .15s;
+}
+.sprint-reset-link:hover { color: var(--primary); }
 
-/* Summary */
+/* Recap after the walk-through */
 .sprint-summary {
-  background: var(--primary); color: white; border-radius: 10px;
-  padding: 1.4rem 1.75rem; margin-top: 1.5rem; display: none;
+  background: var(--gold-bg); border: 2px solid var(--gold); border-radius: 10px;
+  padding: 1.4rem 1.6rem; margin-top: 2rem; display: none;
 }
 .sprint-summary.visible { display: block; animation: sprintIn .4s ease; }
-.sprint-summary h3 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.05rem; color: var(--gold); margin-bottom: .75rem; }
-.sprint-summary-grid { display: grid; grid-template-columns: 1fr; gap: .5rem; }
-.sprint-summary-item { display: flex; align-items: flex-start; gap: .5rem; padding: .4rem 0; }
-.sprint-summary-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
-.sprint-summary-name { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem; color: #eee; }
-.sprint-summary-time { font-size: .75rem; color: #999; display: block; }
+.sprint-summary h3 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.15rem; color: var(--primary); margin-bottom: .75rem; }
+.sprint-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem 1.5rem; }
+.sprint-summary-item { display: flex; align-items: flex-start; gap: .55rem; }
+.sprint-summary-item::before { content: ''; width: .65rem; height: .65rem; border-radius: 50%; background: var(--ev); flex-shrink: 0; margin-top: .4rem; }
+.sprint-summary-name { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; color: var(--primary); }
+.sprint-summary-time { font-size: .9rem; color: var(--text); display: block; }
 
-/* Legend */
-.sprint-legend { display: flex; gap: 1.25rem; flex-wrap: wrap; margin: 1rem 0 .25rem; }
-.sprint-legend-item { display: flex; align-items: center; gap: .35rem; font-size: .75rem; color: var(--muted); }
-.sprint-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+/* In practice: Refinement as a layer on top of the official Sprint */
+.sprint-practice {
+  margin-top: 2rem; padding: 1.4rem 1.6rem; border-radius: 10px;
+  background: var(--card); border: 1.5px solid var(--refinement);
+}
+.sprint-practice h3 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.15rem; color: var(--primary); margin-bottom: .4rem; }
+.sprint-practice > p { max-width: 72ch; }
+.sprint-compare { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 1rem 0 1.1rem; }
+.sprint-compare div { border: 1.5px solid var(--border); border-radius: 8px; padding: .75rem .9rem; background: var(--bg); }
+.sprint-compare strong { display: block; font-family: 'Raleway', sans-serif; font-size: .95rem; color: var(--primary); }
+.sprint-compare span { font-size: .9rem; }
+.sprint-compare div + div { border-color: var(--refinement); background: rgba(139,92,246,.06); }
+.sprint-switch {
+  display: inline-flex; align-items: center; gap: .75rem; min-height: 44px; padding: .35rem .25rem;
+  background: none; border: none; cursor: pointer; text-align: left;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; color: var(--primary);
+}
+.sprint-switch-track {
+  position: relative; width: 44px; height: 24px; flex-shrink: 0;
+  background: #b5ae9f; border-radius: 12px; transition: background .2s;
+}
+.sprint-switch-track::after {
+  content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%;
+  background: white; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform .2s;
+}
+.sprint-switch[aria-checked="true"] .sprint-switch-track { background: var(--refinement); }
+.sprint-switch[aria-checked="true"] .sprint-switch-track::after { transform: translateX(20px); }
+.sprint-practice-status { font-size: .9rem; color: var(--muted); margin: .35rem 0 0; }
 
+/* Bridge to the T/I/A exercise */
+.sprint-bridge {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem;
+  margin-top: 2rem; padding: 1.25rem 1.5rem; border-radius: 10px; background: var(--primary);
+}
+.sprint-bridge p { margin: 0; color: #e8e4da; max-width: 62ch; }
+.sprint-bridge p strong { color: white; }
+.sprint-bridge a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: .6rem 1.25rem; border-radius: 6px;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; white-space: nowrap;
+  background: var(--gold); color: var(--primary); text-decoration: none; transition: background .15s;
+}
+.sprint-bridge a:hover { background: #c2b07f; }
 /* ── POKER PLANNING SECTION ─────────────────────────────────────────────── */
 
 /* Story cards */
@@ -856,12 +886,19 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
-/* Sprint-kalender: dagtegels, knoppen en toggle */
+/* Sprint-kalender: dagtegels, stappen, knoppen en schakelaar */
 .sprint-day:focus-visible,
+.sprint-substep:focus-visible,
 .sprint-btn:focus-visible,
-.sprint-toggle-track:focus-visible {
+.sprint-reset-link:focus-visible,
+.sprint-switch:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+/* Sprint: brug naar Pijlers per Event staat op een donkere achtergrond */
+.sprint-bridge a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 /* Planning Poker: story-kaarten, reveal-knop en resultaatknop */
 .poker-story-card:focus-visible,
@@ -899,13 +936,15 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
   .empir-cycle-loop span { position: static; transform: none; padding: 0; }
   .empir-ex-done { margin-left: 0; }
   .sprint-layout { grid-template-columns: 1fr; }
-  .sprint-detail { position: static; }
-  .sprint-mode-toggle { flex-wrap: wrap; }
+  .sprint-overview-list { grid-template-columns: 1fr 1fr; }
+  .sprint-compare, .sprint-summary-grid { grid-template-columns: 1fr; }
   .poker-layout { grid-template-columns: 1fr; }
   .poker-detail { position: static; }
 }
 @media (max-width: 620px) {
+  .sprint-overview-list { grid-template-columns: 1fr; }
   h2 { font-size: 1.5rem; }
+  .nav-sep, .nav-page { display: none; }
   .sprint-day { min-height: 56px; padding: .35rem .2rem .3rem; }
   .sprint-day .day-num { font-size: .8rem; }
 }
@@ -1022,41 +1061,49 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 <section id="sprint-events">
   <div class="badge">De 5 Scrum Events</div>
   <h2>Een typische Sprint van 2 weken</h2>
-  <p class="lead">Sprints zijn de hartslag van Scrum, waarin idee&euml;n worden omgezet in waarde. Doorloop dag per dag hoe de vijf Scrum Events zich in een typische Sprint van twee weken afspelen.</p>
-  <div class="callout"><p>Klik op een dag in de kalender of gebruik de navigatieknoppen om door de Sprint te wandelen.</p></div>
+  <p class="lead">Sprints zijn de hartslag van Scrum, waarin idee&euml;n worden omgezet in waarde. De Scrum Guide kent vijf events: de <strong>Sprint</strong> zelf is de container, en daarbinnen geven vier events het ritme aan.</p>
 
-  <!-- Legend -->
-  <div class="sprint-legend">
-    <div class="sprint-legend-item"><div class="sprint-legend-dot" style="background:var(--primary)"></div> De Sprint</div>
-    <div class="sprint-legend-item"><div class="sprint-legend-dot dot-planning"></div> Sprint Planning</div>
-    <div class="sprint-legend-item"><div class="sprint-legend-dot dot-daily"></div> Daily Scrum</div>
-    <div class="sprint-legend-item"><div class="sprint-legend-dot dot-review"></div> Sprint Review</div>
-    <div class="sprint-legend-item"><div class="sprint-legend-dot dot-retro"></div> Sprint Retrospective</div>
+  <!-- De 5 events in &eacute;&eacute;n oogopslag -->
+  <div class="sprint-overview">
+    <div class="sprint-overview-label">5. De Sprint <span>vaste periode van 1 tot 4 weken, daarna begint meteen de volgende</span></div>
+    <ol class="sprint-overview-list">
+      <li class="sprint-ev-planning">
+        <span class="sprint-overview-name">1. Sprint Planning</span>
+        <span class="sprint-overview-box">max. 8 uur</span>
+        <p>Het team plant wat het deze Sprint maakt en legt het Sprint Doel vast.</p>
+      </li>
+      <li class="sprint-ev-daily">
+        <span class="sprint-overview-name">2. Daily Scrum</span>
+        <span class="sprint-overview-box">max. 15 minuten, elke dag</span>
+        <p>Kort afstemmen: voortgang, plan voor vandaag en obstakels.</p>
+      </li>
+      <li class="sprint-ev-review">
+        <span class="sprint-overview-name">3. Sprint Review</span>
+        <span class="sprint-overview-box">max. 4 uur</span>
+        <p>Het team toont wat er gemaakt werd aan de stakeholders.</p>
+      </li>
+      <li class="sprint-ev-retro">
+        <span class="sprint-overview-name">4. Sprint Retrospective</span>
+        <span class="sprint-overview-box">max. 3 uur</span>
+        <p>Het team blikt terug: hoe kunnen we beter samenwerken?</p>
+      </li>
+    </ol>
+    <p class="sprint-overview-note">De maximale duur (timebox) geldt voor een Sprint van een maand. Bij een kortere Sprint zijn de events meestal ook korter.</p>
   </div>
 
-  <!-- Mode toggle -->
-  <div class="sprint-mode-toggle" id="sprint-mode-toggle">
-    <span class="sprint-mode-label active" id="sprint-mode-official">Officieel (Scrum Guide)</span>
-    <div class="sprint-toggle-track" id="sprint-toggle" onclick="toggleRefinement()">
-      <div class="sprint-toggle-knob"></div>
-    </div>
-    <span class="sprint-mode-label" id="sprint-mode-refinement">In de praktijk (met Refinement)</span>
-  </div>
-  <div class="callout" id="sprint-mode-callout-block">
-    <p id="sprint-mode-callout-text"><strong>Je bekijkt nu de offici&euml;le Scrum Guide versie.</strong> De Scrum Guide definieert exact 5 events: de Sprint zelf, Sprint Planning, Daily Scrum, Sprint Review en Sprint Retrospective. In deze weergave duurt de Sprint Planning tot 8 uur, omdat het team tijdens de planning ook de backlog items moet begrijpen en schatten.</p>
-    <p style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Schakel de toggle in om te zien hoe de meeste teams in de praktijk werken, met Refinement sessies die de Sprint Planning korter en effici&euml;nter maken.</p>
-  </div>
+  <h3 class="sprint-subtitle">Doorloop de Sprint dag per dag</h3>
+  <p>Klik op een dag in de kalender of gebruik <strong>Volgende</strong>. Alle dagen met een event tellen mee. Het weekend mag je overslaan.</p>
 
   <!-- Progress bar -->
   <div class="sprint-progress">
     <div class="sprint-progress-track"><div class="sprint-progress-fill" id="sprint-fill"></div></div>
-    <span class="sprint-progress-label" id="sprint-progress-label">Dag 0 / 14</span>
+    <span class="sprint-progress-label" id="sprint-progress-label" aria-live="polite"></span>
   </div>
 
   <!-- Calendar + Detail -->
   <div class="sprint-layout">
     <div class="sprint-container">
-      <div class="sprint-container-label">De Sprint <span class="sprint-container-sub">(2 weken, Event 5)</span></div>
+      <div class="sprint-container-label">De Sprint <span class="sprint-container-sub">2 weken</span></div>
       <div class="sprint-calendar" id="sprint-calendar">
         <!-- Headers -->
         <div class="sprint-cal-header">Ma</div>
@@ -1064,29 +1111,47 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
         <div class="sprint-cal-header">Wo</div>
         <div class="sprint-cal-header">Do</div>
         <div class="sprint-cal-header">Vr</div>
-        <div class="sprint-cal-header weekend">Za</div>
-        <div class="sprint-cal-header weekend">Zo</div>
-        <!-- Week 1 label -->
-        <div class="sprint-week-label">Week 1</div>
-        <!-- Day cells rendered by JS -->
-      </div>
-      <!-- Navigation row -->
-      <div class="sprint-nav-row">
-        <button class="sprint-btn outline" id="sprint-prev" onclick="sprintPrev()" disabled>&larr; Vorige dag</button>
-        <span class="sprint-counter" id="sprint-counter">0 / 14 dagen bekeken</span>
-        <button class="sprint-btn" id="sprint-next" onclick="sprintNext()">Volgende dag &rarr;</button>
-      </div>
-      <div class="sprint-reset-row">
-        <button class="sprint-reset-link" onclick="sprintReset()">&#8635; Opnieuw beginnen</button>
+        <div class="sprint-cal-header">Za</div>
+        <div class="sprint-cal-header">Zo</div>
+        <!-- Week labels and day cells rendered by JS -->
       </div>
     </div>
-    <div class="sprint-detail" id="sprint-detail"></div>
+    <div>
+      <div class="sprint-detail" id="sprint-detail" aria-live="polite"></div>
+      <!-- Navigation row -->
+      <div class="sprint-nav-row">
+        <button class="sprint-btn outline" id="sprint-prev" onclick="sprintPrev()" disabled>&larr; Vorige</button>
+        <button class="sprint-reset-link" onclick="sprintReset()">Opnieuw beginnen</button>
+        <button class="sprint-btn" id="sprint-next" onclick="sprintNext()">Volgende &rarr;</button>
+      </div>
+    </div>
   </div>
 
-  <!-- Summary -->
+  <!-- Recap -->
   <div class="sprint-summary" id="sprint-summary">
-    <h3>Overzicht: de 5 Scrum Events</h3>
+    <h3>Samengevat: de 5 Scrum Events</h3>
     <div class="sprint-summary-grid" id="sprint-summary-grid"></div>
+  </div>
+
+  <!-- In de praktijk: Refinement -->
+  <div class="sprint-practice">
+    <h3>En in de praktijk? Refinement</h3>
+    <p>De meeste teams plannen tijdens de Sprint ook <strong>Refinement</strong> sessies in. Refinement is g&eacute;&eacute;n officieel Scrum Event, maar het maakt de volgende Sprint Planning veel korter: de backlog items zijn dan al uitgewerkt, geschat en voorzien van acceptatiecriteria (&ldquo;ready&rdquo;).</p>
+    <div class="sprint-compare">
+      <div><strong>Officieel (Scrum Guide)</strong><span>Sprint Planning tot 8 uur: het team moet de items tijdens de planning nog begrijpen en schatten.</span></div>
+      <div><strong>Met Refinement</strong><span>Sprint Planning ~1,5 tot 2 uur. Vuistregel: Refinement neemt max. 10% van de Sprint in, voor 2 weken ongeveer 2&times;1 uur.</span></div>
+    </div>
+    <button class="sprint-switch" id="sprint-toggle" role="switch" aria-checked="false" onclick="toggleRefinement()">
+      <span class="sprint-switch-track" aria-hidden="true"></span>
+      Toon Refinement in deze Sprint
+    </button>
+    <p class="sprint-practice-status" id="sprint-practice-status">Je bekijkt de offici&euml;le versie. Zet de schakelaar aan: de dagen die veranderen krijgen een paarse rand, je voortgang blijft bewaard.</p>
+  </div>
+
+  <!-- Brug naar Pijlers per Event -->
+  <div class="sprint-bridge">
+    <p><strong>Elk event maakt iets zichtbaar, bekijkt het en stuurt bij.</strong> Zoek nu zelf Transparantie, Inspectie en Aanpassing in elk Scrum Event.</p>
+    <a href="#empirisme-events">Naar Pijlers per Event &rarr;</a>
   </div>
 </section>
 
@@ -1882,8 +1947,10 @@ var SPRINT_DAYS = [
 ];
 
 var SPRINT_TOTAL = SPRINT_DAYS.length;
-var sprintActive = null;
-var sprintVisited = new Set();
+var sprintActive = 0;           // selected day index, or SPRINT_TOTAL for the end-of-Sprint card
+var sprintEvent = 0;            // selected event on that day
+var sprintVisited = new Set();  // "dayIdx-eventName" (and "dayIdx-weekend", which does not count)
+var sprintCompleted = false;    // recap stays visible once every event has been seen
 var refinementMode = false;
 
 // ── Refinement Overrides ─────────────────────────────────────────────────────
@@ -1908,7 +1975,7 @@ var REFINEMENT_OVERRIDES = {
         ]
       }
     ],
-    narrative: 'De Sprint begint! Dankzij de Refinement sessies in de vorige Sprint zijn de backlog items al helder. De Sprint Planning verloopt vlot: in plaats van ~4 uur is het team in ~1,5\u20132 uur klaar.'
+    narrative: 'De Sprint begint! Dankzij de Refinement sessies in de vorige Sprint zijn de backlog items al helder. De Sprint Planning verloopt vlot: in plaats van tot 8 uur is het team in ~1,5\u20132 uur klaar.'
   },
   2: { // Day 3 (Wed W1) — add Refinement session
     eventsAppend: [
@@ -1976,133 +2043,217 @@ function getActiveDay(idx) {
   return day;
 }
 
+// Every event on every working day, in order. Weekends are optional and not part of the steps.
+function sprintSteps() {
+  var steps = [];
+  SPRINT_DAYS.forEach(function(_, i) {
+    getActiveDay(i).events.forEach(function(ev, e) {
+      steps.push({ day: i, ev: e, key: i + '-' + ev.name });
+    });
+  });
+  return steps;
+}
+
+function sprintStepIndex(steps) {
+  for (var s = 0; s < steps.length; s++) {
+    if (steps[s].day === sprintActive && steps[s].ev === sprintEvent) return s;
+  }
+  return -1;
+}
+
+function sprintDayDone(i) {
+  var events = getActiveDay(i).events;
+  if (!events.length) return sprintVisited.has(i + '-weekend');
+  return events.every(function(ev) { return sprintVisited.has(i + '-' + ev.name); });
+}
+
+function sprintIsChanged(i) {
+  return refinementMode && !!REFINEMENT_OVERRIDES[i];
+}
+
 // ── Build calendar cells ──────────────────────────────────────────────────────
 
 (function sprintInit() {
-  var cal = document.getElementById('sprint-calendar');
-
-  // Render day cells for week 1 (indices 0–6)
-  for (var i = 0; i < 7; i++) { buildDayCell(cal, i); }
-
-  // Week 2 label
-  var w2 = document.createElement('div');
-  w2.className = 'sprint-week-label';
-  w2.textContent = 'Week 2';
-  cal.appendChild(w2);
-
-  // Render day cells for week 2 (indices 7–13)
-  for (var i = 7; i < 14; i++) { buildDayCell(cal, i); }
-
-  // Auto-select day 1
-  sprintClick(0);
+  buildCalendar();
+  sprintShow(0, 0, false);
 })();
+
+function buildCalendar() {
+  var cal = document.getElementById('sprint-calendar');
+  Array.from(cal.children).forEach(function(child) {
+    if (!child.classList.contains('sprint-cal-header')) cal.removeChild(child);
+  });
+
+  [[0, 'Week 1'], [7, 'Week 2']].forEach(function(week) {
+    var label = document.createElement('div');
+    label.className = 'sprint-week-label';
+    label.textContent = week[1];
+    cal.appendChild(label);
+    for (var i = week[0]; i < week[0] + 7; i++) { buildDayCell(cal, i); }
+  });
+
+  // Sprint 2 starts right after: one ghost cell to show the loop
+  var next = document.createElement('div');
+  next.className = 'sprint-week-label';
+  next.textContent = 'Daarna: Sprint 2';
+  cal.appendChild(next);
+  var ghost = document.createElement('button');
+  ghost.id = 'sprint-day-end';
+  ghost.className = 'sprint-day ghost';
+  ghost.setAttribute('aria-label', 'Maandag 15: Sprint 2 start met een nieuwe Sprint Planning');
+  ghost.innerHTML = '<span class="day-num">15</span><span class="day-name">Sprint 2</span>' +
+    '<span class="day-dots"><span class="day-dot sprint-ev-planning"></span></span>';
+  ghost.onclick = function() { sprintShowEnd(true); };
+  cal.appendChild(ghost);
+}
 
 function buildDayCell(container, idx) {
   var d = getActiveDay(idx);
-  var cell = document.createElement('div');
+  var cell = document.createElement('button');
   cell.id = 'sprint-day-' + idx;
   cell.className = 'sprint-day' + (d.isWeekend ? ' weekend' : '');
-  cell.onclick = function() { sprintClick(idx); };
+  cell.setAttribute('aria-label', d.weekday + ' ' + d.day + ': ' +
+    (d.events.length ? d.events.map(function(ev) { return ev.name; }).join(', ') : 'weekend, geen events'));
+  cell.onclick = function() { sprintShow(idx, sprintFirstUnseen(idx), true); };
 
-  var num = document.createElement('div');
-  num.className = 'day-num';
-  num.textContent = d.day;
-  cell.appendChild(num);
-
-  var name = document.createElement('div');
-  name.className = 'day-name';
-  name.textContent = d.weekday.substring(0, 2);
-  cell.appendChild(name);
-
-  if (d.events.length > 0) {
-    var dots = document.createElement('div');
-    dots.className = 'day-dots';
-    d.events.forEach(function(ev) {
-      var dot = document.createElement('div');
-      dot.className = 'day-dot dot-' + ev.color;
-      dots.appendChild(dot);
-    });
-    cell.appendChild(dots);
+  var html = '<span class="day-num">' + d.day + '</span><span class="day-name">' + d.weekday.substring(0, 2) + '</span>';
+  if (d.events.length) {
+    html += '<span class="day-dots">';
+    d.events.forEach(function(ev) { html += '<span class="day-dot sprint-ev-' + ev.color + '"></span>'; });
+    html += '</span>';
   }
-
+  cell.innerHTML = html;
   container.appendChild(cell);
+}
+
+function sprintFirstUnseen(idx) {
+  var events = getActiveDay(idx).events;
+  for (var e = 0; e < events.length; e++) {
+    if (!sprintVisited.has(idx + '-' + events[e].name)) return e;
+  }
+  return 0;
 }
 
 // ── Interaction ───────────────────────────────────────────────────────────────
 
-function sprintClick(idx) {
+function sprintShow(idx, evIdx, scroll) {
   sprintActive = idx;
-  sprintVisited.add(idx);
-
-  // Update cell classes
-  SPRINT_DAYS.forEach(function(_, i) {
-    var d = getActiveDay(i);
-    var cell = document.getElementById('sprint-day-' + i);
-    if (!cell) return;
-    var cls = 'sprint-day';
-    if (d.isWeekend) cls += ' weekend';
-    if (sprintVisited.has(i)) cls += ' visited';
-    if (i === idx) cls += ' active';
-    cell.className = cls;
-  });
-
-  // Progress
-  document.getElementById('sprint-fill').style.width = (sprintVisited.size / SPRINT_TOTAL * 100) + '%';
-  document.getElementById('sprint-progress-label').textContent = 'Dag ' + (idx + 1) + ' / ' + SPRINT_TOTAL;
-
-  // Detail
   var day = getActiveDay(idx);
   var detail = document.getElementById('sprint-detail');
 
-  if (day.isWeekend) {
+  if (!day.events.length) {
+    sprintEvent = 0;
+    sprintVisited.add(idx + '-weekend');
     detail.innerHTML =
       '<div class="sprint-weekend-card">' +
         '<div class="sprint-weekend-img-wrap">' +
-          '<img class="sprint-weekend-img" src="img/team_relaxing.jpg" alt="Team rust uit" loading="lazy" />' +
-          '<img class="sprint-weekend-img-hover" src="img/team_relaxing_clicked.jpg" alt="Team rust uit" loading="lazy" />' +
+          '<img class="sprint-weekend-img" src="img/team_relaxing.jpg" alt="Het team ontspant tijdens het weekend" loading="lazy" />' +
+          '<img class="sprint-weekend-img-hover" src="img/team_relaxing_clicked.jpg" alt="" loading="lazy" />' +
         '</div>' +
-        '<div class="sprint-weekend-body">' +
-          '<div class="sprint-weekend-icon">\u{1F6CC}</div>' +
-          '<div class="sprint-weekend-text">Geen Scrum Events gepland. Het team rust uit.</div>' +
-        '</div>' +
+        '<div class="sprint-weekend-body"><p class="sprint-weekend-text">' + day.weekday + ': geen Scrum Events. Het team rust uit.</p></div>' +
       '</div>';
   } else {
+    sprintEvent = Math.min(evIdx || 0, day.events.length - 1);
+    var ev = day.events[sprintEvent];
+    sprintVisited.add(idx + '-' + ev.name);
+
     var html = '';
-    day.events.forEach(function(ev) {
-      html += buildEventCard(ev);
-    });
-    if (day.narrative) {
+    if (day.events.length > 1) {
+      html += '<div class="sprint-substeps" aria-label="Events op ' + day.weekday.toLowerCase() + '">';
+      day.events.forEach(function(other, e) {
+        html += '<button class="sprint-substep sprint-ev-' + other.color + (sprintVisited.has(idx + '-' + other.name) ? ' visited' : '') + '"' +
+          (e === sprintEvent ? ' aria-current="step"' : '') + ' onclick="sprintShow(' + idx + ',' + e + ',false)">' + other.name + '</button>';
+      });
+      html += '</div>';
+    }
+    html += buildEventCard(ev, idx);
+    if (day.narrative && sprintEvent === 0) {
       html += '<div class="sprint-narrative">' + day.narrative + '</div>';
     }
     detail.innerHTML = html;
   }
 
-  // Counter & buttons
-  document.getElementById('sprint-counter').textContent = sprintVisited.size + ' / ' + SPRINT_TOTAL + ' dagen bekeken';
-  updateNavButtons();
+  sprintUpdate();
+  if (scroll) sprintScrollToDetail();
+}
 
-  // Summary
-  if (sprintVisited.size === SPRINT_TOTAL) {
-    document.getElementById('sprint-summary').classList.add('visible');
+function sprintShowEnd(scroll) {
+  sprintActive = SPRINT_TOTAL;
+  sprintEvent = 0;
+  var steps = sprintSteps();
+  var done = steps.filter(function(s) { return sprintVisited.has(s.key); }).length;
+  document.getElementById('sprint-detail').innerHTML =
+    '<div class="sprint-end-card">' +
+      '<h4>De Sprint is voorbij</h4>' +
+      '<p>Na de Sprint Retrospective is deze Sprint afgerond. Maandag start meteen <strong>Sprint 2</strong>, opnieuw met een Sprint Planning. Zo herhaalt de cyclus zich, Sprint na Sprint.</p>' +
+      (done === steps.length
+        ? '<p>Hieronder vind je de samenvatting van de vijf events, en hoe teams het in de praktijk aanpakken.</p>'
+        : '<p>Je hebt ' + done + ' van de ' + steps.length + ' events bekeken. Klik op de dagen zonder vinkje om de rest te zien.</p>') +
+    '</div>';
+  sprintUpdate();
+  if (scroll) sprintScrollToDetail();
+}
+
+function sprintUpdate() {
+  // Cells
+  SPRINT_DAYS.forEach(function(_, i) {
+    var cell = document.getElementById('sprint-day-' + i);
+    var cls = 'sprint-day';
+    if (getActiveDay(i).isWeekend) cls += ' weekend';
+    if (sprintDayDone(i)) cls += ' visited';
+    if (sprintIsChanged(i)) cls += ' changed';
+    if (i === sprintActive) cls += ' active';
+    cell.className = cls;
+    if (i === sprintActive) cell.setAttribute('aria-current', 'date'); else cell.removeAttribute('aria-current');
+  });
+  document.getElementById('sprint-day-end').className = 'sprint-day ghost' + (sprintActive === SPRINT_TOTAL ? ' active' : '');
+
+  // Progress: one indicator, counting events seen
+  var steps = sprintSteps();
+  var done = steps.filter(function(s) { return sprintVisited.has(s.key); }).length;
+  document.getElementById('sprint-fill').style.width = (done / steps.length * 100) + '%';
+  document.getElementById('sprint-progress-label').textContent = done + ' / ' + steps.length + ' events bekeken';
+
+  // Nav buttons
+  var idx = sprintStepIndex(steps);
+  var prev = document.getElementById('sprint-prev');
+  var next = document.getElementById('sprint-next');
+  prev.disabled = idx === 0 || (idx === -1 && sprintActive === 0);
+  next.style.visibility = sprintActive === SPRINT_TOTAL ? 'hidden' : 'visible';
+  next.innerHTML = idx === steps.length - 1 ? 'Sprint afronden &rarr;' : 'Volgende &rarr;';
+
+  // Recap
+  if (done === steps.length) sprintCompleted = true;
+  if (sprintCompleted) {
     renderSummary();
+    document.getElementById('sprint-summary').classList.add('visible');
   }
 }
 
-function buildEventCard(ev) {
+function sprintScrollToDetail() {
+  var detail = document.getElementById('sprint-detail');
+  var top = detail.getBoundingClientRect().top;
+  if (top < 60 || top > window.innerHeight * .5) detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function buildEventCard(ev, dayIdx) {
   var detailsHtml = '';
   if (ev.details && ev.details.length) {
     detailsHtml = '<ul class="sprint-event-details">';
-    ev.details.forEach(function(d) {
-      detailsHtml += '<li>' + d + '</li>';
-    });
+    ev.details.forEach(function(d) { detailsHtml += '<li>' + d + '</li>'; });
     detailsHtml += '</ul>';
   }
-  var imgHtml = ev.image ? '<img class="sprint-event-img" src="' + ev.image + '" alt="' + ev.name + '" loading="lazy" />' : '';
-  return '<div class="sprint-event-card sprint-event-border-' + ev.color + '">' +
+  var badge = '';
+  if (sprintIsChanged(dayIdx)) {
+    badge = '<span class="sprint-event-new">' + (ev.color === 'refinement' ? 'Geen officieel event' : 'Verkort dankzij Refinement') + '</span>';
+  }
+  var imgHtml = ev.image ? '<img class="sprint-event-img" src="' + ev.image + '" alt="Het team tijdens de ' + ev.name + '" loading="lazy" />' : '';
+  return '<div class="sprint-event-card sprint-ev-' + ev.color + '">' +
     imgHtml +
     '<div class="sprint-event-header">' +
-      '<span class="sprint-event-tag sprint-tag-' + ev.color + '">' + ev.icon + ' ' + ev.name + '</span>' +
+      '<span class="sprint-event-tag">' + ev.name + '</span>' +
       '<span class="sprint-event-duration">' + ev.duration + '</span>' +
+      badge +
       '<span class="sprint-event-time">' + ev.time + '</span>' +
     '</div>' +
     '<div class="sprint-event-body">' +
@@ -2112,141 +2263,67 @@ function buildEventCard(ev) {
   '</div>';
 }
 
-function renderPlaceholder() {
-  document.getElementById('sprint-detail').innerHTML =
-    '<div class="sprint-placeholder">' +
-      PLACEHOLDER_ICON.replace('PREFIX', 'sprint') +
-      '<div>Klik op een dag in de kalender om te beginnen.</div>' +
-    '</div>';
-}
-
-function updateNavButtons() {
-  var prev = document.getElementById('sprint-prev');
-  var next = document.getElementById('sprint-next');
-
-  prev.disabled = sprintActive === null || sprintActive <= 0;
-
-  if (sprintActive === SPRINT_TOTAL - 1) {
-    next.textContent = 'Klaar \u2713';
-    next.disabled = true;
-  } else {
-    next.innerHTML = 'Volgende dag &rarr;';
-    next.disabled = false;
-  }
-}
-
 function sprintNext() {
-  var next = sprintActive === null ? 0 : Math.min(sprintActive + 1, SPRINT_TOTAL - 1);
-  sprintClick(next);
+  var steps = sprintSteps();
+  var idx = sprintStepIndex(steps);
+  if (idx === steps.length - 1) { sprintShowEnd(true); return; }
+  var target = idx >= 0 ? steps[idx + 1] : steps.filter(function(s) { return s.day > sprintActive; })[0];
+  if (target) sprintShow(target.day, target.ev, true); else sprintShowEnd(true);
 }
 
 function sprintPrev() {
-  if (sprintActive === null || sprintActive <= 0) return;
-  sprintClick(sprintActive - 1);
+  var steps = sprintSteps();
+  var idx = sprintStepIndex(steps);
+  var target = idx > 0 ? steps[idx - 1] : (idx === -1 ? steps.filter(function(s) { return s.day < sprintActive; }).pop() : null);
+  if (target) sprintShow(target.day, target.ev, true);
 }
 
 function sprintReset() {
-  sprintActive = null;
   sprintVisited = new Set();
-  rebuildCalendar();
+  sprintCompleted = false;
   document.getElementById('sprint-summary').classList.remove('visible');
-  sprintClick(0);
+  sprintShow(0, 0, true);
 }
 
+// Refinement is a layer on top of the official Sprint: progress is kept
 function toggleRefinement() {
   refinementMode = !refinementMode;
+  document.getElementById('sprint-toggle').setAttribute('aria-checked', String(refinementMode));
+  document.getElementById('sprint-practice-status').textContent = refinementMode
+    ? 'Je bekijkt de praktijkversie. Dag 1 heeft een kortere Sprint Planning, en op dag 3 en 9 is er Refinement. Die dagen hebben een paarse rand.'
+    : 'Je bekijkt de officiële versie. Zet de schakelaar aan: de dagen die veranderen krijgen een paarse rand, je voortgang blijft bewaard.';
 
-  // Update toggle UI
-  var track = document.getElementById('sprint-toggle');
-  var labelOff = document.getElementById('sprint-mode-official');
-  var labelOn = document.getElementById('sprint-mode-refinement');
-  var callout = document.getElementById('sprint-mode-callout-block');
-
+  buildCalendar();
   if (refinementMode) {
-    track.classList.add('on');
-    labelOff.classList.remove('active');
-    labelOn.classList.add('active');
-    callout.innerHTML = '<p><strong>Je bekijkt nu de praktijkversie met Refinement sessies.</strong> Refinement is g\u00e9\u00e9n officieel Scrum Event, maar wordt door de meeste teams wel ingepland. Het effect: de Sprint Planning krimpt van ~4\u20138 uur naar ~1,5\u20132 uur, omdat backlog items al zijn uitgewerkt, geschat en voorzien van acceptatiecriteria (\u201cready\u201d). De vuistregel is dat Refinement maximaal 10% van de sprintcapaciteit inneemt. Voor een 2-weken sprint is dat ongeveer 2\u00d71 uur.</p><p style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Schakel de toggle uit om terug te keren naar de offici\u00eble Scrum Guide versie zonder Refinement sessies.</p>';
+    // Jump to the first Refinement session so the change is visible right away
+    var events = getActiveDay(2).events;
+    for (var e = 0; e < events.length; e++) { if (events[e].color === 'refinement') break; }
+    sprintShow(2, e, false);
+    document.querySelector('.sprint-layout').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else if (sprintActive === SPRINT_TOTAL) {
+    sprintShowEnd(false);
   } else {
-    track.classList.remove('on');
-    labelOff.classList.add('active');
-    labelOn.classList.remove('active');
-    callout.innerHTML = '<p><strong>Je bekijkt nu de offici\u00eble Scrum Guide versie.</strong> De Scrum Guide definieert exact 5 events: de Sprint zelf, Sprint Planning, Daily Scrum, Sprint Review en Sprint Retrospective. In deze weergave duurt de Sprint Planning tot 8 uur, omdat het team tijdens de planning ook de backlog items moet begrijpen en schatten.</p><p style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Schakel de toggle in om te zien hoe de meeste teams in de praktijk werken, met Refinement sessies die de Sprint Planning korter en effici\u00ebnter maken.</p>';
+    sprintShow(sprintActive, sprintEvent, false);
   }
-
-  // Update legend
-  updateLegend();
-
-  // Reset state and rebuild
-  sprintActive = null;
-  sprintVisited = new Set();
-  rebuildCalendar();
-
-  // Hide summary
-  document.getElementById('sprint-summary').classList.remove('visible');
-
-  // Auto-select day 1
-  sprintClick(0);
-}
-
-function updateLegend() {
-  var legend = document.querySelector('.sprint-legend');
-  // Remove existing refinement item if any
-  var existing = document.getElementById('sprint-legend-refinement');
-  if (existing) existing.remove();
-
-  if (refinementMode) {
-    var item = document.createElement('div');
-    item.className = 'sprint-legend-item';
-    item.id = 'sprint-legend-refinement';
-    item.innerHTML = '<div class="sprint-legend-dot dot-refinement"></div> Refinement';
-    legend.appendChild(item);
-  }
-}
-
-function rebuildCalendar() {
-  var cal = document.getElementById('sprint-calendar');
-  // Remove all day cells and week-2 label (keep headers and week-1 label)
-  var children = Array.from(cal.children);
-  children.forEach(function(child) {
-    if (child.classList.contains('sprint-day') || (child.classList.contains('sprint-week-label') && child.textContent === 'Week 2')) {
-      cal.removeChild(child);
-    }
-  });
-
-  // Re-render week 1 day cells (indices 0–6)
-  for (var i = 0; i < 7; i++) { buildDayCell(cal, i); }
-
-  // Week 2 label
-  var w2 = document.createElement('div');
-  w2.className = 'sprint-week-label';
-  w2.textContent = 'Week 2';
-  cal.appendChild(w2);
-
-  // Re-render week 2 day cells (indices 7–13)
-  for (var i = 7; i < 14; i++) { buildDayCell(cal, i); }
 }
 
 function renderSummary() {
   var events = [
-    { num: 1, name: 'Sprint Planning', color: 'var(--sprint-blue)', timebox: refinementMode ? '~1,5\u20132 uur (verkort)' : 'Max. 8 uur', desc: refinementMode ? 'Korter en effici\u00ebnter dankzij Refinement: items zijn al "ready"' : 'Het team plant wat er deze Sprint wordt opgeleverd' },
-    { num: 2, name: 'Daily Scrum', color: 'var(--green)', timebox: 'Max. 15 minuten', desc: 'Dagelijkse standup om voortgang en obstakels te bespreken' },
-    { num: 3, name: 'Sprint Review', color: 'var(--gold)', timebox: 'Max. 4 uur', desc: 'Demo van het increment aan stakeholders' },
-    { num: 4, name: 'Sprint Retrospective', color: 'var(--accent)', timebox: 'Max. 3 uur', desc: 'Het team reflecteert en bepaalt verbeteringen' },
-    { num: 5, name: 'De Sprint', color: 'var(--primary)', timebox: '1, 2 of 4 weken', desc: 'Het overkoepelende event: de vaste periode waarin het team werkt aan het Sprint Doel' }
+    { name: '1. Sprint Planning', color: 'planning', timebox: refinementMode ? '~1,5 tot 2 uur met Refinement' : 'max. 8 uur', desc: 'het team plant wat het deze Sprint maakt' },
+    { name: '2. Daily Scrum', color: 'daily', timebox: 'max. 15 minuten', desc: 'dagelijks voortgang en obstakels bespreken' },
+    { name: '3. Sprint Review', color: 'review', timebox: 'max. 4 uur', desc: 'het increment tonen aan de stakeholders' },
+    { name: '4. Sprint Retrospective', color: 'retro', timebox: 'max. 3 uur', desc: 'terugblikken en verbeteringen kiezen' },
+    { name: '5. De Sprint', color: 'sprint', timebox: '1 tot 4 weken', desc: 'de container waarin het team werkt aan het Sprint Doel' }
   ];
   if (refinementMode) {
-    events.splice(2, 0, { num: '*', name: 'Refinement', color: 'var(--refinement)', timebox: '2\u00d7 ~1 uur per Sprint', desc: 'Geen officieel event, maar essentieel in de praktijk voor een vlotte Sprint Planning' });
+    events.push({ name: '+ Refinement (geen officieel event)', color: 'refinement', timebox: '2× ~1 uur per Sprint', desc: 'items voorbereiden voor een vlotte Sprint Planning' });
   }
-  var html = '';
-  events.forEach(function(e) {
-    html += '<div class="sprint-summary-item">' +
-      '<div class="sprint-summary-dot" style="background:' + e.color + '"></div>' +
-      '<div><span class="sprint-summary-name">Event ' + e.num + ': ' + e.name + '</span>' +
-      '<span class="sprint-summary-time">' + e.timebox + ': ' + e.desc + '</span></div>' +
-    '</div>';
-  });
-  document.getElementById('sprint-summary-grid').innerHTML = html;
+  document.getElementById('sprint-summary-grid').innerHTML = events.map(function(e) {
+    return '<div class="sprint-summary-item sprint-ev-' + e.color + '"><div>' +
+      '<span class="sprint-summary-name">' + e.name + '</span>' +
+      '<span class="sprint-summary-time">' + e.timebox + ': ' + e.desc + '</span>' +
+    '</div></div>';
+  }).join('');
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
