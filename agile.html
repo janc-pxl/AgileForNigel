@@ -380,6 +380,75 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 }
 .scenario-summary p { font-size: .95rem; color: var(--text); margin: 0 0 .25rem; line-height: 1.5; }
 
+/* ── SCRUM WAARDEN ─────────────────────────────────────────────────────────── */
+@keyframes waardeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Meet the team */
+.waarde-team { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1.5rem 2rem; align-items: center; margin: 1.75rem 0 .5rem; }
+.waarde-team img { width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.12); }
+.waarde-team h3, .waarde-sub {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--primary); margin-bottom: .5rem;
+}
+.waarde-sub { margin: 2.5rem 0 .4rem; }
+.waarde-names { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .35rem 1.25rem; margin-top: .6rem; }
+.waarde-names li { font-size: .95rem; line-height: 1.4; }
+.waarde-names strong { font-family: 'Raleway', sans-serif; color: var(--primary); }
+.waarde-names span { color: var(--muted); }
+
+/* The five values */
+.waarde-values { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: .75rem; margin-top: 1rem; }
+.waarde-values li { background: var(--card); border: 1.5px solid var(--border); border-radius: 8px; padding: .9rem .95rem 1rem; }
+.waarde-values h4 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.08rem; color: var(--primary); margin: 0; }
+.waarde-values small { display: block; font-size: .82rem; color: var(--muted); margin-bottom: .35rem; }
+.waarde-values p { font-size: .92rem; line-height: 1.45; margin: 0; }
+.waarde-values li.hit { border-color: var(--gold); background: var(--gold-bg); }
+
+/* Dilemmas */
+.waarde-progress { display: flex; align-items: center; gap: .75rem; margin: .75rem 0 1rem; }
+.waarde-progress-track { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.waarde-progress-fill { height: 100%; width: 0; background: var(--green); border-radius: 3px; transition: width .3s; }
+.waarde-progress-label { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .88rem; color: var(--muted); white-space: nowrap; }
+.waarde-dilemmas { display: grid; gap: 1rem; }
+.waarde-dilemma { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; padding: 1.1rem 1.25rem 1.2rem; }
+.waarde-dilemma-who { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem; color: #7a6535; margin-bottom: .2rem; }
+.waarde-dilemma-text { font-size: 1.02rem; font-weight: 600; color: var(--primary); margin: 0 0 .8rem; max-width: 75ch; }
+.waarde-options { display: grid; gap: .5rem; }
+.waarde-option {
+  text-align: left; min-height: 44px; padding: .6rem 1rem; border-radius: 6px; cursor: pointer;
+  font: inherit; font-size: .97rem; color: var(--text); background: white; border: 1.5px solid var(--border);
+  transition: border-color .15s, background .15s;
+}
+.waarde-option:hover:not(:disabled) { border-color: var(--primary); background: #fafaf8; }
+.waarde-option.wrong { border-color: var(--accent); color: #b3202c; background: rgba(230,57,70,.05); text-decoration: line-through; cursor: default; }
+.waarde-option.right { border-color: var(--green); background: rgba(42,157,143,.1); color: #1e7a6e; font-weight: 700; cursor: default; }
+.waarde-feedback { margin-top: .6rem; padding: .75rem 1rem; border-radius: 6px; font-size: .95rem; animation: waardeIn .25s ease; }
+.waarde-feedback.hint { background: rgba(174,154,100,.12); border: 1px solid rgba(174,154,100,.5); }
+.waarde-feedback.ok { background: rgba(42,157,143,.08); border: 1px solid rgba(31,119,108,.35); }
+.waarde-tag {
+  display: inline-block; margin-right: .35rem; padding: 1px 9px; border-radius: 10px;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .82rem; background: var(--primary); color: var(--gold);
+}
+
+/* Values and empiricism */
+.waarde-link { margin-top: 2rem; padding: 1.25rem 1.5rem; border-radius: 10px; background: var(--gold-bg); border: 2px solid var(--gold); }
+.waarde-link h3 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.15rem; color: var(--primary); margin-bottom: .5rem; }
+.waarde-link ul { list-style: none; display: grid; gap: .35rem; }
+.waarde-link li { font-size: .97rem; }
+.waarde-bridge {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem;
+  margin-top: 2rem; padding: 1.25rem 1.5rem; border-radius: 10px; background: var(--primary);
+}
+.waarde-bridge p { margin: 0; color: #e8e4da; max-width: 62ch; }
+.waarde-bridge p strong { color: white; }
+.waarde-bridge a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: .6rem 1.25rem; border-radius: 6px;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; white-space: nowrap;
+  background: var(--gold); color: var(--primary); text-decoration: none; transition: background .15s;
+}
+.waarde-bridge a:hover { background: #c2b07f; }
+.waarde-option:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.waarde-bridge a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
 /* ── SPRINT TIMELINE ───────────────────────────────────────────────────────── */
 
 /* Event colors: dot/border color plus a darker ink that passes 4.5:1 for text */
@@ -964,7 +1033,7 @@ h3.sprint-subtitle {
 }
 .retro-loop a:hover { background: #c2b07f; }
 .retro-recap { margin-top: 2rem; }
-.retro-recap-grid { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; }
+.retro-recap-grid { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: .75rem; }
 .retro-recap-grid li { background: var(--card); border: 1.5px solid var(--border); border-radius: 8px; padding: .85rem .95rem; font-size: .93rem; line-height: 1.45; }
 .retro-recap-grid a { display: flex; align-items: center; min-height: 44px; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem; color: var(--primary); text-decoration: none; }
 .retro-recap-grid a:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -1075,18 +1144,21 @@ h3.sprint-subtitle {
   .poker-steps { grid-template-columns: repeat(3, 1fr); }
   .poker-backlog { grid-template-columns: 1fr; }
   .retro-recap-grid { grid-template-columns: 1fr 1fr; }
+  .waarde-team { grid-template-columns: 1fr; }
+  .waarde-values { grid-template-columns: repeat(3, 1fr); }
   .poker-card { --w: 60px; }
   .poker-slot { width: 60px; }
   .poker-seats { gap: .6rem; }
 }
 @media (max-width: 620px) {
   .sprint-overview-list { grid-template-columns: 1fr; }
-  h2 { font-size: 1.5rem; }
+  h2 { font-size: 1.65rem; }
   .nav-sep, .nav-page { display: none; }
   .retro-board .retro-postit { display: none; }
   .retro-list { display: grid; gap: .6rem; margin-top: .75rem; }
   .retro-prev { grid-template-columns: 1fr; }
   .retro-recap-grid { grid-template-columns: 1fr; }
+  .waarde-values { grid-template-columns: 1fr; }
   .retro-intro img { width: 100%; }
   .poker-steps { grid-template-columns: repeat(2, 1fr); }
   .poker-card { --w: 40px; }
@@ -1121,6 +1193,7 @@ h3.sprint-subtitle {
   </button>
   <div class="nav-dropdown" id="nav-dropdown">
     <a href="#empirisme" onclick="navClose()">Empirisme</a>
+    <a href="#scrum-waarden" onclick="navClose()">Scrum Waarden</a>
     <a href="#sprint-events" onclick="navClose()">Scrum Events</a>
     <a href="#empirisme-events" onclick="navClose()">Pijlers per Event</a>
     <a href="#poker-planning" onclick="navClose()">Planning Poker</a>
@@ -1182,7 +1255,65 @@ h3.sprint-subtitle {
 
   <!-- Brug naar de Sprint -->
   <div class="empir-bridge">
-    <p><strong>Hoe brengt Scrum deze cyclus in de praktijk?</strong> Doorloop eerst een volledige Sprint. Daarna zoek je zelf de drie pijlers in elk Scrum Event en test je jezelf.</p>
+    <p><strong>Empirisme werkt alleen als het team eerlijk en open is.</strong> Daarvoor zijn er de Scrum Waarden. Maak meteen kennis met het team dat je de rest van de pagina volgt.</p>
+    <a href="#scrum-waarden">Naar de Scrum Waarden &rarr;</a>
+  </div>
+</section>
+
+<section id="scrum-waarden">
+  <div class="badge">Scrum Waarden</div>
+  <h2>Vijf waarden voor een team dat werkt</h2>
+  <p class="lead">Empirisme werkt alleen als mensen het ook doen: eerlijk zijn over hun voortgang, durven zeggen dat iets misloopt, samen het doel halen. Daarom steunt Scrum op vijf waarden: <strong>commitment, focus, openheid, respect en moed</strong>.</p>
+
+  <!-- Het team -->
+  <div class="waarde-team">
+    <img src="img/team_cast.jpg" alt="Het Campi-team: Leen, Stef, Arnaud, Sara, Mohammed en Pieter, van links naar rechts" loading="lazy" />
+    <div>
+      <h3>Maak kennis met het Campi-team</h3>
+      <p>Zes PXL-Digital studenten bouwen Campi, een campusapp. Je volgt hen op de rest van deze pagina: door een Sprint, aan de pokertafel en in de Retrospective.</p>
+      <ul class="waarde-names">
+        <li><strong>Leen</strong> <span>Developer</span></li>
+        <li><strong>Stef</strong> <span>Developer</span></li>
+        <li><strong>Arnaud</strong> <span>Developer</span></li>
+        <li><strong>Sara</strong> <span>Developer</span></li>
+        <li><strong>Mohammed</strong> <span>Developer</span></li>
+        <li><strong>Pieter</strong> <span>Scrum Master</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- De vijf waarden -->
+  <h3 class="waarde-sub">De vijf waarden</h3>
+  <ul class="waarde-values" id="waarde-values">
+    <li data-value="commitment"><h4>Commitment</h4><small>toewijding</small><p>We zetten ons volledig in voor het team en het Sprint Doel.</p></li>
+    <li data-value="focus"><h4>Focus</h4><small>focus</small><p>We werken aan wat nu het belangrijkst is, en aan weinig tegelijk.</p></li>
+    <li data-value="openheid"><h4>Openheid</h4><small>openness</small><p>We delen eerlijk hoe het gaat, ook als het niet goed gaat.</p></li>
+    <li data-value="respect"><h4>Respect</h4><small>respect</small><p>We waarderen elkaars mening, kunde en achtergrond.</p></li>
+    <li data-value="moed"><h4>Moed</h4><small>courage</small><p>We durven problemen aan te kaarten en fouten toe te geven.</p></li>
+  </ul>
+
+  <!-- Dilemma's -->
+  <h3 class="waarde-sub">Wat doe jij? Vijf momenten uit Sprint 1</h3>
+  <p>Waarden zie je pas in wat mensen doen. Kies bij elk moment de reactie die past bij hoe een Scrum Team werkt.</p>
+  <div class="waarde-progress">
+    <div class="waarde-progress-track"><div class="waarde-progress-fill" id="waarde-fill"></div></div>
+    <span class="waarde-progress-label" id="waarde-progress-label" aria-live="polite">0 / 5 beantwoord</span>
+  </div>
+  <div class="waarde-dilemmas" id="waarde-dilemmas"></div>
+
+  <!-- Waarden en empirisme -->
+  <div class="waarde-link">
+    <h3>Waarden maken empirisme mogelijk</h3>
+    <ul>
+      <li><strong>Openheid</strong> zorgt voor <strong>transparantie</strong>: zonder eerlijkheid is er niets om te inspecteren.</li>
+      <li><strong>Moed</strong> maakt <strong>inspectie en aanpassing</strong> mogelijk: je moet durven zeggen dat iets niet werkt.</li>
+      <li><strong>Commitment, focus en respect</strong> houden het team samen op koers naar het Sprint Doel.</li>
+    </ul>
+  </div>
+
+  <!-- Brug naar de Sprint -->
+  <div class="waarde-bridge">
+    <p><strong>Hoe brengt het team dit in de praktijk?</strong> Doorloop met Leen, Stef, Arnaud, Sara, Mohammed en Pieter een volledige Sprint. Daarna zoek je zelf de drie pijlers in elk Scrum Event.</p>
     <a href="#sprint-events">Naar de Sprint &rarr;</a>
   </div>
 </section>
@@ -1458,6 +1589,7 @@ h3.sprint-subtitle {
     <h3>Samengevat: alles op deze pagina</h3>
     <ul class="retro-recap-grid">
       <li><a href="#empirisme">Empirisme</a>Transparantie, Inspectie en Aanpassing: zichtbaar maken, bekijken, bijsturen.</li>
+      <li><a href="#scrum-waarden">Scrum Waarden</a>Commitment, focus, openheid, respect en moed: de basis voor goed teamwork.</li>
       <li><a href="#sprint-events">De 5 Scrum Events</a>De Sprint als container, met Planning, Daily Scrum, Review en Retrospective.</li>
       <li><a href="#poker-planning">Planning Poker</a>In stilte kiezen, samen omdraaien, hoogste en laagste leggen uit, nooit een gemiddelde.</li>
       <li><a href="#retrospectives">Retrospective</a>Eerst terugkijken, dan 1 of 2 SMART-actiepunten die het team echt uitvoert.</li>
@@ -1896,6 +2028,106 @@ function scenarioShowSummary() {
     '<p><strong>' + scenarioScore + ' van de ' + EMPIR_SCENARIOS.length + '</strong> scenario\'s correct bij de eerste poging (' + pct + '%).</p>' +
     '<p>De pijlers zitten niet alleen in de events, maar ook in de hulpmiddelen van het team: het Scrum Board, de burndown chart en de afspraken over wanneer iets echt af is.</p>';
   el.classList.add('visible');
+}
+
+// ── Scrum Waarden ─────────────────────────────────────────────────────────────
+
+// Five moments from Campi Sprint 1, one per value. One option is right; the others carry feedback.
+var WAARDE_DILEMMAS = [
+  {
+    value: 'openheid', label: 'Openheid', who: 'Dag 4, Daily Scrum',
+    text: 'Arnaud zit al twee dagen vast op de koppeling met het PXL-roostersysteem, maar in de Daily zegt hij telkens “gaat goed”. Wat zegt hij best morgen?',
+    options: [
+      { text: '“Ik zit vast op de roosterkoppeling. Wie kan me vandaag helpen?”', right: true },
+      { text: '“Gaat goed.” Hij werkt dit weekend door om de achterstand in te halen.', feedback: 'Zo blijft het probleem verborgen, en kan het team niet bijsturen. Wie eerlijk deelt hoe het gaat, ook als het niet goed gaat, maakt hulp mogelijk.' },
+      { text: 'Niets zeggen en ondertussen een andere story oppakken.', feedback: 'Dan ligt er een half afgewerkte story, en weet niemand dat er een probleem is. Het team kan alleen helpen als het weet wat er speelt.' }
+    ],
+    why: 'Arnaud deelt eerlijk dat hij vastzit. Zo kan het team meteen helpen, en blijft de voortgang zichtbaar voor iedereen.'
+  },
+  {
+    value: 'focus', label: 'Focus', who: 'Dag 6',
+    text: 'Een lector vraagt Stef om “even snel” een extra scherm te bouwen voor de opendeurdag. Het hoort niet bij het Sprint Doel. Wat doet Stef?',
+    options: [
+      { text: 'Hij bouwt het ’s avonds, dan merkt niemand het.', feedback: 'Dan gaat zijn energie naar werk buiten het Sprint Doel, en is het team niet transparant over waar de tijd naartoe gaat.' },
+      { text: 'Hij verwijst de lector naar de Product Owner, die het op de Product Backlog kan zetten voor een volgende Sprint.', right: true },
+      { text: 'Hij begint er meteen aan: een lector vraagt het tenslotte.', feedback: 'Elke “snelle” extra vraag haalt het team weg van het Sprint Doel. Wat in de Sprint komt, beslist het team samen met de Product Owner.' }
+    ],
+    why: 'Het team werkt aan wat nu het belangrijkst is: het Sprint Doel. Nieuwe wensen horen op de Product Backlog, niet tussendoor.'
+  },
+  {
+    value: 'moed', label: 'Moed', who: 'Sprint Planning',
+    text: 'De Product Owner wil nog twee extra stories in de Sprint. Sara ziet dat het team dat nooit haalt. Wat doet Sara?',
+    options: [
+      { text: 'Ze zwijgt: de Product Owner beslist toch.', feedback: 'De Product Owner bepaalt wat het belangrijkst is, maar het team zegt hoeveel het aankan. Zwijgen leidt tot een Sprint die niet lukt.' },
+      { text: 'Ze zegt ja en hoopt dat het team het toch haalt.', feedback: 'Hopen is geen plan. Wie nu ja zegt, moet later uitleggen waarom het niet gelukt is.' },
+      { text: 'Ze zegt eerlijk dat het team dat niet haalt, en legt uit waarom.', right: true }
+    ],
+    why: 'Sara durft een moeilijke boodschap te brengen, eerlijk over wat haalbaar is. Dat vraagt moed, maar het voorkomt een Sprint die mislukt.'
+  },
+  {
+    value: 'respect', label: 'Respect', who: 'Refinement',
+    text: 'Mohammed stelt een vraag over een story. Stef vindt het antwoord evident en rolt met zijn ogen. Wat is de beste reactie?',
+    options: [
+      { text: 'Stef legt het rustig uit: elke vraag helpt het team de story beter te begrijpen.', right: true },
+      { text: 'Mohammed stelt voortaan geen vragen meer, om de anderen niet op te houden.', feedback: 'Dan blijft er onduidelijkheid, en dat zie je later terug als grote verschillen in de Planning Poker. Elke vraag verdient een serieus antwoord.' },
+      { text: 'Pieter beantwoordt de vraag zelf, dat gaat sneller.', feedback: 'Dat lost de vraag op, maar niet de houding van Stef. In een team waardeer je elkaars vragen en kennis.' }
+    ],
+    why: 'In een Scrum Team neem je elkaar serieus. Wie zich gerespecteerd voelt, durft vragen te stellen, en dat maakt het werk beter.'
+  },
+  {
+    value: 'commitment', label: 'Commitment', who: 'Donderdag, week 2',
+    text: 'De login-story is bijna af, maar de tests ontbreken nog. Leen kan de tests afwerken, of een nieuwe, leukere story beginnen. Wat kiest ze?',
+    options: [
+      { text: 'Ze begint de nieuwe story: de tests kunnen volgende Sprint.', feedback: 'Dan is de story niet echt af, en haalt het team zijn Sprint Doel niet. Half werk telt niet mee in de Review.' },
+      { text: 'Ze zet de story al op Done: de tests zijn bijna klaar.', feedback: 'Dat is niet eerlijk tegenover het team en de stakeholders. Done betekent echt af, met tests.' },
+      { text: 'Ze werkt eerst de tests af, zodat de story echt Done is en het Sprint Doel gehaald wordt.', right: true }
+    ],
+    why: 'Leen zet zich in voor het gezamenlijke doel en voor kwaliteit, ook als een nieuwe story leuker lijkt.'
+  }
+];
+
+var waardeState = WAARDE_DILEMMAS.map(function() { return { done: false, wrong: [] }; });
+
+(function waardeInit() {
+  waardeRender();
+})();
+
+function waardeRender() {
+  document.getElementById('waarde-dilemmas').innerHTML = WAARDE_DILEMMAS.map(function(d, i) {
+    var st = waardeState[i];
+    var html = '<div class="waarde-dilemma"><div class="waarde-dilemma-who">' + (i + 1) + '. ' + d.who + '</div>' +
+      '<p class="waarde-dilemma-text">' + d.text + '</p><div class="waarde-options">';
+    d.options.forEach(function(o, j) {
+      var cls = st.done && o.right ? ' right' : (st.wrong.indexOf(j) !== -1 ? ' wrong' : '');
+      var off = st.done || st.wrong.indexOf(j) !== -1;
+      html += '<button class="waarde-option' + cls + '" onclick="waardeAnswer(' + i + ',' + j + ')"' + (off ? ' disabled' : '') + '>' + o.text + '</button>';
+    });
+    html += '</div><div aria-live="polite">';
+    if (st.done) {
+      html += '<div class="waarde-feedback ok"><span class="waarde-tag">' + d.label + '</span>' + d.why + '</div>';
+    } else if (st.wrong.length) {
+      html += '<div class="waarde-feedback hint"><strong>Niet helemaal.</strong> ' + d.options[st.wrong[st.wrong.length - 1]].feedback + '</div>';
+    }
+    return html + '</div></div>';
+  }).join('');
+
+  var done = waardeState.filter(function(s) { return s.done; }).length;
+  document.getElementById('waarde-fill').style.width = (done / WAARDE_DILEMMAS.length * 100) + '%';
+  document.getElementById('waarde-progress-label').textContent = done + ' / ' + WAARDE_DILEMMAS.length + ' beantwoord';
+  // Light up each value once its dilemma is solved
+  document.querySelectorAll('#waarde-values li').forEach(function(li) {
+    var v = li.getAttribute('data-value');
+    li.classList.toggle('hit', WAARDE_DILEMMAS.some(function(d, i) { return d.value === v && waardeState[i].done; }));
+  });
+}
+
+function waardeAnswer(i, j) {
+  var st = waardeState[i];
+  if (WAARDE_DILEMMAS[i].options[j].right) st.done = true; else st.wrong.push(j);
+  waardeRender();
+  var item = document.querySelectorAll('.waarde-dilemma')[i];
+  var focus = st.done ? null : item.querySelector('.waarde-option:not(:disabled)');
+  if (focus) focus.focus({ preventScroll: true });
 }
 
 // ── Sprint Days Data ──────────────────────────────────────────────────────────
