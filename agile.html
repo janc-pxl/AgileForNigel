@@ -836,79 +836,139 @@ h3.sprint-subtitle {
 .poker-bridge a:hover { background: #c2b07f; }
 
 /* ── RETROSPECTIVE SECTION ──────────────────────────────────────────────────── */
-.retro-tabs { display: flex; gap: .6rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
-.retro-tab {
-  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .8rem;
-  letter-spacing: .04em; text-transform: uppercase;
-  padding: .5rem 1.1rem; border-radius: 4px;
-  border: 2px solid var(--border); background: var(--card);
-  color: var(--muted); cursor: pointer; transition: all .15s;
+@keyframes retroIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Intro: lead + team photo */
+.retro-intro { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem 2rem; margin: 1rem 0 .5rem; }
+.retro-intro .lead { flex: 1; min-width: 260px; margin: 0; }
+.retro-intro img { width: 300px; max-width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.12); }
+
+/* Steps */
+.retro-step { margin-top: 2.5rem; scroll-margin-top: 70px; }
+.retro-step h3 {
+  display: flex; align-items: center; gap: .65rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--primary); margin-bottom: .4rem;
 }
-.retro-tab:hover { border-color: var(--gold); color: var(--primary); }
-.retro-tab.active { background: var(--primary); border-color: var(--primary); color: white; }
-.retro-formats-label {
-  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .82rem;
-  color: var(--muted); margin: 1.5rem 0 .5rem; text-transform: uppercase; letter-spacing: .04em;
+.retro-step h3 span {
+  width: 1.8rem; height: 1.8rem; border-radius: 50%; flex-shrink: 0; background: var(--primary); color: var(--gold);
+  display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: .95rem;
 }
-.retro-formats-label span { color: var(--gold); }
-.retro-tab.visited:not(.active) {
-  border-color: var(--gold); color: var(--primary); background: rgba(174,154,100,.08);
+.retro-step > p { max-width: 72ch; }
+
+/* Shared answer buttons + feedback */
+.retro-choices { display: flex; flex-wrap: wrap; gap: .5rem; }
+.retro-choice {
+  min-height: 44px; padding: .5rem 1rem; border-radius: 6px; cursor: pointer;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .92rem;
+  border: 2px solid var(--border); background: white; color: var(--primary);
+  transition: border-color .15s, background .15s;
 }
-.retro-tab.visited:not(.active)::after { content: ' \2713'; font-size: .75em; color: var(--gold); }
-.retro-rules {
-  background: var(--gold-bg); border-left: 4px solid var(--gold);
-  border-radius: 0 4px 4px 0; padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+.retro-choice:hover:not(:disabled) { border-color: var(--primary); background: #fafaf8; }
+.retro-choice.wrong { border-color: var(--accent); color: #b3202c; background: rgba(230,57,70,.05); text-decoration: line-through; cursor: default; }
+.retro-choice.right { border-color: var(--green); background: rgba(42,157,143,.1); color: #1e7a6e; cursor: default; }
+.retro-feedback { margin-top: .6rem; padding: .7rem 1rem; border-radius: 6px; font-size: .95rem; animation: retroIn .25s ease; }
+.retro-feedback.hint { background: rgba(174,154,100,.12); border: 1px solid rgba(174,154,100,.5); }
+.retro-feedback.ok { background: rgba(42,157,143,.08); border: 1px solid rgba(31,119,108,.35); }
+
+/* Step 1: previous action points */
+.retro-prev { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+.retro-prev-item { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; padding: 1rem; }
+.retro-prev-note {
+  background: #90CAF9; color: var(--primary); padding: .7rem .85rem; margin-bottom: .8rem;
+  font-size: .98rem; line-height: 1.4; box-shadow: 2px 3px 7px rgba(0,0,0,.18); transform: rotate(-1deg);
 }
-.retro-rules h4 { margin: 0 0 .5rem; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .88rem; }
-.retro-rules ol { margin: 0; padding-left: 1.2rem; }
-.retro-rules li { margin-bottom: .25rem; font-size: .88rem; }
-.retro-board-wrap { position: relative; width: 100%; margin-bottom: 1rem; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,.15); cursor: pointer; }
+.retro-prev-item:nth-child(2) .retro-prev-note { transform: rotate(1deg); }
+.retro-prev-q { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .92rem; margin: 0 0 .5rem; }
+
+/* Step 2: the board */
+.retro-board { position: relative; width: 100%; margin-top: 1rem; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,.15); }
 .retro-board-img { display: block; width: 100%; height: auto; }
 .retro-postit {
-  position: absolute;
-  width: 13%; min-height: 46px;
-  padding: .35em .4em;
-  background: #FFF176;
-  box-shadow: 2px 3px 7px rgba(0,0,0,.26);
-  font-size: clamp(.52rem, 1.05vw, .7rem); line-height: 1.3;
-  border-radius: 2px;
-  opacity: 0; transform: scale(.5) rotate(var(--rot, 0deg));
-  transition: opacity .25s, transform .25s;
-  z-index: 10; word-break: break-word; pointer-events: none;
+  position: absolute; width: 13%; min-height: 9%; padding: .45em .5em;
+  background: #FFF176; color: var(--primary); box-shadow: 2px 3px 7px rgba(0,0,0,.26);
+  font-size: clamp(.72rem, 1.05vw, .88rem); line-height: 1.3; border-radius: 2px;
+  transform: rotate(var(--rot, 0deg)); hyphens: auto;
 }
-.retro-postit.blue { background: #90CAF9; }
-.retro-postit.visible { opacity: 1; transform: scale(1) rotate(var(--rot, 0deg)); animation: retro-stick .35s cubic-bezier(.22,1.4,.64,1) both; }
-@keyframes retro-stick {
+.retro-postit b { display: block; font-family: 'Raleway', sans-serif; font-size: .9em; color: #5c4a14; }
+.retro-postit.blue { background: #90CAF9; width: 12%; }
+.retro-postit.blue b { color: #1d4f7a; }
+.retro-postit.new { animation: retroStick .4s ease-out both; }
+@keyframes retroStick {
   0%   { opacity: 0; transform: scale(.7) rotate(calc(var(--rot, 0deg) - 6deg)) translateY(-8px); }
-  60%  { opacity: 1; transform: scale(1.06) rotate(calc(var(--rot, 0deg) + 2deg)) translateY(1px); }
-  100% { opacity: 1; transform: scale(1) rotate(var(--rot, 0deg)) translateY(0); }
+  70%  { opacity: 1; transform: scale(1.04) rotate(var(--rot, 0deg)); }
+  100% { opacity: 1; transform: scale(1) rotate(var(--rot, 0deg)); }
 }
-.retro-board-placeholder {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -52%) rotate(-4deg);
-  width: 150px; height: 150px;
-  border: 2px dashed #ccc; border-radius: 4px;
-  display: flex; align-items: center; justify-content: center;
-  color: #bbb; font-size: .78rem; font-weight: 700; font-family: 'Raleway', sans-serif;
-  text-transform: uppercase; letter-spacing: .04em; text-align: center; padding: .75rem;
-  pointer-events: none; line-height: 1.4;
-  transition: opacity .3s;
+.retro-list { display: none; }
+.retro-list-col { background: var(--card); border: 1.5px solid var(--border); border-radius: 8px; padding: .7rem .9rem; }
+.retro-list-col h4 { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; color: var(--primary); margin: 0 0 .35rem; }
+.retro-list-col ul { list-style: none; }
+.retro-list-col li { background: #FFF176; padding: .4rem .6rem; margin-bottom: .35rem; font-size: .93rem; line-height: 1.4; }
+.retro-list-col.blue li { background: #90CAF9; }
+.retro-sort { margin-top: 1rem; padding: 1rem 1.1rem; background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; }
+.retro-sort-note {
+  display: inline-block; background: #FFF176; padding: .6rem .8rem; margin: 0 0 .75rem;
+  font-size: 1rem; line-height: 1.4; box-shadow: 2px 3px 7px rgba(0,0,0,.2); transform: rotate(-1deg); max-width: 34ch;
 }
-.retro-controls { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
-.retro-btn {
-  font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 1rem;
-  letter-spacing: .04em; text-transform: uppercase;
-  padding: .75rem 2rem; border-radius: 4px; border: none;
-  background: var(--gold); color: var(--primary); cursor: pointer; transition: opacity .15s;
+.retro-sort-note b { display: block; font-family: 'Raleway', sans-serif; color: #5c4a14; }
+.retro-sort-label { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .9rem; color: var(--muted); margin: 0 0 .5rem; }
+
+/* Step 3: choose the action points */
+.retro-actions { display: grid; gap: .5rem; margin-top: 1rem; }
+.retro-action {
+  display: flex; align-items: flex-start; gap: .7rem; text-align: left; min-height: 44px;
+  padding: .7rem 1rem; border-radius: 8px; cursor: pointer;
+  font: inherit; font-size: .98rem; color: var(--text); background: white; border: 1.5px solid var(--border);
+  transition: border-color .15s, background .15s;
 }
-.retro-hint-text {
-  font-size: .88rem; color: var(--muted); text-align: center;
-  margin: 0 0 .6rem; font-style: italic;
+.retro-action::before {
+  content: ''; flex-shrink: 0; width: 1.1rem; height: 1.1rem; margin-top: .15rem; border-radius: 4px;
+  border: 2px solid #8a8478; background: white;
 }
-.retro-btn:hover:not(:disabled) { opacity: .82; }
-.retro-btn:disabled { opacity: .3; cursor: not-allowed; }
-.retro-btn.outline { background: transparent; border: 2px solid var(--border); color: var(--muted); }
-.retro-btn.outline:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
-.retro-step-label { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .8rem; color: var(--muted); }
+.retro-action:hover { border-color: var(--primary); }
+.retro-action[aria-pressed="true"] { border-color: var(--primary); background: #f5f9fd; }
+.retro-action[aria-pressed="true"]::before { background: #1d4f7a; border-color: #1d4f7a; box-shadow: inset 0 0 0 2px white; }
+.retro-action.bad { border-color: var(--accent); background: rgba(230,57,70,.04); }
+.retro-action.good { border-color: var(--green); background: rgba(42,157,143,.08); }
+.retro-action-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; margin-top: .9rem; }
+.retro-count { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: .92rem; color: var(--muted); }
+.retro-check {
+  min-height: 44px; padding: .5rem 1.3rem; border-radius: 6px; cursor: pointer;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem;
+  background: var(--primary); color: white; border: 2px solid var(--primary);
+}
+.retro-check:disabled { background: transparent; color: var(--muted); border-color: var(--border); cursor: default; }
+
+/* Step 4: which format when */
+.retro-fq { display: grid; gap: .9rem; margin-top: 1rem; }
+.retro-fq-item { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem; }
+.retro-fq-item h4 { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.02rem; color: var(--primary); margin: 0 0 .6rem; }
+.retro-fq-result { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: .8rem; animation: retroIn .3s ease; }
+.retro-fq-result img { width: 220px; max-width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+.retro-fq-result p { flex: 1; min-width: 220px; margin: 0; font-size: .97rem; }
+
+/* Ending: rules, loop to Sprint 2, page recap */
+.retro-end { margin-top: 3rem; padding: 1.4rem 1.6rem; border-radius: 10px; background: var(--gold-bg); border: 2px solid var(--gold); }
+.retro-end h3, .retro-recap h3 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.2rem; color: var(--primary); margin-bottom: .6rem; }
+.retro-end ol { margin-left: 1.2rem; }
+.retro-end li { margin-bottom: .3rem; }
+.retro-loop {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem;
+  margin-top: 1.5rem; padding: 1.25rem 1.5rem; border-radius: 10px; background: var(--primary);
+}
+.retro-loop p { margin: 0; color: #e8e4da; max-width: 62ch; }
+.retro-loop p strong { color: white; }
+.retro-loop a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: .6rem 1.25rem; border-radius: 6px;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; white-space: nowrap;
+  background: var(--gold); color: var(--primary); text-decoration: none; transition: background .15s;
+}
+.retro-loop a:hover { background: #c2b07f; }
+.retro-recap { margin-top: 2rem; }
+.retro-recap-grid { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; }
+.retro-recap-grid li { background: var(--card); border: 1.5px solid var(--border); border-radius: 8px; padding: .85rem .95rem; font-size: .93rem; line-height: 1.45; }
+.retro-recap-grid a { display: flex; align-items: center; min-height: 44px; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem; color: var(--primary); text-decoration: none; }
+.retro-recap-grid a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.retro-own { margin-top: 1rem; max-width: 72ch; }
 
 /* FOCUS-VISIBLE — toetsenbordnavigatie */
 /* Globale fallback voor alles wat nog niet specifiek is */
@@ -970,12 +1030,17 @@ h3.sprint-subtitle {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
 }
-/* Retrospective: tabs, knoppen en klikbaar bord */
-.retro-tab:focus-visible,
-.retro-btn:focus-visible,
-.retro-board-wrap:focus-visible {
+/* Retrospective: antwoordknoppen, actiepunten, controleknop en links */
+.retro-choice:focus-visible,
+.retro-action:focus-visible,
+.retro-check:focus-visible,
+.retro-recap-grid a:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+.retro-loop a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 
 /* MOTION — toegankelijkheid */
@@ -1009,6 +1074,7 @@ h3.sprint-subtitle {
   .sprint-compare, .sprint-summary-grid { grid-template-columns: 1fr; }
   .poker-steps { grid-template-columns: repeat(3, 1fr); }
   .poker-backlog { grid-template-columns: 1fr; }
+  .retro-recap-grid { grid-template-columns: 1fr 1fr; }
   .poker-card { --w: 60px; }
   .poker-slot { width: 60px; }
   .poker-seats { gap: .6rem; }
@@ -1017,6 +1083,11 @@ h3.sprint-subtitle {
   .sprint-overview-list { grid-template-columns: 1fr; }
   h2 { font-size: 1.5rem; }
   .nav-sep, .nav-page { display: none; }
+  .retro-board .retro-postit { display: none; }
+  .retro-list { display: grid; gap: .6rem; margin-top: .75rem; }
+  .retro-prev { grid-template-columns: 1fr; }
+  .retro-recap-grid { grid-template-columns: 1fr; }
+  .retro-intro img { width: 100%; }
   .poker-steps { grid-template-columns: repeat(2, 1fr); }
   .poker-card { --w: 40px; }
   .poker-slot { width: 40px; font-size: 0; }
@@ -1326,23 +1397,72 @@ h3.sprint-subtitle {
 
 <section id="retrospectives">
   <div class="badge">Sprint Retrospective</div>
-  <h2>Retrospective Formats</h2>
-  <p class="lead">Aan het einde van elke Sprint reflecteert het Scrum Team tijdens de <strong>Sprint Retrospective</strong> op hun manier van werken. Een goed format structureert het gesprek en zorgt dat het team met concrete verbeteringen naar de volgende Sprint gaat.</p>
-
-  <div class="callout">
-    <p>De drie formats hier zijn slechts voorbeelden: er bestaan tientallen retrospective formats, elk met een eigen opzet en invalshoek. Welk format je kiest hangt af van de nood van het team en de fase van het project.</p>
-    <p style="margin-top:.6rem;">Elke retrospective eindigt idealiter met een <strong>beperkt aantal concrete actiepunten</strong>. Liever 2 acties die het team zeker uitvoert dan een lange lijst die blijft liggen. Acties die sprint na sprint onuitgevoerd blijven, zijn trouwens zelf een bron van frustratie: ze komen gegarandeerd terug als post-it in de volgende retrospective.</p>
+  <h2>Terugblikken en verbeteren</h2>
+  <div class="retro-intro">
+    <p class="lead">Aan het einde van elke Sprint blikt het Scrum Team terug op de <strong>manier van werken</strong>, niet op het product. Sprint 1 van Campi is voorbij: Pieter, de Scrum Master, opent de Retrospective. Jij doet mee.</p>
+    <img src="img/sprint_retro.jpg" alt="Het Campi-team tijdens de Sprint Retrospective, rond een bord vol post-its" loading="lazy" />
   </div>
 
-  <p class="retro-formats-label">Ontdek de 3 formats: <span id="retro-formats-progress">1 / 3 bekeken</span></p>
-  <div class="retro-tabs" id="retro-tabs"></div>
-  <div class="retro-rules" id="retro-rules"></div>
-  <p class="retro-hint-text" id="retro-hint">Klik op de afbeelding of de knop om post-its te onthullen</p>
-  <div class="retro-board-wrap" id="retro-board" onclick="retroNext()"></div>
-  <div class="retro-controls">
-    <button class="retro-btn" id="retro-next-btn" onclick="retroNext()">Volgende post-it &rarr;</button>
-    <button class="retro-btn outline" id="retro-reset-btn" onclick="retroReset()" disabled>Opnieuw</button>
-    <span class="retro-step-label" id="retro-step-label">Klik op &ldquo;Volgende post-it&rdquo; om te starten</span>
+  <!-- Stap 1 -->
+  <div class="retro-step">
+    <h3><span>1</span> Eerst terugkijken: zijn de vorige actiepunten uitgevoerd?</h3>
+    <p>Bij de start van het project sprak het team twee dingen af. Wat denk jij, na alles wat je op deze pagina zag?</p>
+    <div class="retro-prev" id="retro-prev"></div>
+  </div>
+
+  <!-- Stap 2 -->
+  <div class="retro-step">
+    <h3><span>2</span> De observaties: Start, Stop, Continue</h3>
+    <p>Iedereen schreef in stilte post-its. Vier hangen al op het bord. Waar horen de laatste drie?</p>
+    <div class="retro-board" id="retro-board"></div>
+    <div class="retro-list" id="retro-list"></div>
+    <div class="retro-sort" id="retro-sort" aria-live="polite"></div>
+  </div>
+
+  <!-- Stap 3 -->
+  <div class="retro-step">
+    <h3><span>3</span> Kies de actiepunten</h3>
+    <p>Het team neemt niet alles mee. Kies de <strong>2</strong> actiepunten die het team echt gaat uitvoeren in Sprint 2.</p>
+    <div class="retro-actions" id="retro-actions"></div>
+    <div class="retro-action-bar">
+      <span class="retro-count" id="retro-count" aria-live="polite">0 / 2 gekozen</span>
+      <button class="retro-check" id="retro-check" onclick="retroCheckActions()" disabled>Controleer mijn keuze</button>
+    </div>
+    <div id="retro-action-fb" aria-live="polite"></div>
+  </div>
+
+  <!-- Stap 4 -->
+  <div class="retro-step">
+    <h3><span>4</span> Welk format wanneer?</h3>
+    <p>Start, Stop, Continue is maar &eacute;&eacute;n format. Er bestaan er tientallen, en het format is maar een hulpmiddel. Welk format past bij deze situaties?</p>
+    <div class="retro-fq" id="retro-fq"></div>
+  </div>
+
+  <!-- Einde -->
+  <div class="retro-end">
+    <h3>Wat neem je mee naar je eigen team?</h3>
+    <ol>
+      <li>Begin elke Retrospective met de <strong>actiepunten van vorige keer</strong>: zijn ze uitgevoerd? Wat niet gebeurde, komt terug.</li>
+      <li>Eerst <strong>observaties</strong> verzamelen, pas daarna acties kiezen.</li>
+      <li>Kies <strong>1 of 2 SMART-actiepunten</strong>. Liever 2 acties die zeker gebeuren dan een lange lijst die blijft liggen.</li>
+      <li>Het <strong>format</strong> is maar een hulpmiddel: kies wat past bij wat het team nu nodig heeft.</li>
+    </ol>
+  </div>
+
+  <div class="retro-loop">
+    <p><strong>Een Retrospective is Inspectie en Aanpassing van je manier van werken.</strong> Maandag start Sprint 2, met de nieuwe actiepunten op het bord. De cyclus begint opnieuw.</p>
+    <a href="#sprint-events">Terug naar de Sprint &uarr;</a>
+  </div>
+
+  <div class="retro-recap">
+    <h3>Samengevat: alles op deze pagina</h3>
+    <ul class="retro-recap-grid">
+      <li><a href="#empirisme">Empirisme</a>Transparantie, Inspectie en Aanpassing: zichtbaar maken, bekijken, bijsturen.</li>
+      <li><a href="#sprint-events">De 5 Scrum Events</a>De Sprint als container, met Planning, Daily Scrum, Review en Retrospective.</li>
+      <li><a href="#poker-planning">Planning Poker</a>In stilte kiezen, samen omdraaien, hoogste en laagste leggen uit, nooit een gemiddelde.</li>
+      <li><a href="#retrospectives">Retrospective</a>Eerst terugkijken, dan 1 of 2 SMART-actiepunten die het team echt uitvoert.</li>
+    </ul>
+    <p class="retro-own"><strong>Doe dit in jullie eigen projectteam:</strong> maak je bord en je voortgang zichtbaar, schat samen in met kaarten, en sluit elke Sprint af met een korte Retrospective en hoogstens twee actiepunten.</p>
   </div>
 </section>
 
@@ -2859,172 +2979,251 @@ function pokerRound2() {
 // ── RETROSPECTIVE SECTION ────────────────────────────────────────────────────
 // ══════════════════════════════════════════════════════════════════════════════
 
-var RETRO_FORMATS = [
+// Step 1: the action points the team agreed at the project start
+var RETRO_PREV = [
   {
-    id: 'ssc',
-    name: 'Start / Stop / Continue',
-    img: 'img/StartStopContinue.jpg',
-    rules: [
-      '<strong>START</strong>: Wat moeten we <em>beginnen</em> te doen? Nieuwe gewoonten, tools of afspraken die ontbreken.',
-      '<strong>STOP</strong>: Wat moeten we <em>stoppen</em>? Gewoonten die tijd kosten zonder waarde te bieden.',
-      '<strong>CONTINUE</strong>: Wat doen we <em>goed</em> en moeten we zeker bewaren? Versterk wat al werkt.',
-      'Iedereen schrijft post-its in stilte, daarna plakt elk teamlid ze in de juiste kolom.',
-      'Bespreek de post-its per kolom en kies samen 2 concrete actiepunten.'
-    ],
-    postits: [
-      { text: 'Dagelijks status delen',          top: '15%', left:  '3%', rot: -3 },
-      { text: 'Code reviews voor elke merge',    top: '35%', left: '15%', rot:  2 },
-      { text: 'Vroeger beginnen met testen',     top: '52%', left:  '3%', rot: -1 },
-      { text: 'Taken niet afstemmen',            top: '15%', left: '37%', rot:  3 },
-      { text: 'Last-minute code pushen',         top: '37%', left: '48%', rot: -2 },
-      { text: 'Goede teamsfeer bewaren',         top: '15%', left: '67%', rot:  1 },
-      { text: 'Sprint demos bijhouden',          top: '35%', left: '79%', rot: -3 },
-      { text: 'Dagelijkse standup om 9u, 15 min. max. Scrum Master bewaakt tijdslimiet (v.a. sprint 3).', top: '72%', left: '65%', rot: -1, blue: true },
-      { text: 'Min. 1 code review goedkeuring vereist voor elke merge, v.a. sprint 3.',                   top: '72%', left: '79%', rot:  1, blue: true }
-    ]
+    text: 'Het Scrum Board elke dag bijwerken vóór de Daily Scrum.',
+    done: true,
+    right: 'Klopt: in elke Daily Scrum zag je een bijgewerkt bord en een burndown chart. Deze afspraak werkt, het team houdt ze vast.',
+    wrong: 'Kijk nog eens naar de Daily Scrums in de Sprint: waren het bord en de burndown chart telkens bijgewerkt?'
   },
   {
-    id: 'msg',
-    name: 'Mad / Sad / Glad',
-    img: 'img/MadSadGlad.jpg',
-    rules: [
-      '<strong>MAD</strong>: Wat maakte je <em>gefrustreerd</em> deze sprint? Obstakels, blokkades, ergernissen.',
-      '<strong>SAD</strong>: Wat <em>baart je zorgen</em> of stelde je teleur? Gemiste kansen, tegenvallers.',
-      '<strong>GLAD</strong>: Wat maakte je <em>trots of blij</em>? Successen, fijne samenwerking, mooie resultaten.',
-      'Teamleden schrijven anoniem post-its en plakken ze in de bijhorende zone.',
-      'Bespreek samen de clusters. Formuleer actiepunten vanuit MAD en SAD.'
-    ],
-    postits: [
-      { text: 'Te veel onduidelijke stories',        top:  '8%', left:  '2%', rot: -2 },
-      { text: 'Slechte Wi-Fi op school',             top: '30%', left:  '2%', rot:  3 },
-      { text: 'Feature niet op tijd klaar',          top: '58%', left: '22%', rot: -1 },
-      { text: 'Teamlid ziek gevallen',               top: '74%', left: '35%', rot:  2 },
-      { text: 'Demo was een succes',                 top:  '8%', left: '57%', rot:  1 },
-      { text: 'Klant tevreden met prototype',        top:  '8%', left: '71%', rot: -2 },
-      { text: 'Team hielp elkaar goed',              top: '30%', left: '63%', rot:  3 },
-      { text: 'PO verfijnt stories min. 3 dagen voor Sprint Planning (v.a. sprint 4).', top: '72%', left: '63%', rot: -1, blue: true },
-      { text: 'Bij ziekte: melding binnen 2u, taken direct herverdelen in de standup.', top: '72%', left: '77%', rot:  1, blue: true }
-    ]
-  },
-  {
-    id: 'sail',
-    name: 'Zeilboot',
-    img: 'img/Sailboat.jpg',
-    rules: [
-      '<strong>Wind</strong>: Wat <em>drijft ons vooruit</em>? Sterktes, goede gewoonten, fijne tools.',
-      '<strong>Anker</strong>: Wat <em>houdt ons tegen</em>? Obstakels, frustraties, technische schuld.',
-      '<strong>Doel (eiland)</strong>: Waar willen we <em>naartoe</em>? Ons overkoepelend sprint- of projectdoel.',
-      'Iedereen schrijft post-its en plakt ze bij het bijhorende onderdeel van de boot.',
-      'Bespreek hoe het anker lichter kan worden. Formuleer 2 concrete actiepunten.'
-    ],
-    postits: [
-      { text: 'Duidelijke taakverdeling',               top:  '5%', left:  '2%', rot: -2 },
-      { text: 'Git workflow werkt goed',                top: '26%', left:  '2%', rot:  1 },
-      { text: 'Werkende app voor de deadline',          top:  '5%', left: '63%', rot: -1 },
-      { text: 'Tevreden klant bij sprint review',       top:  '5%', left: '77%', rot:  3 },
-      { text: 'Technical debt groeit',                   top: '60%', left:  '8%', rot:  2 },
-      { text: 'Onduidelijke requirements',              top: '74%', left:  '8%', rot: -3 },
-      { text: 'Te weinig testcoverage',                  top: '67%', left: '22%', rot:  1 },
-      { text: '2u per sprint voor refactoring inplannen (donderdag week 2).', top: '77%', left: '70%', rot: -1, blue: true },
-      { text: 'Requirements review met PO bij elke sprint start, max. 30 min.', top: '77%', left: '83%', rot:  1, blue: true }
-    ]
+    text: 'Elke story krijgt acceptatiecriteria vóór de Sprint Planning.',
+    done: false,
+    right: 'Klopt: in de Planning Poker was het lesrooster nog niet Ready, en de login-story begreep niet iedereen op dezelfde manier. Een actie die niet uitgevoerd werd, komt terug: Sara zet ze opnieuw op het bord.',
+    wrong: 'Denk aan de Planning Poker: was elke story duidelijk en Ready toen het team ging inschatten?'
   }
 ];
 
-var retroActive = 0;
-var retroSteps = [0, 0, 0];
-var retroVisited = new Set([0]);
+// Step 2: the Start / Stop / Continue board. sort: the student places this post-it.
+var RETRO_COLS = { start: 'Start', stop: 'Stop', cont: 'Continue' };
+var RETRO_NOTES = [
+  { col: 'start', who: 'Arnaud', text: 'API-toegang regelen vóór de Sprint start', top: '25%', left: '6%', rot: -2 },
+  { col: 'stop', who: 'Sara', text: 'Stories inschatten zonder acceptatiecriteria', top: '25%', left: '37%', rot: 2 },
+  { col: 'cont', who: 'Leen', text: 'Live demo in de Review: het dagmenu werkte!', top: '25%', left: '67%', rot: -1 },
+  { col: 'cont', who: 'Pieter', text: 'Burndown elke dag bijwerken', top: '26%', left: '81%', rot: 2 },
+  { col: 'start', who: 'Sara', text: 'Een Refinement-sessie inplannen tijdens de Sprint', top: '48%', left: '19%', rot: 1, sort: true },
+  { col: 'stop', who: 'Mohammed', text: 'Op vrijdag nog last-minute code pushen', top: '48%', left: '50%', rot: -2, sort: true },
+  { col: 'cont', who: 'Stef', text: 'Pair programming bij de login-story hielp enorm', top: '45%', left: '73%', rot: 1, sort: true }
+];
+var RETRO_COL_HINT = {
+  start: 'START is voor iets nieuws dat het team nog niet doet.',
+  stop: 'STOP is voor een gewoonte die het team moet afleren.',
+  cont: 'CONTINUE is voor iets dat al goed werkt en moet blijven.'
+};
 
-(function initRetro() {
-  var tabsEl = document.getElementById('retro-tabs');
-  RETRO_FORMATS.forEach(function(fmt, i) {
-    var btn = document.createElement('button');
-    btn.className = 'retro-tab' + (i === 0 ? ' active' : '');
-    btn.textContent = fmt.name;
-    btn.addEventListener('click', function() { retroSelectFormat(i); });
-    tabsEl.appendChild(btn);
-  });
-  retroRenderRules();
+// Step 3: candidate action points; the two SMART ones get a short text for the board
+var RETRO_ACTIONS = [
+  { text: 'Vanaf Sprint 2 plant Pieter elke woensdag van week 1 een Refinement van maximaal 1 uur.', short: 'Refinement op woensdag week 1, max. 1 uur', good: true },
+  { text: 'We gaan beter communiceren.', feedback: '“We gaan beter communiceren” is te vaag: wat doet het team concreet, en wanneer is het gelukt?' },
+  { text: 'De Product Owner vraagt vóór de volgende Sprint Planning de API-toegang aan bij de PXL IT-dienst.', short: 'PO vraagt API-toegang aan vóór de Planning', good: true },
+  { text: 'Iedereen werkt elke avond een uur langer.', feedback: '“Elke avond langer werken” is niet realistisch en lost de oorzaak niet op. Scrum gaat uit van een tempo dat het team lang volhoudt.' },
+  { text: 'Ooit eens onze Git-workflow bekijken.', feedback: '“Ooit eens” is niet tijdgebonden, en dus gebeurt het nooit. Wie doet wat, en tegen wanneer?' }
+];
+
+// Step 4: which format fits which situation
+var RETRO_FORMATS = {
+  ssc: { name: 'Start, Stop, Continue', img: 'img/StartStopContinue.jpg', wrong: 'Start, Stop, Continue gaat meteen naar concrete gewoonten. Heeft het team hier eerst iets anders nodig?' },
+  msg: { name: 'Mad, Sad, Glad', img: 'img/MadSadGlad.jpg', wrong: 'Mad, Sad, Glad draait om gevoelens: wat maakte je boos, verdrietig of blij? Is dat hier de vraag?' },
+  sail: { name: 'Zeilboot', img: 'img/Sailboat.jpg', wrong: 'De Zeilboot kijkt naar het doel en de risico’s op langere termijn. Past dat bij deze situatie?' }
+};
+var RETRO_FQ = [
+  { situation: 'Na een zware Sprint met spanning en frustratie in het team.', answer: 'msg',
+    why: 'Mad, Sad, Glad laat het team eerst benoemen wat het voelt: wat maakte je boos, verdrietig of blij? Pas daarna volgen de actiepunten.' },
+  { situation: 'Halverwege het project: waar willen we naartoe, en welke risico’s zien we onderweg?', answer: 'sail',
+    why: 'De Zeilboot toont het doel (het eiland), wat het team vooruit duwt (de wind), wat het tegenhoudt (het anker) en de risico’s onderweg (de rotsen).' },
+  { situation: 'Een nieuw team doet zijn eerste Retrospective en wil concrete gewoonten afspreken.', answer: 'ssc',
+    why: 'Start, Stop, Continue is eenvoudig en levert meteen concrete gewoonten op: wat beginnen we, wat stoppen we, wat houden we vast?' }
+];
+
+var retroPrevState = RETRO_PREV.map(function() { return { answer: null, wrong: [] }; });
+var retroSorted = new Set();      // indexes of RETRO_NOTES the student placed
+var retroSortWrong = [];          // wrong columns tried for the current post-it
+var retroPicked = [];             // indexes of RETRO_ACTIONS selected
+var retroActionsDone = false;
+var retroFqState = RETRO_FQ.map(function() { return { done: false, wrong: [] }; });
+
+(function retroInit() {
+  retroRenderPrev();
   retroRenderBoard();
-  retroUpdateFormatProgress();
+  retroRenderSort();
+  retroRenderActions();
+  retroRenderFq();
 })();
 
-function retroSelectFormat(idx) {
-  retroActive = idx;
-  retroVisited.add(idx);
-  retroSteps[retroActive] = 0;
-  document.querySelectorAll('.retro-tab').forEach(function(t, i) {
-    t.classList.toggle('active', i === idx);
+// ── Step 1 ──
+function retroRenderPrev() {
+  document.getElementById('retro-prev').innerHTML = RETRO_PREV.map(function(p, i) {
+    var st = retroPrevState[i];
+    var html = '<div class="retro-prev-item"><div class="retro-prev-note">' + p.text + '</div>' +
+      '<p class="retro-prev-q">Uitgevoerd?</p><div class="retro-choices">';
+    [true, false].forEach(function(v) {
+      var cls = st.answer !== null && v === p.done ? ' right' : (st.wrong.indexOf(v) !== -1 ? ' wrong' : '');
+      var off = st.answer !== null || st.wrong.indexOf(v) !== -1;
+      html += '<button class="retro-choice' + cls + '" onclick="retroPrevAnswer(' + i + ',' + v + ')"' + (off ? ' disabled' : '') + '>' + (v ? 'Ja, uitgevoerd' : 'Nee, niet uitgevoerd') + '</button>';
+    });
+    html += '</div><div aria-live="polite">';
+    if (st.answer !== null) html += '<div class="retro-feedback ok">' + p.right + '</div>';
+    else if (st.wrong.length) html += '<div class="retro-feedback hint"><strong>Niet helemaal.</strong> ' + p.wrong + '</div>';
+    return html + '</div></div>';
+  }).join('');
+}
+
+function retroPrevAnswer(i, v) {
+  var st = retroPrevState[i];
+  if (v === RETRO_PREV[i].done) st.answer = v; else st.wrong.push(v);
+  retroRenderPrev();
+}
+
+// ── Step 2 ──
+function retroNoteVisible(i) {
+  return !RETRO_NOTES[i].sort || retroSorted.has(i);
+}
+
+function retroRenderBoard(newIdx) {
+  var html = '<img class="retro-board-img" src="img/StartStopContinue.jpg" alt="Whiteboard met drie kolommen: Start, Stop en Continue, met een vak voor actiepunten">';
+  RETRO_NOTES.forEach(function(n, i) {
+    if (!retroNoteVisible(i)) return;
+    html += '<div class="retro-postit' + (i === newIdx ? ' new' : '') + '" style="top:' + n.top + ';left:' + n.left + ';--rot:' + n.rot + 'deg">' +
+      '<b>' + n.who + '</b>' + n.text + '</div>';
   });
-  retroRenderRules();
-  retroRenderBoard();
-  retroUpdateFormatProgress();
-}
-
-function retroUpdateFormatProgress() {
-  document.querySelectorAll('.retro-tab').forEach(function(t, i) {
-    t.classList.toggle('visited', retroVisited.has(i));
-  });
-  var el = document.getElementById('retro-formats-progress');
-  if (el) el.textContent = retroVisited.size + ' / 3 bekeken';
-}
-
-function retroRenderRules() {
-  var fmt = RETRO_FORMATS[retroActive];
-  document.getElementById('retro-rules').innerHTML =
-    '<h4>Spelregels: ' + fmt.name + '</h4><ol>' +
-    fmt.rules.map(function(r) { return '<li>' + r + '</li>'; }).join('') +
-    '</ol>';
-}
-
-function retroRenderBoard() {
-  var fmt = RETRO_FORMATS[retroActive];
-  var step = retroSteps[retroActive];
-  var html = '<img class="retro-board-img" src="' + fmt.img + '" alt="' + fmt.name + '">';
-  if (step === 0) {
-    html += '<div class="retro-board-placeholder">Klik om post-its te ontdekken</div>';
-  }
-  fmt.postits.forEach(function(p, i) {
-    html += '<div class="retro-postit' + (p.blue ? ' blue' : '') + (i < step ? ' visible' : '') + '"' +
-      ' id="rp-' + retroActive + '-' + i + '"' +
-      ' style="top:' + p.top + ';left:' + p.left + ';--rot:' + (p.rot || 0) + 'deg">' +
-      p.text + '</div>';
+  var good = retroActionsDone ? retroPicked : [];
+  good.forEach(function(a, k) {
+    html += '<div class="retro-postit blue' + (newIdx === 'actions' ? ' new' : '') + '" style="top:75%;left:' + (k ? '80.5' : '66.5') + '%;--rot:' + (k ? 1 : -1) + 'deg">' +
+      '<b>Actiepunt ' + (k + 1) + '</b>' + RETRO_ACTIONS[a].short + '</div>';
   });
   document.getElementById('retro-board').innerHTML = html;
-  retroUpdateControls();
+
+  // The same content as a list, shown instead of the board on small screens
+  var list = '';
+  Object.keys(RETRO_COLS).forEach(function(c) {
+    var items = RETRO_NOTES.filter(function(n, i) { return n.col === c && retroNoteVisible(i); });
+    list += '<div class="retro-list-col"><h4>' + RETRO_COLS[c] + '</h4><ul>' +
+      items.map(function(n) { return '<li><b>' + n.who + ':</b> ' + n.text + '</li>'; }).join('') + '</ul></div>';
+  });
+  if (good.length) {
+    list += '<div class="retro-list-col blue"><h4>Actiepunten</h4><ul>' +
+      good.map(function(a) { return '<li>' + RETRO_ACTIONS[a].text + '</li>'; }).join('') + '</ul></div>';
+  }
+  document.getElementById('retro-list').innerHTML = list;
 }
 
-function retroNext() {
-  var fmt = RETRO_FORMATS[retroActive];
-  var step = retroSteps[retroActive];
-  if (step >= fmt.postits.length) return;
-  retroSteps[retroActive]++;
-  var placeholder = document.querySelector('.retro-board-placeholder');
-  if (placeholder) placeholder.remove();
-  var el = document.getElementById('rp-' + retroActive + '-' + step);
-  if (el) setTimeout(function() { el.classList.add('visible'); }, 20);
-  retroUpdateControls();
+function retroCurrentSort() {
+  for (var i = 0; i < RETRO_NOTES.length; i++) {
+    if (RETRO_NOTES[i].sort && !retroSorted.has(i)) return i;
+  }
+  return -1;
 }
 
-function retroReset() {
-  retroSteps[retroActive] = 0;
-  retroRenderBoard();
+function retroRenderSort(feedback) {
+  var i = retroCurrentSort();
+  var el = document.getElementById('retro-sort');
+  if (i === -1) {
+    el.innerHTML = '<div class="retro-feedback ok"><strong>Het bord is compleet.</strong> Zie je het patroon? Wat werkt (Continue) houdt het team vast, de problemen bij Start en Stop worden de bron voor de actiepunten.</div>';
+    return;
+  }
+  var n = RETRO_NOTES[i];
+  var html = '<p class="retro-sort-label">Post-it ' + (retroSorted.size + 1) + ' van 3: waar hoort deze?</p>' +
+    '<div class="retro-sort-note"><b>' + n.who + '</b>' + n.text + '</div><div class="retro-choices">';
+  Object.keys(RETRO_COLS).forEach(function(c) {
+    var wrong = retroSortWrong.indexOf(c) !== -1;
+    html += '<button class="retro-choice' + (wrong ? ' wrong' : '') + '" onclick="retroSort(\'' + c + '\')"' + (wrong ? ' disabled' : '') + '>' + RETRO_COLS[c] + '</button>';
+  });
+  html += '</div>';
+  if (feedback) html += '<div class="retro-feedback hint"><strong>Niet helemaal.</strong> ' + feedback + '</div>';
+  el.innerHTML = html;
 }
 
-function retroUpdateControls() {
-  var fmt = RETRO_FORMATS[retroActive];
-  var step = retroSteps[retroActive];
-  var total = fmt.postits.length;
-  var contentCount = fmt.postits.filter(function(p) { return !p.blue; }).length;
-  document.getElementById('retro-next-btn').disabled = (step >= total);
-  document.getElementById('retro-reset-btn').disabled = (step === 0);
-  var lbl;
-  if (step === 0)             lbl = 'Klik op "Volgende post-it" om te starten';
-  else if (step <= contentCount) lbl = 'Post-it ' + step + ' / ' + contentCount;
-  else if (step < total)      lbl = 'Actiepunt ' + (step - contentCount) + ' / 2';
-  else                        lbl = 'Retrospective afgerond!';
-  document.getElementById('retro-step-label').textContent = lbl;
-  document.getElementById('retro-hint').style.display = (step === 0) ? '' : 'none';
+function retroSort(col) {
+  var i = retroCurrentSort();
+  if (i === -1) return;
+  if (RETRO_NOTES[i].col !== col) {
+    retroSortWrong.push(col);
+    retroRenderSort(RETRO_COL_HINT[col] + ' Past deze post-it daarbij?');
+    var next = document.querySelector('#retro-sort .retro-choice:not(:disabled)');
+    if (next) next.focus({ preventScroll: true });
+    return;
+  }
+  retroSorted.add(i);
+  retroSortWrong = [];
+  retroRenderBoard(i);
+  retroRenderSort();
+  var btn = document.querySelector('#retro-sort .retro-choice');
+  if (btn) btn.focus({ preventScroll: true });
+}
+
+// ── Step 3 ──
+function retroRenderActions() {
+  document.getElementById('retro-actions').innerHTML = RETRO_ACTIONS.map(function(a, i) {
+    var on = retroPicked.indexOf(i) !== -1;
+    var cls = retroActionsDone && on ? ' good' : '';
+    return '<button class="retro-action' + cls + '" aria-pressed="' + on + '" onclick="retroPick(' + i + ')">' + a.text + '</button>';
+  }).join('');
+  document.getElementById('retro-count').textContent = retroPicked.length + ' / 2 gekozen';
+  document.getElementById('retro-check').disabled = retroPicked.length !== 2 || retroActionsDone;
+}
+
+function retroPick(i) {
+  if (retroActionsDone) return;
+  var pos = retroPicked.indexOf(i);
+  var fb = document.getElementById('retro-action-fb');
+  if (pos !== -1) {
+    retroPicked.splice(pos, 1);
+  } else if (retroPicked.length === 2) {
+    fb.innerHTML = '<div class="retro-feedback hint">Je hebt er al 2 gekozen. Liever 2 acties die zeker gebeuren dan een lange lijst die blijft liggen. Klik op een gekozen actiepunt om het te wisselen.</div>';
+    return;
+  } else {
+    retroPicked.push(i);
+  }
+  fb.innerHTML = '';
+  retroRenderActions();
+  var btn = document.querySelectorAll('#retro-actions .retro-action')[i];
+  if (btn) btn.focus({ preventScroll: true });
+}
+
+function retroCheckActions() {
+  var bad = retroPicked.filter(function(i) { return !RETRO_ACTIONS[i].good; });
+  var fb = document.getElementById('retro-action-fb');
+  if (bad.length) {
+    document.querySelectorAll('#retro-actions .retro-action').forEach(function(btn, i) {
+      btn.classList.toggle('bad', bad.indexOf(i) !== -1);
+    });
+    fb.innerHTML = '<div class="retro-feedback hint"><strong>Nog niet.</strong> ' +
+      bad.map(function(i) { return RETRO_ACTIONS[i].feedback; }).join(' ') +
+      ' Een goed actiepunt is SMART: Specifiek, Meetbaar, Acceptabel, Realistisch en Tijdgebonden.</div>';
+    return;
+  }
+  retroActionsDone = true;
+  retroPicked.sort();
+  retroRenderActions();
+  retroRenderBoard('actions');
+  fb.innerHTML = '<div class="retro-feedback ok"><strong>Goed gekozen.</strong> Beide actiepunten zijn SMART: je weet wie wat doet en wanneer het gelukt is. Ze hangen nu als blauwe post-its in het actievak, en in de volgende Retrospective kijkt het team eerst of ze uitgevoerd zijn.</div>';
+}
+
+// ── Step 4 ──
+function retroRenderFq() {
+  document.getElementById('retro-fq').innerHTML = RETRO_FQ.map(function(q, i) {
+    var st = retroFqState[i];
+    var html = '<div class="retro-fq-item"><h4>' + q.situation + '</h4><div class="retro-choices">';
+    Object.keys(RETRO_FORMATS).forEach(function(k) {
+      var cls = st.done && k === q.answer ? ' right' : (st.wrong.indexOf(k) !== -1 ? ' wrong' : '');
+      var off = st.done || st.wrong.indexOf(k) !== -1;
+      html += '<button class="retro-choice' + cls + '" onclick="retroFqAnswer(' + i + ',\'' + k + '\')"' + (off ? ' disabled' : '') + '>' + RETRO_FORMATS[k].name + '</button>';
+    });
+    html += '</div><div aria-live="polite">';
+    if (st.done) {
+      html += '<div class="retro-fq-result"><img src="' + RETRO_FORMATS[q.answer].img + '" alt="Whiteboard voor ' + RETRO_FORMATS[q.answer].name + '" loading="lazy" /><p>' + q.why + '</p></div>';
+    } else if (st.wrong.length) {
+      html += '<div class="retro-feedback hint"><strong>Niet helemaal.</strong> ' + RETRO_FORMATS[st.wrong[st.wrong.length - 1]].wrong + '</div>';
+    }
+    return html + '</div></div>';
+  }).join('');
+}
+
+function retroFqAnswer(i, k) {
+  var st = retroFqState[i];
+  if (k === RETRO_FQ[i].answer) st.done = true; else st.wrong.push(k);
+  retroRenderFq();
 }
 
 /* NAV HAMBURGER */
