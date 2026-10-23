@@ -270,6 +270,10 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 .empir-tab.done .empir-tab-count { color: var(--a-ink); font-weight: 800; }
 .empir-tab.done[aria-pressed="true"] .empir-tab-count { color: #8fd8cc; }
 .empir-acts { display: grid; gap: .75rem; scroll-margin-top: 70px; }
+.empir-event-head { display: flex; align-items: center; gap: 1rem; margin-bottom: .25rem; animation: empirIn .25s ease; }
+.empir-event-head img { width: 168px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; flex-shrink: 0; background: var(--border); }
+.empir-event-head h4 { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--primary); margin: 0 0 .15rem; }
+.empir-event-head p { margin: 0; font-size: .95rem; color: var(--muted); }
 .empir-act {
   background: var(--card); border: 1.5px solid var(--border); border-radius: 10px;
   padding: 1rem 1.25rem; animation: empirIn .25s ease;
@@ -327,9 +331,12 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 /* ── SCENARIO SORTER ──────────────────────────────────────────────────────── */
 
 .scenario-card {
+  display: grid; grid-template-columns: 260px 1fr; gap: 1.5rem; align-items: start;
   background: white; border: 1.5px solid var(--border); border-radius: 10px;
-  padding: 1.5rem; min-height: 220px; animation: empirIn .25s ease;
+  padding: 1rem 1.5rem 1.25rem 1rem; min-height: 220px; animation: empirIn .25s ease;
 }
+.scenario-img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 6px; background: var(--bg); }
+.scenario-body { padding-top: .35rem; min-width: 0; }
 .scenario-number {
   font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .78rem;
   letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem;
@@ -940,6 +947,9 @@ h3.sprint-subtitle {
   .empir-ex-done { margin-left: 0; }
   .empir-ex-body { grid-template-columns: 1fr; padding: .75rem .75rem 1rem; }
   .empir-ex-img { aspect-ratio: 16 / 9; max-height: 240px; }
+  .scenario-card { grid-template-columns: 1fr; gap: .9rem; padding: .75rem .75rem 1.25rem; }
+  .scenario-img { aspect-ratio: 16 / 9; max-height: 220px; }
+  .scenario-body { padding: 0 .5rem; }
   .empir-ex-content { padding: 0 .5rem; }
   .sprint-layout { grid-template-columns: 1fr; }
   .sprint-overview-list { grid-template-columns: 1fr 1fr; }
@@ -951,6 +961,7 @@ h3.sprint-subtitle {
   .sprint-overview-list { grid-template-columns: 1fr; }
   h2 { font-size: 1.5rem; }
   .nav-sep, .nav-page { display: none; }
+  .empir-event-head img { width: 112px; }
   .sprint-day { min-height: 56px; padding: .35rem .2rem .3rem; }
   .sprint-day .day-num { font-size: .8rem; }
 }
@@ -1341,6 +1352,15 @@ var EMPIR_EVENTS = [
 // Activity order per event, so the answer is never simply T, I, A from top to bottom
 var EMPIR_ORDERS = [['I', 'A', 'T'], ['A', 'T', 'I'], ['T', 'A', 'I'], ['A', 'I', 'T'], ['I', 'T', 'A']];
 
+// Event header in the scanner: the same photos as in the Sprint walk-through, so students recognise the scene
+var EMPIR_EVENT_INTRO = [
+  { img: 'img/daily_standup_burndown.jpg', alt: 'Het team bekijkt het Scrum Board en de burndown chart tijdens de Sprint', line: 'De container: twee weken werken aan één Sprint Doel.' },
+  { img: 'img/sprint_planning.jpg', alt: 'Het team tijdens de Sprint Planning', line: 'Het team plant wat het deze Sprint maakt.' },
+  { img: 'img/daily_standup_early.jpg', alt: 'Het team staat rond het Scrum Board tijdens de Daily Scrum', line: 'Elke dag kort afstemmen rond het Scrum Board.' },
+  { img: 'img/sprint_review.jpg', alt: 'Het team toont het resultaat aan de stakeholders tijdens de Sprint Review', line: 'Het team toont het resultaat aan de stakeholders.' },
+  { img: 'img/sprint_retro.jpg', alt: 'Het team blikt terug tijdens de Sprint Retrospective', line: 'Het team blikt terug op hoe het samenwerkte.' }
+];
+
 // Scanner hints: key is the wrong pillar chosen + the right one, so the hint explains the difference
 var EMPIR_HINTS = {
   TI: 'Er wordt meer gedaan dan iets zichtbaar maken: het team beoordeelt of het goed zit.',
@@ -1355,30 +1375,40 @@ var EMPIR_HINTS = {
 var EMPIR_SCENARIOS = [
   {
     scenario: 'Het team werkt de burndown chart elke dag bij en hangt hem op waar iedereen hem kan zien.',
+    img: 'img/quiz_1.jpg',
+    alt: 'Een teamlid tekent de burndown chart van vandaag bij op een whiteboard',
     correct: 'T',
     hint: 'Gaat het hier om iets beoordelen, iets veranderen, of iets zichtbaar maken?',
     explanation: 'De burndown chart bijwerken en ophangen is <strong>transparantie</strong>: de echte voortgang is voor iedereen zichtbaar. Pas daarna kan het team hem inspecteren.'
   },
   {
     scenario: 'Voor een story naar Done gaat, kijkt een teamlid na of alle afspraken gehaald zijn: getest, gereviewd en gedocumenteerd.',
+    img: 'img/quiz_2.jpg',
+    alt: 'Een ontwikkelaar overloopt een checklist naast zijn laptop met testresultaten',
     correct: 'I',
     hint: 'Er wordt hier iets nagekeken. Wordt er al iets veranderd?',
     explanation: 'Het werk nakijken tegen de afspraken is <strong>inspectie</strong>. Pas als er iets niet klopt, volgt een aanpassing.'
   },
   {
     scenario: 'Na feedback van stakeholders wordt een User Story herschreven.',
+    img: 'img/quiz_3.jpg',
+    alt: 'Een teamlid vervangt een doorgestreepte post-it op het bord terwijl een collega naar haar notities wijst',
     correct: 'A',
     hint: 'Er wordt hier iets aangepast op basis van geleerde lessen. Welk principe?',
     explanation: 'Een User Story herschrijven op basis van feedback is <strong>aanpassing</strong>: het product wordt bijgestuurd op basis van nieuwe inzichten.'
   },
   {
     scenario: 'Het Scrum Board hangt zichtbaar in de teamruimte.',
+    img: 'img/quiz_4.jpg',
+    alt: 'Een Scrum Board met drie kolommen post-its hangt aan de muur van de teamruimte',
     correct: 'T',
     hint: 'Dit gaat over het beschikbaar maken van informatie. Wie kan het zien?',
     explanation: 'Een zichtbaar Scrum Board is <strong>transparantie</strong>: iedereen (team, stakeholders, management) kan de status van het werk bekijken.'
   },
   {
     scenario: 'Aan het einde van de Sprint vergelijkt het team hoeveel werk het gepland had met hoeveel er echt af raakte.',
+    img: 'img/quiz_5.jpg',
+    alt: 'Drie teamleden vergelijken twee staafdiagrammen op een whiteboard',
     correct: 'I',
     hint: 'Er wordt hier een vergelijking gemaakt tussen plan en realiteit. Dat klinkt als...',
     explanation: 'Plan en realiteit vergelijken is <strong>inspectie</strong>: het team controleert of zijn inschattingen klopten en zoekt naar afwijkingen.'
@@ -1483,7 +1513,10 @@ function empirRenderTabs() {
 
 function empirRenderActs() {
   var ev = EMPIR_EVENTS[empirActive];
-  var html = '';
+  var intro = EMPIR_EVENT_INTRO[empirActive];
+  var html = '<div class="empir-event-head">' +
+    '<img src="' + intro.img + '" alt="' + intro.alt + '" loading="lazy" />' +
+    '<div><h4>' + ev.name + '</h4><p>' + intro.line + '</p></div></div>';
   EMPIR_ORDERS[empirActive].forEach(function(p) {
     var key = empirActive + '-' + p;
     if (empirSolved.has(key)) {
@@ -1555,6 +1588,8 @@ function scenarioRender(idx) {
   var answered = scenarioAnswered.has(idx);
 
   var html = '<div class="scenario-card">';
+  html += '<img class="scenario-img" src="' + s.img + '" alt="' + s.alt + '" />';
+  html += '<div class="scenario-body">';
   html += '<div class="scenario-number">Scenario ' + (idx + 1) + ' van ' + EMPIR_SCENARIOS.length + '</div>';
   html += '<div class="scenario-text">“' + s.scenario + '”</div>';
   html += '<div class="scenario-btn-row">';
@@ -1572,7 +1607,7 @@ function scenarioRender(idx) {
     html += '<div class="scenario-feedback success">' + s.explanation + '</div>';
   }
   html += '</div>';
-  html += '</div>';
+  html += '</div></div>';
 
   document.getElementById('scenario-card').innerHTML = html;
 }
