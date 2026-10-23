@@ -904,6 +904,114 @@ h3.sprint-subtitle {
 }
 .poker-bridge a:hover { background: #c2b07f; }
 
+/* ── SPRINT PLANNING SECTION ────────────────────────────────────────────────── */
+@keyframes planIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+.plan-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 1.5rem 2rem; align-items: center; margin: 1rem 0 .5rem; }
+.plan-intro .lead { margin: 0 0 .75rem; }
+.plan-intro figure { margin: 0; }
+.plan-intro img { width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.12); display: block; }
+.plan-intro figcaption { font-size: .88rem; color: var(--muted); margin-top: .4rem; }
+.plan-facts { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; margin-top: 1.5rem; }
+.plan-facts li { background: var(--card); border: 1.5px solid var(--border); border-radius: 8px; padding: .85rem .95rem; font-size: .93rem; line-height: 1.45; }
+.plan-facts strong { display: block; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .98rem; color: var(--primary); margin-bottom: .2rem; }
+
+/* Steps */
+.plan-step { margin-top: 2.5rem; }
+.plan-step h3 {
+  display: flex; align-items: center; gap: .65rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--primary); margin-bottom: .4rem;
+}
+.plan-step h3 span {
+  width: 1.8rem; height: 1.8rem; border-radius: 50%; flex-shrink: 0; background: var(--primary); color: var(--gold);
+  display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: .95rem;
+}
+.plan-step > p { max-width: 72ch; }
+.plan-form { display: inline-block; margin: .2rem 0 .4rem; padding: .5rem .9rem; border-radius: 6px; background: var(--gold-bg); border: 1px solid rgba(174,154,100,.45); font-size: 1rem; }
+
+/* Questions */
+.plan-q { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; padding: 1rem 1.15rem 1.1rem; margin-top: 1rem; }
+.plan-q-text { font-size: 1.02rem; font-weight: 600; color: var(--primary); margin: 0 0 .75rem; max-width: 75ch; }
+.plan-options { display: grid; gap: .5rem; }
+.plan-option {
+  text-align: left; min-height: 44px; padding: .55rem 1rem; border-radius: 6px; cursor: pointer;
+  font: inherit; font-size: .97rem; color: var(--text); background: white; border: 1.5px solid var(--border);
+  transition: border-color .15s, background .15s;
+}
+.plan-option:hover:not(:disabled) { border-color: var(--primary); background: #fafaf8; }
+.plan-option.wrong { border-color: var(--accent); color: #b3202c; background: rgba(230,57,70,.05); text-decoration: line-through; cursor: default; }
+.plan-option.right { border-color: var(--green); background: rgba(42,157,143,.1); color: #155f55; font-weight: 700; cursor: default; }
+.plan-feedback { margin-top: .6rem; padding: .7rem 1rem; border-radius: 6px; font-size: .95rem; animation: planIn .25s ease; }
+.plan-feedback.hint { background: rgba(174,154,100,.12); border: 1px solid rgba(174,154,100,.5); }
+.plan-feedback.ok { background: rgba(42,157,143,.08); border: 1px solid rgba(31,119,108,.35); }
+
+/* Step 3: Product Backlog -> Sprint Backlog */
+.plan-capacity { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin: 1rem 0 .75rem; }
+.plan-capacity-track { flex: 1; min-width: 200px; height: 12px; background: var(--border); border-radius: 6px; overflow: hidden; }
+.plan-capacity-fill { height: 100%; width: 0; background: var(--sprint-blue); border-radius: 6px; transition: width .3s, background .3s; }
+.plan-capacity-fill.over { background: var(--accent); }
+.plan-capacity-label { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; color: var(--primary); white-space: nowrap; }
+.plan-board { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.plan-col h4 { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem; color: var(--primary); margin: 0 0 .5rem; }
+.plan-col h4 small { font-family: Arial, system-ui, sans-serif; font-weight: 400; font-size: .85rem; color: var(--muted); }
+.plan-items { list-style: none; display: grid; gap: .5rem; min-height: 120px; padding: .6rem; border-radius: 10px; border: 1.5px dashed var(--border); background: var(--card); }
+.plan-item {
+  display: flex; align-items: center; gap: .6rem; width: 100%; text-align: left; min-height: 48px;
+  padding: .55rem .75rem; border-radius: 6px; cursor: pointer;
+  font: inherit; color: var(--text); background: white; border: 1.5px solid var(--border);
+  transition: border-color .15s, background .15s; animation: planIn .2s ease;
+}
+.plan-item:hover:not(:disabled) { border-color: var(--primary); }
+.plan-item-rank { font-family: 'Raleway', sans-serif; font-weight: 900; color: var(--muted); min-width: 1.2rem; }
+.plan-item-main { flex: 1; min-width: 0; }
+.plan-item-title { display: block; font-weight: 700; color: var(--primary); }
+.plan-item-note { display: block; font-size: .85rem; color: var(--muted); }
+.plan-item-sp {
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem; padding: 2px 8px; border-radius: 10px;
+  background: rgba(91,127,166,.12); color: #3d5f85; white-space: nowrap;
+}
+.plan-item.blocked .plan-item-sp { background: rgba(230,57,70,.08); color: #b3202c; }
+.plan-empty { font-size: .92rem; color: var(--muted); padding: .5rem; }
+.plan-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; margin-top: .9rem; }
+.plan-check {
+  min-height: 44px; padding: .5rem 1.3rem; border-radius: 6px; cursor: pointer;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem;
+  background: var(--primary); color: white; border: 2px solid var(--primary);
+}
+.plan-check:disabled { background: transparent; color: var(--muted); border-color: var(--border); cursor: default; }
+
+/* Result: the Sprint Backlog in three parts */
+.plan-result { margin-top: 1.25rem; padding: 1.3rem 1.5rem; border-radius: 10px; background: var(--card); border: 2px solid var(--gold); animation: planIn .3s ease; }
+.plan-result h4 { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.15rem; color: var(--primary); margin: 0 0 .75rem; }
+.plan-parts { display: grid; grid-template-columns: 1fr 1.2fr 1.4fr; gap: 1rem; }
+.plan-parts h5 { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; color: #7a6535; margin: 0 0 .3rem; }
+.plan-parts ul { list-style: none; }
+.plan-parts li { font-size: .93rem; padding: .15rem 0; }
+.plan-parts p { font-size: .95rem; margin: 0; }
+
+/* Product Backlog vs Sprint Backlog */
+.plan-compare { width: 100%; border-collapse: collapse; margin-top: 2.5rem; font-size: .95rem; background: var(--card); }
+.plan-compare caption { text-align: left; font-family: 'Raleway', sans-serif; font-weight: 900; font-size: 1.2rem; color: var(--primary); margin-bottom: .6rem; }
+.plan-compare th, .plan-compare td { padding: .65rem .85rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+.plan-compare thead th { font-family: 'Raleway', sans-serif; font-weight: 800; background: var(--primary); color: white; }
+.plan-compare tbody th { font-family: 'Raleway', sans-serif; font-weight: 800; color: var(--primary); background: var(--bg); width: 22%; }
+
+/* Bridge to the Review */
+.plan-bridge {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem;
+  margin-top: 2rem; padding: 1.25rem 1.5rem; border-radius: 10px; background: var(--primary);
+}
+.plan-bridge p { margin: 0; color: #e8e4da; max-width: 62ch; }
+.plan-bridge p strong { color: white; }
+.plan-bridge a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: .6rem 1.25rem; border-radius: 6px;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; white-space: nowrap;
+  background: var(--gold); color: var(--primary); text-decoration: none; transition: background .15s;
+}
+.plan-bridge a:hover { background: #c2b07f; }
+.plan-option:focus-visible, .plan-item:focus-visible, .plan-check:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.plan-bridge a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
 /* ── SPRINT REVIEW SECTION ──────────────────────────────────────────────────── */
 @keyframes reviewIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -1142,7 +1250,7 @@ h3.sprint-subtitle {
 }
 .retro-loop a:hover { background: #c2b07f; }
 .retro-recap { margin-top: 2rem; }
-.retro-recap-grid { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
+.retro-recap-grid { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; }
 .retro-recap-grid li { background: var(--card); border: 1.5px solid var(--border); border-radius: 8px; padding: .85rem .95rem; font-size: .93rem; line-height: 1.45; }
 .retro-recap-grid a { display: flex; align-items: center; min-height: 44px; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem; color: var(--primary); text-decoration: none; }
 .retro-recap-grid a:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -1255,6 +1363,9 @@ h3.sprint-subtitle {
   .retro-recap-grid { grid-template-columns: 1fr 1fr; }
   .waarde-team { grid-template-columns: 1fr; }
   .review-intro { grid-template-columns: 1fr; }
+  .plan-intro { grid-template-columns: 1fr; }
+  .plan-facts { grid-template-columns: 1fr 1fr; }
+  .plan-parts { grid-template-columns: 1fr; }
   .review-facts { grid-template-columns: 1fr 1fr; }
   .waarde-values { grid-template-columns: repeat(3, 1fr); }
   .poker-card { --w: 60px; }
@@ -1271,6 +1382,11 @@ h3.sprint-subtitle {
   .retro-recap-grid { grid-template-columns: 1fr; }
   .waarde-values { grid-template-columns: 1fr; }
   .review-facts, .review-stories, .review-cats, .review-holders { grid-template-columns: 1fr; }
+  .plan-facts, .plan-board { grid-template-columns: 1fr; }
+  .plan-compare, .plan-compare tbody, .plan-compare tr, .plan-compare th, .plan-compare td { display: block; width: 100%; }
+  .plan-compare thead { display: none; }
+  .plan-compare td:nth-of-type(1)::before { content: "Product Backlog: "; font-weight: 700; }
+  .plan-compare td:nth-of-type(2)::before { content: "Sprint Backlog: "; font-weight: 700; }
   .retro-intro img { width: 100%; }
   .poker-steps { grid-template-columns: repeat(2, 1fr); }
   .poker-card { --w: 40px; }
@@ -1309,6 +1425,7 @@ h3.sprint-subtitle {
     <a href="#sprint-events" onclick="navClose()">Scrum Events</a>
     <a href="#empirisme-events" onclick="navClose()">Pijlers per Event</a>
     <a href="#poker-planning" onclick="navClose()">Planning Poker</a>
+    <a href="#sprint-planning" onclick="navClose()">Sprint Planning</a>
     <a href="#sprint-review" onclick="navClose()">Sprint Review</a>
     <a href="#retrospectives" onclick="navClose()">Retrospectives</a>
   </div>
@@ -1634,7 +1751,87 @@ h3.sprint-subtitle {
 
   <!-- Brug naar Retrospectives -->
   <div class="poker-bridge">
-    <p><strong>De stories zijn ingeschat en de Sprint kan beginnen.</strong> Twee weken later toont het team het resultaat aan de stakeholders: de Sprint Review.</p>
+    <p><strong>De stories zijn ingeschat.</strong> Nu kiest het team in de Sprint Planning welke stories het in Sprint 1 oppakt, en met welk doel.</p>
+    <a href="#sprint-planning">Naar de Sprint Planning &rarr;</a>
+  </div>
+</section>
+
+<section id="sprint-planning">
+  <div class="badge">Sprint Planning</div>
+  <h2>Kiezen wat er in de Sprint komt</h2>
+  <div class="plan-intro">
+    <div>
+      <p class="lead">De stories zijn ingeschat. Bij de start van Sprint 1 beslist het Campi-team in de <strong>Sprint Planning</strong> welke items van de Product Backlog het deze Sprint oppakt, en waarom.</p>
+      <p>Twee dingen komen eruit: een <strong>Sprint Doel</strong> (een korte zin over wat het team wil bereiken) en een <strong>Sprint Backlog</strong> (de gekozen items en het plan om ze af te werken).</p>
+    </div>
+    <figure>
+      <img src="img/sprint_planning.jpg" alt="Het Campi-team tijdens de Sprint Planning, met Pieter bij een scherm vol backlog items" loading="lazy" />
+      <figcaption>Pieter toont de Product Backlog, Sara wijst het item met de hoogste prioriteit aan.</figcaption>
+    </figure>
+  </div>
+
+  <ul class="plan-facts">
+    <li><strong>Wanneer?</strong>Bij de start van elke Sprint.</li>
+    <li><strong>Hoe lang?</strong>Maximaal 8 uur (voor een Sprint van een maand).</li>
+    <li><strong>Wie?</strong>Het hele Scrum Team: Product Owner, Scrum Master en Developers.</li>
+    <li><strong>Resultaat?</strong>Een Sprint Doel en een Sprint Backlog.</li>
+  </ul>
+
+  <!-- Stap 1 -->
+  <div class="plan-step">
+    <h3><span>1</span> Een goede User Story</h3>
+    <p>Een User Story beschrijft wat een gebruiker wil, vanuit het standpunt van die gebruiker:</p>
+    <p class="plan-form"><strong>Als</strong> (type gebruiker) <strong>wil ik</strong> (een doel) <strong>zodat</strong> (een reden).</p>
+    <div id="plan-story-qs"></div>
+  </div>
+
+  <!-- Stap 2 -->
+  <div class="plan-step">
+    <h3><span>2</span> Het Sprint Doel</h3>
+    <p>Het Sprint Doel is een korte zin die de Product Owner en het team samen opstellen. Het houdt de stakeholders op de hoogte, en in de Sprint Review kijkt men of het gehaald is.</p>
+    <div id="plan-goal-q"></div>
+  </div>
+
+  <!-- Stap 3 -->
+  <div class="plan-step">
+    <h3><span>3</span> Vul de Sprint Backlog</h3>
+    <p>Dit is de Product Backlog, in de volgorde die de Product Owner koos, met de schattingen uit de Planning Poker. Het team schat zijn capaciteit voor Sprint 1 op <strong>17 storypunten</strong>: het is de eerste Sprint, dus er is nog geen velocity, en Mohammed volgt &eacute;&eacute;n dag een opleiding. Klik op een item om het in de Sprint Backlog te zetten, of er terug uit te halen.</p>
+    <div class="plan-capacity">
+      <div class="plan-capacity-track"><div class="plan-capacity-fill" id="plan-capacity-fill"></div></div>
+      <span class="plan-capacity-label" id="plan-capacity-label" aria-live="polite">0 / 17 storypunten</span>
+    </div>
+    <div class="plan-board">
+      <div class="plan-col">
+        <h4>Product Backlog <small>(Product Owner)</small></h4>
+        <ul class="plan-items" id="plan-pb"></ul>
+      </div>
+      <div class="plan-col">
+        <h4>Sprint Backlog <small>(het team)</small></h4>
+        <ul class="plan-items" id="plan-sb"></ul>
+      </div>
+    </div>
+    <div class="plan-bar">
+      <button class="plan-check" id="plan-check" onclick="planCheck()">Controleer de Sprint Backlog</button>
+    </div>
+    <div id="plan-fb" aria-live="polite"></div>
+    <div id="plan-result"></div>
+  </div>
+
+  <!-- Product Backlog vs Sprint Backlog -->
+  <table class="plan-compare">
+    <caption>Product Backlog of Sprint Backlog?</caption>
+    <thead><tr><th scope="col"></th><th scope="col">Product Backlog</th><th scope="col">Sprint Backlog</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Wat?</th><td>Alles wat nodig is voor het hele product.</td><td>De items die het team in deze Sprint afwerkt, plus het plan.</td></tr>
+      <tr><th scope="row">Van wie?</th><td>De Product Owner verzamelt, prioriteert en verfijnt.</td><td>Het team stelt ze op en werkt ze af.</td></tr>
+      <tr><th scope="row">Bepaald door?</th><td>Het doel van het hele product.</td><td>Het Sprint Doel.</td></tr>
+      <tr><th scope="row">Hoe lang?</th><td>Zolang het product bestaat, en verandert mee met de klant.</td><td>E&eacute;n Sprint. Elke Sprint krijgt een nieuwe Sprint Backlog.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Brug naar de Sprint Review -->
+  <div class="plan-bridge">
+    <p><strong>Het plan staat, de Sprint begint.</strong> Twee weken later toont het team het resultaat aan de stakeholders: de Sprint Review.</p>
     <a href="#sprint-review">Naar de Sprint Review &rarr;</a>
   </div>
 </section>
@@ -1775,6 +1972,7 @@ h3.sprint-subtitle {
       <li><a href="#scrum-waarden">Scrum Waarden</a>Commitment, focus, openheid, respect en moed: de basis voor goed teamwork.</li>
       <li><a href="#sprint-events">De 5 Scrum Events</a>De Sprint als container, met Planning, Daily Scrum, Review en Retrospective.</li>
       <li><a href="#poker-planning">Planning Poker</a>In stilte kiezen, samen omdraaien, hoogste en laagste leggen uit, nooit een gemiddelde.</li>
+      <li><a href="#sprint-planning">Sprint Planning</a>Een Sprint Doel kiezen en de Sprint Backlog vullen, van boven naar onder en binnen de capaciteit.</li>
       <li><a href="#sprint-review">Sprint Review</a>Alleen Done-werk tonen, feedback ophalen, en de Product Backlog bijwerken.</li>
       <li><a href="#retrospectives">Retrospective</a>Eerst terugkijken, dan 1 of 2 SMART-actiepunten die het team echt uitvoert.</li>
     </ul>
@@ -3389,6 +3587,177 @@ function pokerRound2() {
       document.getElementById('poker-scenario').focus({ preventScroll: true });
     }, 700);
   }, 450);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── SPRINT PLANNING SECTION ──────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+// Steps 1 and 2: questions. One option is right; the others carry feedback.
+var PLAN_QS = {
+  story: [
+    {
+      text: 'Welke User Story is goed geschreven?',
+      options: [
+        { text: '“Als developer wil ik een koppeling met het cateringsysteem bouwen, zodat de data binnenkomt.”', feedback: 'Een User Story heeft waarde voor een gebruiker. “Als developer …” is een taak, geen User Story: anders zou het een “Developer Story” heten.' },
+        { text: '“Als student wil ik het dagmenu van PXL Catering bekijken, zodat ik weet wat er vandaag te eten is.”', right: true },
+        { text: '“Dagmenu-scherm bouwen met prijs en allergenen.”', feedback: 'Hier ontbreken wie het wil en waarom. Zonder die twee weet het team niet waarvoor het bouwt.' }
+      ],
+      why: 'Een gebruiker, een doel en een reden: zo weet het team voor wie en waarom het bouwt.'
+    },
+    {
+      text: 'Bij die story horen acceptatiecriteria: wanneer is ze “done”? Welk criterium is bruikbaar?',
+      options: [
+        { text: 'Het menu ziet er mooi uit.', feedback: 'Wat “mooi” is, kan je niet controleren. Een acceptatiecriterium moet je kunnen nagaan.' },
+        { text: 'Het team doet zijn best om het menu af te werken.', feedback: 'Dat zegt iets over het team, niet over het resultaat. Een acceptatiecriterium beschrijft wat het product moet kunnen.' },
+        { text: 'Het menu toont per gerecht de prijs en de allergenen.', right: true }
+      ],
+      why: 'Een goed acceptatiecriterium kan je controleren: het menu toont de prijs en de allergenen, of niet.'
+    }
+  ],
+  goal: [
+    {
+      text: 'Welk Sprint Doel kiest het team voor Sprint 1?',
+      options: [
+        { text: 'US-07, US-04, US-02 en US-05 afwerken.', feedback: 'Een lijst items is geen doel: het zegt niet wat de gebruiker erbij wint. Stakeholders hebben genoeg aan het doel, niet aan alle details.' },
+        { text: 'Een eerste versie van Campi waarin studenten inloggen en het dagmenu en het campusnieuws lezen.', right: true },
+        { text: 'Zo hard mogelijk werken aan de app.', feedback: 'Dat is niet concreet: in de Sprint Review kan je niet nagaan of het gehaald is.' }
+      ],
+      why: 'Eén zin over wat het team wil bereiken. In de Sprint Review kijkt men of dit doel gehaald is.'
+    }
+  ]
+};
+
+// Step 3: the Product Backlog in priority order, with the Planning Poker estimates
+var PLAN_CAPACITY = 17;
+var PLAN_ITEMS = [
+  { id: 'US-07', title: 'Inloggen met PXL-account', sp: 3, ready: true, tasks: ['Microsoft-login koppelen', 'Inlogscherm bouwen', 'Foutmeldingen en tests'] },
+  { id: 'US-04', title: 'Dagmenu PXL Catering', sp: 3, ready: true, tasks: ['Menu ophalen bij Catering', 'Dagmenu-scherm met allergenen', 'Tests'] },
+  { id: 'US-01', title: 'Persoonlijk lesrooster', sp: null, ready: false, note: 'nog niet Ready: geen toegang tot het roostersysteem',
+    refuse: 'Het lesrooster is nog niet Ready: het team heeft nog geen toegang tot het PXL-roostersysteem. Een story die niet Ready is, neem je niet op in de Sprint.' },
+  { id: 'US-02', title: 'Campusnieuws lezen', sp: 3, ready: true, tasks: ['Nieuws-API koppelen', 'Nieuwslijst en detail', 'Tests'] },
+  { id: 'US-05', title: 'Meldingen bij roosterwijzigingen', sp: 8, ready: true, tasks: ['Meldingendienst koppelen', 'Wijzigingen detecteren', 'Instellingen per vak', 'Tests'] },
+  { id: 'US-03', title: 'Interactieve campusplattegrond', sp: null, ready: false, note: 'te groot (20 tot 40): eerst opsplitsen',
+    refuse: 'De plattegrond is te groot: het team schatte 20 tot 40 punten. Eerst opsplitsen in kleinere stories, dan pas inplannen.' },
+  { id: 'US-06', title: 'Favoriete lokalen opslaan', sp: 1, ready: true, tasks: ['Favorieten bewaren', 'Ster-icoon op de kaart'] }
+];
+var PLAN_CORRECT = ['US-07', 'US-04', 'US-02', 'US-05'];
+
+var planQState = { story: PLAN_QS.story.map(function() { return { done: false, wrong: [] }; }),
+                   goal: PLAN_QS.goal.map(function() { return { done: false, wrong: [] }; }) };
+var planSprint = [];        // ids in the Sprint Backlog, in Product Backlog order
+var planDone = false;
+
+(function planInit() {
+  planRenderQs('story');
+  planRenderQs('goal');
+  planRenderBoard();
+})();
+
+function planRenderQs(group) {
+  var el = document.getElementById(group === 'story' ? 'plan-story-qs' : 'plan-goal-q');
+  el.innerHTML = PLAN_QS[group].map(function(q, i) {
+    var st = planQState[group][i];
+    var html = '<div class="plan-q"><p class="plan-q-text">' + q.text + '</p><div class="plan-options">';
+    q.options.forEach(function(o, j) {
+      var cls = st.done && o.right ? ' right' : (st.wrong.indexOf(j) !== -1 ? ' wrong' : '');
+      var off = st.done || st.wrong.indexOf(j) !== -1;
+      html += '<button class="plan-option' + cls + '" onclick="planAnswer(\'' + group + '\',' + i + ',' + j + ')"' + (off ? ' disabled' : '') + '>' + o.text + '</button>';
+    });
+    html += '</div><div aria-live="polite">';
+    if (st.done) html += '<div class="plan-feedback ok">' + q.why + '</div>';
+    else if (st.wrong.length) html += '<div class="plan-feedback hint"><strong>Niet helemaal.</strong> ' + q.options[st.wrong[st.wrong.length - 1]].feedback + '</div>';
+    return html + '</div></div>';
+  }).join('');
+}
+
+function planAnswer(group, i, j) {
+  var st = planQState[group][i];
+  if (PLAN_QS[group][i].options[j].right) st.done = true; else st.wrong.push(j);
+  planRenderQs(group);
+  var box = document.querySelectorAll('#' + (group === 'story' ? 'plan-story-qs' : 'plan-goal-q') + ' .plan-q')[i];
+  var next = st.done ? null : box.querySelector('.plan-option:not(:disabled)');
+  if (next) next.focus({ preventScroll: true });
+}
+
+function planPoints() {
+  return planSprint.reduce(function(sum, id) {
+    return sum + PLAN_ITEMS.filter(function(it) { return it.id === id; })[0].sp;
+  }, 0);
+}
+
+function planItemHtml(it, rank) {
+  var sp = it.sp === null ? (it.ready ? '?' : '!') : it.sp + ' SP';
+  return '<li><button class="plan-item' + (it.ready ? '' : ' blocked') + '" onclick="planToggle(\'' + it.id + '\')"' + (planDone ? ' disabled' : '') + '>' +
+    '<span class="plan-item-rank">' + rank + '</span>' +
+    '<span class="plan-item-main"><span class="plan-item-title">' + it.id + ' ' + it.title + '</span>' +
+    (it.note ? '<span class="plan-item-note">' + it.note + '</span>' : '') + '</span>' +
+    '<span class="plan-item-sp">' + (it.ready ? sp : 'niet in te plannen') + '</span></button></li>';
+}
+
+function planRenderBoard() {
+  var pb = '', sb = '';
+  PLAN_ITEMS.forEach(function(it, i) {
+    if (planSprint.indexOf(it.id) === -1) pb += planItemHtml(it, i + 1);
+    else sb += planItemHtml(it, i + 1);
+  });
+  document.getElementById('plan-pb').innerHTML = pb || '<li class="plan-empty">De Product Backlog is leeg.</li>';
+  document.getElementById('plan-sb').innerHTML = sb || '<li class="plan-empty">Nog geen items gekozen.</li>';
+  var pts = planPoints();
+  var fill = document.getElementById('plan-capacity-fill');
+  fill.style.width = Math.min(pts / PLAN_CAPACITY * 100, 100) + '%';
+  fill.classList.toggle('over', pts > PLAN_CAPACITY);
+  document.getElementById('plan-capacity-label').textContent = pts + ' / ' + PLAN_CAPACITY + ' storypunten' + (pts > PLAN_CAPACITY ? ': te veel' : '');
+  document.getElementById('plan-check').disabled = planDone || !planSprint.length;
+}
+
+function planToggle(id) {
+  if (planDone) return;
+  var it = PLAN_ITEMS.filter(function(x) { return x.id === id; })[0];
+  var fb = document.getElementById('plan-fb');
+  if (!it.ready) {
+    fb.innerHTML = '<div class="plan-feedback hint">' + it.refuse + '</div>';
+    return;
+  }
+  var pos = planSprint.indexOf(id);
+  if (pos === -1) planSprint.push(id); else planSprint.splice(pos, 1);
+  planSprint.sort(function(a, b) {
+    return PLAN_ITEMS.map(function(x) { return x.id; }).indexOf(a) - PLAN_ITEMS.map(function(x) { return x.id; }).indexOf(b);
+  });
+  fb.innerHTML = '';
+  planRenderBoard();
+  var again = document.querySelector('.plan-item[onclick="planToggle(\'' + id + '\')"]');
+  if (again) again.focus({ preventScroll: true });
+}
+
+function planCheck() {
+  var pts = planPoints();
+  var fb = document.getElementById('plan-fb');
+  var missing = PLAN_CORRECT.filter(function(id) { return planSprint.indexOf(id) === -1; });
+  var extra = planSprint.filter(function(id) { return PLAN_CORRECT.indexOf(id) === -1; });
+  if (!missing.length && !extra.length) {
+    planDone = true;
+    planRenderBoard();
+    fb.innerHTML = '<div class="plan-feedback ok"><strong>Juist.</strong> Het team neemt de items van boven naar onder, zolang ze Ready zijn en binnen de capaciteit passen: 17 van de 17 storypunten. Het lesrooster en de plattegrond slaat het over, en voor de favorieten is er geen plaats meer.</div>';
+    planRenderResult();
+    return;
+  }
+  var lines = [];
+  if (pts > PLAN_CAPACITY) lines.push('Dit is meer dan de capaciteit van 17 storypunten. Een Sprint die te vol zit, haalt het team niet.');
+  if (missing.length) lines.push('Je slaat een item met een hogere prioriteit over: ' + missing.join(', ') + '. Het team werkt de Product Backlog van boven naar onder af.');
+  if (extra.indexOf('US-06') !== -1 && pts <= PLAN_CAPACITY) lines.push('De favorieten (US-06) hebben de laagste prioriteit: kies eerst de belangrijkere items.');
+  fb.innerHTML = '<div class="plan-feedback hint"><strong>Nog niet.</strong> ' + lines.join(' ') + '</div>';
+}
+
+function planRenderResult() {
+  var items = PLAN_ITEMS.filter(function(it) { return planSprint.indexOf(it.id) !== -1; });
+  document.getElementById('plan-result').innerHTML =
+    '<div class="plan-result"><h4>De Sprint Backlog van Sprint 1</h4><div class="plan-parts">' +
+      '<div><h5>Sprint Doel (waarom)</h5><p>Een eerste versie van Campi waarin studenten inloggen en het dagmenu en het campusnieuws lezen.</p></div>' +
+      '<div><h5>Items (wat)</h5><ul>' + items.map(function(it) { return '<li>' + it.id + ' ' + it.title + ' (' + it.sp + ' SP)</li>'; }).join('') + '</ul></div>' +
+      '<div><h5>Plan (hoe)</h5><ul>' + items.map(function(it) { return '<li><strong>' + it.id + ':</strong> ' + it.tasks.join(', ') + '</li>'; }).join('') + '</ul>' +
+      '<p>Wie welke taak doet, beslist het team zelf tijdens de Sprint.</p></div>' +
+    '</div></div>';
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
