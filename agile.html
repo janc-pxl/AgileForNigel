@@ -203,9 +203,12 @@ h3.empir-subtitle:first-of-type { border-top: none; padding-top: 0; margin-top: 
 }
 .empir-ex-step.solved .empir-ex-num { background: var(--pillar); border-color: var(--pillar); color: white; }
 .empir-ex-body {
+  display: grid; grid-template-columns: 240px 1fr; gap: 1.1rem; align-items: start;
   background: var(--card); border: 1.5px solid var(--border); border-radius: 10px;
-  padding: 1rem 1.25rem; animation: empirIn .25s ease;
+  padding: .75rem 1.25rem .9rem .75rem; animation: empirIn .25s ease;
 }
+.empir-ex-img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 6px; background: var(--bg); }
+.empir-ex-content { padding-top: .25rem; }
 .empir-ex-text, .empir-act-text { font-weight: 600; font-size: 1.02rem; color: var(--primary); margin: 0 0 .85rem; }
 .empir-ex-step.solved .empir-ex-text, .empir-act.solved .empir-act-text { margin-bottom: .5rem; }
 .empir-ex-expl, .empir-act-expl { font-size: .95rem; margin: 0; }
@@ -935,6 +938,9 @@ h3.sprint-subtitle {
   .empir-cycle-loop::before { display: none; }
   .empir-cycle-loop span { position: static; transform: none; padding: 0; }
   .empir-ex-done { margin-left: 0; }
+  .empir-ex-body { grid-template-columns: 1fr; padding: .75rem .75rem 1rem; }
+  .empir-ex-img { aspect-ratio: 16 / 9; max-height: 240px; }
+  .empir-ex-content { padding: 0 .5rem; }
   .sprint-layout { grid-template-columns: 1fr; }
   .sprint-overview-list { grid-template-columns: 1fr 1fr; }
   .sprint-compare, .sprint-summary-grid { grid-template-columns: 1fr; }
@@ -1251,24 +1257,32 @@ var EMPIR_EXAMPLE = [
   {
     text: 'Je bouwt eerst een eenvoudige versie van de app die alleen foto’s kan uploaden. Iedereen kan die versie bekijken en uitproberen.',
     correct: 'T',
+    img: 'img/fotoapp_1.jpg',
+    alt: 'Het team bekijkt de eerste, eenvoudige versie van de app op een gsm en een laptop',
     hint: 'Er wordt hier nog niets beoordeeld of veranderd. Wat levert een eerste werkende versie vooral op?',
     explanation: 'Een werkende versie maakt zichtbaar waar je staat: iedereen kan zien wat er al is. Dat is <strong>transparantie</strong>.'
   },
   {
     text: 'Een kleine groep studenten test de app. Jij kijkt hoe ze de app gebruiken en vraagt wat ze ervan vinden.',
     correct: 'I',
+    img: 'img/fotoapp_2.jpg',
+    alt: 'Studenten testen de app op hun gsm terwijl een teamlid toekijkt en notities neemt',
     hint: 'Je verandert nog niets. Je kijkt en luistert. Welke pijler is dat?',
     explanation: 'Je observeert hoe de app in de praktijk wordt gebruikt en vraagt om feedback. Dat is <strong>inspectie</strong>.'
   },
   {
     text: 'De testers willen filters gebruiken voor ze een foto uploaden. Je voegt een eenvoudige filterfunctie toe.',
     correct: 'A',
+    img: 'img/fotoapp_3.jpg',
+    alt: 'Een ontwikkelaar werkt aan de nieuwe filterfunctie terwijl een teamlid naar het scherm wijst',
     hint: 'Er verandert hier iets aan de app, op basis van wat je geleerd hebt.',
     explanation: 'Je past de app aan op basis van de feedback. Dat is <strong>aanpassing</strong> (in de Scrum Guide: adaptatie).'
   },
   {
     text: 'Je laat dezelfde studenten de nieuwe versie met filters opnieuw testen.',
     correct: 'I',
+    img: 'img/fotoapp_4.jpg',
+    alt: 'Dezelfde studenten testen de nieuwe versie met filters en tonen het resultaat aan het teamlid',
     hint: 'Dit is dezelfde soort stap als stap 2. Wat doe je opnieuw?',
     explanation: 'De cyclus begint opnieuw: je <strong>inspecteert</strong> de nieuwe versie, leert en past weer aan. Dat herhalen heet iteratie.'
   }
@@ -1416,7 +1430,9 @@ function exRender() {
     var solved = exSolved.has(idx);
     html += '<li class="empir-ex-step' + (solved ? ' solved' : '') + '" data-pillar="' + step.correct + '">';
     html += '<div class="empir-ex-num">' + (idx + 1) + '</div>';
-    html += '<div class="empir-ex-body"><p class="empir-ex-text">' + step.text + '</p>';
+    html += '<div class="empir-ex-body">';
+    html += '<img class="empir-ex-img" src="' + step.img + '" alt="' + step.alt + '" loading="lazy" />';
+    html += '<div class="empir-ex-content"><p class="empir-ex-text">' + step.text + '</p>';
     if (solved) {
       html += '<div class="empir-tag">' + EMPIR_PILLARS[step.correct] + '</div>';
       html += '<p class="empir-ex-expl">' + step.explanation + '</p>';
@@ -1424,7 +1440,7 @@ function exRender() {
       html += empirChoices('exAnswer(this, ' + idx + ', ');
       html += '<div id="empir-ex-feedback" aria-live="polite"></div>';
     }
-    html += '</div></li>';
+    html += '</div></div></li>';
   });
   document.getElementById('empir-ex').innerHTML = html;
   document.getElementById('empir-ex-done').classList.toggle('visible', exSolved.size === EMPIR_EXAMPLE.length);
