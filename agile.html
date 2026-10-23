@@ -1012,6 +1012,105 @@ h3.sprint-subtitle {
 .plan-option:focus-visible, .plan-item:focus-visible, .plan-check:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 .plan-bridge a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
+/* ── DAILY SCRUM SECTION ────────────────────────────────────────────────────── */
+@keyframes dailyIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+.daily-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 1.5rem 2rem; align-items: center; margin: 1rem 0 .5rem; }
+.daily-intro .lead { margin: 0 0 .75rem; }
+.daily-intro figure { margin: 0; }
+.daily-intro img { width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.12); display: block; }
+.daily-intro figcaption { font-size: .88rem; color: var(--muted); margin-top: .4rem; }
+.daily-facts { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; margin-top: 1.5rem; }
+.daily-facts li { background: var(--card); border: 1.5px solid var(--border); border-radius: 8px; padding: .85rem .95rem; font-size: .93rem; line-height: 1.45; }
+.daily-facts strong { display: block; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .98rem; color: var(--primary); margin-bottom: .2rem; }
+
+/* The three questions */
+.daily-three { list-style: none; counter-reset: dq; display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin-top: 1.25rem; }
+.daily-three li {
+  counter-increment: dq; position: relative; padding: .9rem 1rem .95rem 3.1rem; border-radius: 8px;
+  background: var(--gold-bg); border: 1px solid rgba(174,154,100,.45);
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.02rem; color: var(--primary);
+}
+.daily-three li::before {
+  content: counter(dq); position: absolute; left: .9rem; top: .8rem; width: 1.6rem; height: 1.6rem; border-radius: 50%;
+  background: var(--primary); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 900;
+}
+
+/* Steps */
+.daily-step { margin-top: 2.5rem; }
+.daily-step h3 {
+  display: flex; align-items: center; gap: .65rem;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--primary); margin-bottom: .4rem;
+}
+.daily-step h3 span {
+  width: 1.8rem; height: 1.8rem; border-radius: 50%; flex-shrink: 0; background: var(--primary); color: var(--gold);
+  display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: .95rem;
+}
+.daily-step > p { max-width: 72ch; }
+
+/* Questions */
+.daily-q { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; padding: 1rem 1.15rem 1.1rem; margin-top: 1rem; }
+.daily-q-who { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem; color: #7a6535; margin-bottom: .2rem; }
+.daily-q-text { font-size: 1.02rem; font-weight: 600; color: var(--primary); margin: 0 0 .75rem; max-width: 75ch; }
+.daily-options { display: grid; gap: .5rem; }
+.daily-options.row { display: flex; flex-wrap: wrap; }
+.daily-option {
+  text-align: left; min-height: 44px; padding: .55rem 1rem; border-radius: 6px; cursor: pointer;
+  font: inherit; font-size: .97rem; color: var(--text); background: white; border: 1.5px solid var(--border);
+  transition: border-color .15s, background .15s;
+}
+.daily-options.row .daily-option { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .92rem; color: var(--primary); }
+.daily-option:hover:not(:disabled) { border-color: var(--primary); background: #fafaf8; }
+.daily-option.wrong { border-color: var(--accent); color: #b3202c; background: rgba(230,57,70,.05); text-decoration: line-through; cursor: default; }
+.daily-option.right { border-color: var(--green); background: rgba(42,157,143,.1); color: #155f55; font-weight: 700; cursor: default; }
+.daily-feedback { margin-top: .6rem; padding: .7rem 1rem; border-radius: 6px; font-size: .95rem; animation: dailyIn .25s ease; }
+.daily-feedback.hint { background: rgba(174,154,100,.12); border: 1px solid rgba(174,154,100,.5); }
+.daily-feedback.ok { background: rgba(42,157,143,.08); border: 1px solid rgba(31,119,108,.35); }
+
+/* Step 3: the Scrum Board and the burndown chart on day 8 */
+.daily-status { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 1rem; margin-top: 1rem; align-items: start; }
+.daily-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; padding: .75rem; border-radius: 10px; background: var(--card); border: 1.5px solid var(--border); }
+.daily-board h4 { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .92rem; color: var(--primary); margin: 0 0 .4rem; }
+.daily-board ul { list-style: none; display: grid; gap: .35rem; }
+.daily-board li { background: #FFF176; padding: .35rem .5rem; font-size: .85rem; line-height: 1.3; box-shadow: 1px 2px 4px rgba(0,0,0,.15); }
+.daily-board li b { display: block; font-family: 'Raleway', sans-serif; font-size: .8rem; color: #5c4a14; }
+.daily-board li.stuck { box-shadow: 0 0 0 2px var(--accent), 1px 2px 4px rgba(0,0,0,.15); }
+.daily-chart { padding: .75rem; border-radius: 10px; background: var(--card); border: 1.5px solid var(--border); }
+.daily-chart svg { display: block; width: 100%; height: auto; }
+.daily-chart .axis { stroke: #8a8478; stroke-width: 1.5; }
+.daily-chart .grid { stroke: var(--border); stroke-width: 1; }
+.daily-chart .ideal { stroke: #7a6535; stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+.daily-chart .actual { stroke: #3d5f85; stroke-width: 3; fill: none; stroke-linejoin: round; }
+.daily-chart .dot { fill: #3d5f85; }
+.daily-chart .today { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 3 4; }
+.daily-chart text { font-family: Arial, system-ui, sans-serif; font-size: 16px; fill: #555; }
+.daily-chart .lbl { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 17px; }
+.daily-chart .lbl.actual-l { fill: #3d5f85; }
+.daily-chart .lbl.today-l { fill: #b3202c; }
+.daily-legend { display: flex; gap: 1.25rem; justify-content: center; margin-top: .4rem; font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .85rem; }
+.daily-legend span { display: inline-flex; align-items: center; gap: .4rem; }
+.daily-legend span::before { content: ''; width: 22px; }
+.daily-legend .actual { color: #3d5f85; }
+.daily-legend .actual::before { border-top: 3px solid #3d5f85; }
+.daily-legend .ideal { color: #7a6535; }
+.daily-legend .ideal::before { border-top: 2px dashed #7a6535; }
+
+/* Bridge to the Review */
+.daily-bridge {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem;
+  margin-top: 2rem; padding: 1.25rem 1.5rem; border-radius: 10px; background: var(--primary);
+}
+.daily-bridge p { margin: 0; color: #e8e4da; max-width: 62ch; }
+.daily-bridge p strong { color: white; }
+.daily-bridge a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: .6rem 1.25rem; border-radius: 6px;
+  font-family: 'Raleway', sans-serif; font-weight: 800; font-size: .95rem; white-space: nowrap;
+  background: var(--gold); color: var(--primary); text-decoration: none; transition: background .15s;
+}
+.daily-bridge a:hover { background: #c2b07f; }
+.daily-option:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.daily-bridge a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
 /* ── SPRINT REVIEW SECTION ──────────────────────────────────────────────────── */
 @keyframes reviewIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -1364,6 +1463,8 @@ h3.sprint-subtitle {
   .waarde-team { grid-template-columns: 1fr; }
   .review-intro { grid-template-columns: 1fr; }
   .plan-intro { grid-template-columns: 1fr; }
+  .daily-intro, .daily-status, .daily-three { grid-template-columns: 1fr; }
+  .daily-facts { grid-template-columns: 1fr 1fr; }
   .plan-facts { grid-template-columns: 1fr 1fr; }
   .plan-parts { grid-template-columns: 1fr; }
   .review-facts { grid-template-columns: 1fr 1fr; }
@@ -1383,6 +1484,8 @@ h3.sprint-subtitle {
   .waarde-values { grid-template-columns: 1fr; }
   .review-facts, .review-stories, .review-cats, .review-holders { grid-template-columns: 1fr; }
   .plan-facts, .plan-board { grid-template-columns: 1fr; }
+  .daily-facts { grid-template-columns: 1fr; }
+  .daily-chart text, .daily-chart .lbl { font-size: 21px; }
   .plan-compare, .plan-compare tbody, .plan-compare tr, .plan-compare th, .plan-compare td { display: block; width: 100%; }
   .plan-compare thead { display: none; }
   .plan-compare td:nth-of-type(1)::before { content: "Product Backlog: "; font-weight: 700; }
@@ -1426,6 +1529,7 @@ h3.sprint-subtitle {
     <a href="#empirisme-events" onclick="navClose()">Pijlers per Event</a>
     <a href="#poker-planning" onclick="navClose()">Planning Poker</a>
     <a href="#sprint-planning" onclick="navClose()">Sprint Planning</a>
+    <a href="#daily-scrum" onclick="navClose()">Daily Scrum</a>
     <a href="#sprint-review" onclick="navClose()">Sprint Review</a>
     <a href="#retrospectives" onclick="navClose()">Retrospectives</a>
   </div>
@@ -1829,9 +1933,113 @@ h3.sprint-subtitle {
     </tbody>
   </table>
 
-  <!-- Brug naar de Sprint Review -->
+  <!-- Brug naar de Daily Scrum -->
   <div class="plan-bridge">
-    <p><strong>Het plan staat, de Sprint begint.</strong> Twee weken later toont het team het resultaat aan de stakeholders: de Sprint Review.</p>
+    <p><strong>Het plan staat, de Sprint begint.</strong> Elke ochtend stemt het team kort af over de voortgang: de Daily Scrum.</p>
+    <a href="#daily-scrum">Naar de Daily Scrum &rarr;</a>
+  </div>
+</section>
+
+<section id="daily-scrum">
+  <div class="badge">Daily Scrum</div>
+  <h2>Elke dag kort afstemmen</h2>
+  <div class="daily-intro">
+    <div>
+      <p class="lead">De Sprint loopt. Elke ochtend om 9 uur staat het Campi-team een kwartier rond het Scrum Board: de <strong>Daily Scrum</strong>, in de cursus ook <strong>Daily Standup</strong> genoemd.</p>
+      <p>Het doel: obstakels zo snel mogelijk zien en wegwerken, en het plan voor vandaag samen bijsturen. Iedereen staat recht, zodat niemand de vergadering nodeloos rekt.</p>
+    </div>
+    <figure>
+      <img src="img/daily_standup_burndown.jpg" alt="Het Campi-team staat rond de burndown chart tijdens de Daily Scrum, Mohammed wijst de lijn aan" loading="lazy" />
+      <figcaption>Dag 8: Mohammed wijst de burndown chart aan.</figcaption>
+    </figure>
+  </div>
+
+  <ul class="daily-facts">
+    <li><strong>Wanneer?</strong>Elke werkdag, op hetzelfde uur en dezelfde plek.</li>
+    <li><strong>Hoe lang?</strong>Maximaal 15 minuten, en recht staan.</li>
+    <li><strong>Wie?</strong>De Developers. De Scrum Master zorgt dat het kort en nuttig blijft.</li>
+    <li><strong>Waarom?</strong>Obstakels snel zien en het plan voor vandaag bijsturen.</li>
+  </ul>
+
+  <p style="margin-top:1.5rem;">Elk teamlid beantwoordt drie vragen:</p>
+  <ol class="daily-three">
+    <li>Wat heb ik gisteren bereikt?</li>
+    <li>Wat ga ik vandaag doen?</li>
+    <li>Welke obstakels belemmeren mijn vooruitgang?</li>
+  </ol>
+
+  <!-- Stap 1 -->
+  <div class="daily-step">
+    <h3><span>1</span> Luister naar Mohammed</h3>
+    <p>Dag 8. Mohammed vertelt zijn update. Bij welke van de drie vragen hoort elke zin?</p>
+    <div id="daily-sort"></div>
+  </div>
+
+  <!-- Stap 2 -->
+  <div class="daily-step">
+    <h3><span>2</span> Wat loopt er mis?</h3>
+    <p>Een Daily Scrum kan snel mis beginnen gaan. Herken jij wat er in deze momenten fout gaat?</p>
+    <div id="daily-wrong"></div>
+  </div>
+
+  <!-- Stap 3 -->
+  <div class="daily-step">
+    <h3><span>3</span> Lees het bord en de burndown chart</h3>
+    <p>Het Scrum Board toont de taken van de Sprint Backlog in drie kolommen. De burndown chart toont hoeveel storypunten er elke dag nog overblijven, naast de ideale lijn. Zo zie je in &eacute;&eacute;n oogopslag of het team op schema ligt.</p>
+    <div class="daily-status">
+      <div class="daily-board" aria-label="Scrum Board op dag 8">
+        <div><h4>To Do</h4><ul>
+          <li><b>US-05</b>Wijzigingen detecteren</li>
+          <li><b>US-05</b>Instellingen per vak</li>
+          <li><b>US-05</b>Tests</li>
+          <li><b>US-02</b>Tests</li>
+        </ul></div>
+        <div><h4>Doing</h4><ul>
+          <li><b>US-07 &middot; Leen</b>Foutmeldingen en tests</li>
+          <li><b>US-04 &middot; Stef</b>Tests</li>
+          <li class="stuck"><b>US-02 &middot; Sara</b>Nieuwslijst en detail (al 4 dagen)</li>
+          <li><b>US-05 &middot; Mohammed</b>Meldingendienst koppelen</li>
+        </ul></div>
+        <div><h4>Done</h4><ul>
+          <li><b>US-07</b>Microsoft-login koppelen</li>
+          <li><b>US-07</b>Inlogscherm bouwen</li>
+          <li><b>US-04</b>Menu ophalen bij Catering</li>
+          <li><b>US-04</b>Dagmenu-scherm</li>
+          <li><b>US-02</b>Nieuws-API koppelen</li>
+        </ul></div>
+      </div>
+      <div class="daily-chart">
+        <svg viewBox="0 0 520 275" role="img" aria-labelledby="daily-chart-title">
+          <title id="daily-chart-title">Burndown chart van Sprint 1: op dag 8 blijven nog 10 storypunten over, de ideale lijn zit op ongeveer 3</title>
+          <line class="grid" x1="50" y1="43.5" x2="500" y2="43.5"/>
+          <line class="grid" x1="50" y1="102.4" x2="500" y2="102.4"/>
+          <line class="grid" x1="50" y1="161.2" x2="500" y2="161.2"/>
+          <line class="axis" x1="50" y1="15" x2="50" y2="220"/>
+          <line class="axis" x1="50" y1="220" x2="505" y2="220"/>
+          <text x="42" y="224" text-anchor="end">0</text>
+          <text x="42" y="165" text-anchor="end">5</text>
+          <text x="42" y="106" text-anchor="end">10</text>
+          <text x="42" y="47" text-anchor="end">15</text>
+          <text x="50" y="246" text-anchor="middle">start</text>
+          <text x="275" y="246" text-anchor="middle">5</text>
+          <text x="500" y="246" text-anchor="middle">10</text>
+          <text x="275" y="270" text-anchor="middle">werkdagen</text>
+          <line class="ideal" x1="50" y1="20" x2="500" y2="220"/>
+          <polyline class="actual" points="50,20 95,20 140,31.8 185,43.5 230,55.3 275,55.3 320,78.8 365,90.6 410,102.4"/>
+          <circle class="dot" cx="410" cy="102.4" r="5"/>
+          <line class="today" x1="410" y1="15" x2="410" y2="220"/>
+          <text class="lbl today-l" x="404" y="28" text-anchor="end">vandaag, dag 8</text>
+          <text class="lbl actual-l" x="420" y="98">nog 10</text>
+        </svg>
+        <div class="daily-legend"><span class="actual">werkelijk</span><span class="ideal">ideaal</span></div>
+      </div>
+    </div>
+    <div id="daily-read"></div>
+  </div>
+
+  <!-- Brug naar de Sprint Review -->
+  <div class="daily-bridge">
+    <p><strong>Elke dag een kwartier, tien keer per Sprint.</strong> Na de laatste Daily toont het team het resultaat aan de stakeholders: de Sprint Review.</p>
     <a href="#sprint-review">Naar de Sprint Review &rarr;</a>
   </div>
 </section>
@@ -1973,6 +2181,7 @@ h3.sprint-subtitle {
       <li><a href="#sprint-events">De 5 Scrum Events</a>De Sprint als container, met Planning, Daily Scrum, Review en Retrospective.</li>
       <li><a href="#poker-planning">Planning Poker</a>In stilte kiezen, samen omdraaien, hoogste en laagste leggen uit, nooit een gemiddelde.</li>
       <li><a href="#sprint-planning">Sprint Planning</a>Een Sprint Doel kiezen en de Sprint Backlog vullen, van boven naar onder en binnen de capaciteit.</li>
+      <li><a href="#daily-scrum">Daily Scrum</a>Elke dag maximaal 15 minuten: gisteren, vandaag, obstakels, en het bord en de burndown lezen.</li>
       <li><a href="#sprint-review">Sprint Review</a>Alleen Done-werk tonen, feedback ophalen, en de Product Backlog bijwerken.</li>
       <li><a href="#retrospectives">Retrospective</a>Eerst terugkijken, dan 1 of 2 SMART-actiepunten die het team echt uitvoert.</li>
     </ul>
@@ -3758,6 +3967,142 @@ function planRenderResult() {
       '<div><h5>Plan (hoe)</h5><ul>' + items.map(function(it) { return '<li><strong>' + it.id + ':</strong> ' + it.tasks.join(', ') + '</li>'; }).join('') + '</ul>' +
       '<p>Wie welke taak doet, beslist het team zelf tijdens de Sprint.</p></div>' +
     '</div></div>';
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── DAILY SCRUM SECTION ──────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+// Step 1: Mohammed's update, to sort into the three questions
+var DAILY_Q3 = { gisteren: 'Gisteren', vandaag: 'Vandaag', obstakel: 'Obstakel' };
+var DAILY_SORT = [
+  { text: '“Vandaag begin ik aan het detecteren van roosterwijzigingen.”', answer: 'vandaag' },
+  { text: '“Ik heb nog altijd geen testaccount voor het PXL-roostersysteem, dus ik kan niets uitproberen.”', answer: 'obstakel',
+    why: 'Dit is een obstakel. Pieter, de Scrum Master, neemt het na de Daily op met de IT-dienst, zodat Mohammed verder kan.' },
+  { text: '“Gisteren heb ik de meldingendienst gekoppeld aan de app.”', answer: 'gisteren' }
+];
+var DAILY_SORT_HINT = {
+  gisteren: 'Gisteren gaat over wat al af is.',
+  vandaag: 'Vandaag gaat over wat je nu gaat doen.',
+  obstakel: 'Een obstakel is iets dat je tegenhoudt en waar je hulp bij nodig hebt.'
+};
+
+// Step 2: three ways a Daily Scrum goes wrong
+var DAILY_WRONG = [
+  {
+    who: 'Dag 3',
+    text: 'Stef en Arnaud beginnen tijdens de Daily een technische discussie over de database. Na twintig minuten staat de rest van het team nog altijd te wachten.',
+    options: [
+      { text: 'Dat is goed: zo zijn ze meteen klaar met het probleem.', feedback: 'Het probleem is misschien opgelost, maar de rest van het team verloor twintig minuten. De Daily duurt maximaal 15 minuten.' },
+      { text: 'Ze bespreken het na de Daily, met wie nodig is.', right: true },
+      { text: 'Pieter schrapt de Daily voortaan, want ze duurt toch te lang.', feedback: 'Zonder Daily ziet het team obstakels pas veel later. Beter: de Daily kort houden en details erna bespreken.' }
+    ],
+    why: 'De Daily blijft kort: wie meer tijd nodig heeft, spreekt erna af met de juiste mensen.'
+  },
+  {
+    who: 'Dag 5',
+    text: 'Elk teamlid kijkt tijdens zijn update naar Pieter, alsof het verslag uitbrengt aan de baas.',
+    options: [
+      { text: 'Logisch: de Scrum Master moet weten of iedereen goed werkt.', feedback: 'De Scrum Master is geen baas die het werk controleert. Hij helpt het team en ruimt obstakels op.' },
+      { text: 'Pieter moet meer vragen stellen, dan wordt het een goed verslag.', feedback: 'Dan wordt het nog meer een verslag aan Pieter. De Daily is een gesprek van het team met elkaar.' },
+      { text: 'De Daily is voor het team zelf: ze praten tegen elkaar, niet tegen Pieter.', right: true }
+    ],
+    why: 'Het team stemt met elkaar af. Pieter zorgt alleen dat de Daily vlot en kort verloopt.'
+  },
+  {
+    who: 'Dag 8',
+    text: 'Sara zegt: “Alles gaat goed.” Maar op het Scrum Board staat haar taak al vier dagen in Doing.',
+    options: [
+      { text: 'Het bord toont iets anders. Het team vraagt door: zit Sara misschien vast?', right: true },
+      { text: 'Als Sara zegt dat het goed gaat, dan gaat het goed.', feedback: 'Het bord is er net om eerlijk te tonen hoe het werk vordert. Vier dagen in Doing is een signaal.' },
+      { text: 'Sara verplaatst haar post-it snel naar Done.', feedback: 'Dan klopt het bord niet meer. Done betekent echt af, en dat is het niet.' }
+    ],
+    why: 'Het bord maakt zichtbaar wat er gebeurt: dat is transparantie. Een taak die blijft hangen, is vaak een verborgen obstakel.'
+  }
+];
+
+// Step 3: reading the board and the burndown chart
+var DAILY_READ = [
+  {
+    text: 'Wat zegt de burndown chart op dag 8?',
+    options: [
+      { text: 'Het team loopt voor op schema.', feedback: 'Kijk waar de blauwe lijn ligt: boven de ideale lijn. Er blijft dus meer werk over dan gepland.' },
+      { text: 'Het team loopt achter: er blijven 10 storypunten over, waar het er ongeveer 3 had moeten zijn.', right: true },
+      { text: 'Dat kan je uit de grafiek niet afleiden.', feedback: 'Dat kan wel: vergelijk de blauwe lijn (werkelijk) met de stippellijn (ideaal).' }
+    ],
+    why: 'De werkelijke lijn ligt boven de ideale lijn: het team loopt achter.'
+  },
+  {
+    text: 'Wat doet het team vandaag?',
+    options: [
+      { text: 'Pieter verlengt de Sprint met twee dagen.', feedback: 'Een Sprint heeft een vaste duur. Het team stuurt het plan bij, niet de deadline.' },
+      { text: 'Iedereen begint aan een nieuwe taak uit To Do, dan gaat het sneller.', feedback: 'Meer taken tegelijk beginnen maakt niets sneller af. Eerst afwerken wat in Doing staat.' },
+      { text: 'Ze helpen elkaar de taken in Doing af te werken, te beginnen bij Sara, voor iemand iets nieuws begint.', right: true }
+    ],
+    why: 'Samen afwerken wat al loopt, helpt het meest. Lukt het toch niet alles te halen, dan bespreekt het team met de Product Owner wat het belangrijkst is voor het Sprint Doel.'
+  }
+];
+
+var dailySortState = DAILY_SORT.map(function() { return { done: false, wrong: [] }; });
+var dailyWrongState = DAILY_WRONG.map(function() { return { done: false, wrong: [] }; });
+var dailyReadState = DAILY_READ.map(function() { return { done: false, wrong: [] }; });
+
+(function dailyInit() {
+  dailyRenderSort();
+  dailyRenderQs('wrong');
+  dailyRenderQs('read');
+})();
+
+function dailyRenderSort() {
+  document.getElementById('daily-sort').innerHTML = DAILY_SORT.map(function(s, i) {
+    var st = dailySortState[i];
+    var html = '<div class="daily-q"><div class="daily-q-who">Mohammed, zin ' + (i + 1) + '</div><p class="daily-q-text">' + s.text + '</p><div class="daily-options row">';
+    Object.keys(DAILY_Q3).forEach(function(k) {
+      var cls = st.done && k === s.answer ? ' right' : (st.wrong.indexOf(k) !== -1 ? ' wrong' : '');
+      var off = st.done || st.wrong.indexOf(k) !== -1;
+      html += '<button class="daily-option' + cls + '" onclick="dailySort(' + i + ',\'' + k + '\')"' + (off ? ' disabled' : '') + '>' + DAILY_Q3[k] + '</button>';
+    });
+    html += '</div><div aria-live="polite">';
+    if (st.done && s.why) html += '<div class="daily-feedback ok">' + s.why + '</div>';
+    else if (!st.done && st.wrong.length) html += '<div class="daily-feedback hint"><strong>Niet helemaal.</strong> ' + DAILY_SORT_HINT[st.wrong[st.wrong.length - 1]] + ' Past deze zin daarbij?</div>';
+    return html + '</div></div>';
+  }).join('');
+}
+
+function dailySort(i, k) {
+  var st = dailySortState[i];
+  if (DAILY_SORT[i].answer === k) st.done = true; else st.wrong.push(k);
+  dailyRenderSort();
+  var next = st.done ? null : document.querySelectorAll('#daily-sort .daily-q')[i].querySelector('.daily-option:not(:disabled)');
+  if (next) next.focus({ preventScroll: true });
+}
+
+function dailyRenderQs(group) {
+  var data = group === 'wrong' ? DAILY_WRONG : DAILY_READ;
+  var state = group === 'wrong' ? dailyWrongState : dailyReadState;
+  document.getElementById('daily-' + group).innerHTML = data.map(function(q, i) {
+    var st = state[i];
+    var html = '<div class="daily-q">' + (q.who ? '<div class="daily-q-who">' + q.who + '</div>' : '') +
+      '<p class="daily-q-text">' + q.text + '</p><div class="daily-options">';
+    q.options.forEach(function(o, j) {
+      var cls = st.done && o.right ? ' right' : (st.wrong.indexOf(j) !== -1 ? ' wrong' : '');
+      var off = st.done || st.wrong.indexOf(j) !== -1;
+      html += '<button class="daily-option' + cls + '" onclick="dailyAnswer(\'' + group + '\',' + i + ',' + j + ')"' + (off ? ' disabled' : '') + '>' + o.text + '</button>';
+    });
+    html += '</div><div aria-live="polite">';
+    if (st.done) html += '<div class="daily-feedback ok">' + q.why + '</div>';
+    else if (st.wrong.length) html += '<div class="daily-feedback hint"><strong>Niet helemaal.</strong> ' + q.options[st.wrong[st.wrong.length - 1]].feedback + '</div>';
+    return html + '</div></div>';
+  }).join('');
+}
+
+function dailyAnswer(group, i, j) {
+  var data = group === 'wrong' ? DAILY_WRONG : DAILY_READ;
+  var st = (group === 'wrong' ? dailyWrongState : dailyReadState)[i];
+  if (data[i].options[j].right) st.done = true; else st.wrong.push(j);
+  dailyRenderQs(group);
+  var next = st.done ? null : document.querySelectorAll('#daily-' + group + ' .daily-q')[i].querySelector('.daily-option:not(:disabled)');
+  if (next) next.focus({ preventScroll: true });
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
