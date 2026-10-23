@@ -1021,39 +1021,9 @@ h3.sprint-subtitle {
     <p><strong>Zie je de cyclus?</strong> Zichtbaar maken, bekijken, aanpassen, en dan opnieuw. Scrum doet precies hetzelfde, maar in een vast ritme: elke dag en elke Sprint.</p>
   </div>
 
-  <!-- Stap 2: oefenen -->
-  <h3 class="empir-subtitle">Test jezelf: herken de pijlers in Scrum</h3>
-  <p>Lees elk scenario en beslis welke pijler je herkent. Twijfel je? Gebruik de geheugensteun.</p>
-  <div class="empir-legend">
-    <span data-pillar="T"><strong>Transparantie</strong> iets zichtbaar maken</span>
-    <span data-pillar="I"><strong>Inspectie</strong> iets bekijken of beoordelen</span>
-    <span data-pillar="A"><strong>Aanpassing</strong> iets veranderen</span>
-  </div>
-
-  <!-- Scenario progress -->
-  <div class="scenario-progress">
-    <div class="scenario-progress-track"><div class="scenario-progress-fill" id="scenario-fill"></div></div>
-    <span class="scenario-progress-label" id="scenario-progress-label">0 / 12 beantwoord</span>
-  </div>
-
-  <div id="scenario-card" aria-live="polite">
-    <!-- JS renders scenario -->
-  </div>
-
-  <!-- Scenario nav -->
-  <div class="scenario-nav-row">
-    <button class="scenario-btn-nav outline" id="scenario-prev" onclick="scenarioPrev()" disabled>&larr; Vorig scenario</button>
-    <button class="scenario-btn-nav" id="scenario-next" onclick="scenarioNext()">Volgend scenario &rarr;</button>
-  </div>
-
-  <!-- Scenario summary -->
-  <div class="scenario-summary" id="scenario-summary">
-    <!-- JS fills -->
-  </div>
-
   <!-- Brug naar de Sprint -->
   <div class="empir-bridge">
-    <p><strong>Scrum bouwt deze cyclus in elk event in.</strong> Doorloop eerst een volledige Sprint. Daarna zoek je zelf de drie pijlers in elk Scrum Event.</p>
+    <p><strong>Hoe brengt Scrum deze cyclus in de praktijk?</strong> Doorloop eerst een volledige Sprint. Daarna zoek je zelf de drie pijlers in elk Scrum Event en test je jezelf.</p>
     <a href="#sprint-events">Naar de Sprint &rarr;</a>
   </div>
 </section>
@@ -1150,7 +1120,7 @@ h3.sprint-subtitle {
 
   <!-- Brug naar Pijlers per Event -->
   <div class="sprint-bridge">
-    <p><strong>Elk event maakt iets zichtbaar, bekijkt het en stuurt bij.</strong> Zoek nu zelf Transparantie, Inspectie en Aanpassing in elk Scrum Event.</p>
+    <p><strong>Zit de cyclus van zichtbaar maken, bekijken en bijsturen in elk event?</strong> Zoek zelf Transparantie, Inspectie en Aanpassing in elk Scrum Event.</p>
     <a href="#empirisme-events">Naar Pijlers per Event &rarr;</a>
   </div>
 </section>
@@ -1158,7 +1128,12 @@ h3.sprint-subtitle {
 <section id="empirisme-events">
   <div class="badge">Empirisme in de Scrum Events</div>
   <h2>Vind de drie pijlers in elk event</h2>
-  <p class="lead">Je kent nu de vijf Scrum Events. Komen Transparantie, Inspectie en Aanpassing in elk van die events terug? Kies bij elke activiteit welke pijler je herkent. Elke juiste keuze vult je overzichtstabel aan.</p>
+  <p class="lead">Je kent nu de vijf Scrum Events. Kies per event bij elke activiteit welke pijler je herkent. Elke juiste keuze vult je overzichtstabel aan.</p>
+  <div class="empir-legend" aria-label="Geheugensteun">
+    <span data-pillar="T"><strong>Transparantie</strong> iets zichtbaar maken</span>
+    <span data-pillar="I"><strong>Inspectie</strong> iets bekijken of beoordelen</span>
+    <span data-pillar="A"><strong>Aanpassing</strong> iets veranderen</span>
+  </div>
 
   <div class="empir-tabs" id="empir-tabs">
     <!-- JS renders event buttons -->
@@ -1178,6 +1153,31 @@ h3.sprint-subtitle {
   <div class="empir-summary" id="empir-summary">
     <h4>Je overzicht is compleet</h4>
     <p><strong>Elk Scrum Event bevat alle drie de pijlers.</strong> Elk event maakt iets zichtbaar, bekijkt het kritisch en stuurt bij. Daarom noemen we Scrum een empirisch raamwerk. Deze tabel is meteen je samenvatting voor het examen.</p>
+  </div>
+
+  <!-- Transfer: herken de pijlers buiten de events -->
+  <h3 class="empir-subtitle">Test jezelf: herken de pijlers in de praktijk</h3>
+  <p>De pijlers zitten niet alleen in de events, maar ook in de hulpmiddelen en afspraken van het team. Lees elk scenario en beslis welke pijler je herkent.</p>
+
+  <!-- Scenario progress -->
+  <div class="scenario-progress">
+    <div class="scenario-progress-track"><div class="scenario-progress-fill" id="scenario-fill"></div></div>
+    <span class="scenario-progress-label" id="scenario-progress-label">0 / 5 beantwoord</span>
+  </div>
+
+  <div id="scenario-card" aria-live="polite">
+    <!-- JS renders scenario -->
+  </div>
+
+  <!-- Scenario nav -->
+  <div class="scenario-nav-row">
+    <button class="scenario-btn-nav outline" id="scenario-prev" onclick="scenarioPrev()" disabled>&larr; Vorig scenario</button>
+    <button class="scenario-btn-nav" id="scenario-next" onclick="scenarioNext()">Volgend scenario &rarr;</button>
+  </div>
+
+  <!-- Scenario summary -->
+  <div class="scenario-summary" id="scenario-summary">
+    <!-- JS fills -->
   </div>
 </section>
 
@@ -1327,6 +1327,17 @@ var EMPIR_EVENTS = [
 // Activity order per event, so the answer is never simply T, I, A from top to bottom
 var EMPIR_ORDERS = [['I', 'A', 'T'], ['A', 'T', 'I'], ['T', 'A', 'I'], ['A', 'I', 'T'], ['I', 'T', 'A']];
 
+// Scanner hints: key is the wrong pillar chosen + the right one, so the hint explains the difference
+var EMPIR_HINTS = {
+  TI: 'Er wordt meer gedaan dan iets zichtbaar maken: het team beoordeelt of het goed zit.',
+  TA: 'Er wordt meer gedaan dan iets zichtbaar maken: er verandert iets aan het plan of de werkwijze.',
+  IT: 'Er wordt hier nog niets beoordeeld of vergeleken. Het gaat erom dat informatie open en zichtbaar is.',
+  IA: 'Er wordt niet alleen gekeken: het team beslist om iets te veranderen.',
+  AT: 'Er verandert hier nog niets. Het gaat erom dat iedereen kan zien wat er gebeurt.',
+  AI: 'Er verandert hier nog niets. Het team kijkt eerst kritisch of het goed zit.'
+};
+
+// Transfer quiz: situations around the events (tools and team agreements), no overlap with the scanner activities
 var EMPIR_SCENARIOS = [
   {
     scenario: 'Het team werkt de burndown chart elke dag bij en hangt hem op waar iedereen hem kan zien.',
@@ -1335,46 +1346,10 @@ var EMPIR_SCENARIOS = [
     explanation: 'De burndown chart bijwerken en ophangen is <strong>transparantie</strong>: de echte voortgang is voor iedereen zichtbaar. Pas daarna kan het team hem inspecteren.'
   },
   {
-    scenario: 'De Product Owner past de prioriteit van backlog items aan na de Sprint Review.',
-    correct: 'A',
-    hint: 'Er verandert hier iets op basis van wat er geleerd is. Welk principe hoort daarbij?',
-    explanation: 'De backlog aanpassen op basis van feedback is <strong>aanpassing</strong>: het plan wordt bijgestuurd op basis van wat er ge\u00efnspecteerd is.'
-  },
-  {
-    scenario: 'Stakeholders bekijken het werkende increment en geven feedback.',
-    correct: 'I',
-    hint: 'De stakeholders ontvangen hier niet alleen informatie: ze beoordelen actief wat er gebouwd is.',
-    explanation: 'Het increment beoordelen en feedback geven is <strong>inspectie</strong>: stakeholders controleren of het opgeleverde werk aan hun verwachtingen voldoet.'
-  },
-  {
-    scenario: 'Het Scrum Board hangt zichtbaar in de teamruimte.',
-    correct: 'T',
-    hint: 'Dit gaat over het beschikbaar maken van informatie. Wie kan het zien?',
-    explanation: 'Een zichtbaar Scrum Board is <strong>transparantie</strong>: iedereen (team, stakeholders, management) kan de status van het werk bekijken.'
-  },
-  {
-    scenario: 'Het team besluit om volgende Sprint pair programming te gebruiken na de Retrospective.',
-    correct: 'A',
-    hint: 'Het team verandert hier bewust iets aan hun manier van werken. Waarom?',
-    explanation: 'Een procesverbetering doorvoeren is <strong>aanpassing</strong>: het team past hun werkwijze aan op basis van wat ze geleerd hebben in de Retrospective.'
-  },
-  {
     scenario: 'Voor een story naar Done gaat, kijkt een teamlid na of alle afspraken gehaald zijn: getest, gereviewd en gedocumenteerd.',
     correct: 'I',
     hint: 'Er wordt hier iets nagekeken. Wordt er al iets veranderd?',
     explanation: 'Het werk nakijken tegen de afspraken is <strong>inspectie</strong>. Pas als er iets niet klopt, volgt een aanpassing.'
-  },
-  {
-    scenario: 'Tijdens Sprint Planning bespreekt het team openlijk hoeveel werk ze aankunnen.',
-    correct: 'T',
-    hint: 'Het team deelt hier eerlijk informatie over hun capaciteit. Verbergen ze iets?',
-    explanation: 'Eerlijk communiceren over capaciteit is <strong>transparantie</strong>: het team verbergt geen problemen en is open over wat realistisch haalbaar is.'
-  },
-  {
-    scenario: 'Het team vergelijkt de geplande velocity met de werkelijke velocity.',
-    correct: 'I',
-    hint: 'Er wordt hier een vergelijking gemaakt tussen plan en realiteit. Dat klinkt als...',
-    explanation: 'Plan versus realiteit vergelijken is <strong>inspectie</strong>: het team controleert of hun schattingen accuraat waren en zoekt naar afwijkingen.'
   },
   {
     scenario: 'Na feedback van stakeholders wordt een User Story herschreven.',
@@ -1383,22 +1358,16 @@ var EMPIR_SCENARIOS = [
     explanation: 'Een User Story herschrijven op basis van feedback is <strong>aanpassing</strong>: het product wordt bijgestuurd op basis van nieuwe inzichten.'
   },
   {
-    scenario: 'Elk teamlid deelt in de Daily Scrum welke obstakels er zijn.',
+    scenario: 'Het Scrum Board hangt zichtbaar in de teamruimte.',
     correct: 'T',
-    hint: 'Obstakels delen met het team: wordt hier iets verborgen of juist openbaar gemaakt?',
-    explanation: 'Obstakels openlijk delen is <strong>transparantie</strong>: problemen worden niet verborgen maar zichtbaar gemaakt zodat het team kan helpen.'
+    hint: 'Dit gaat over het beschikbaar maken van informatie. Wie kan het zien?',
+    explanation: 'Een zichtbaar Scrum Board is <strong>transparantie</strong>: iedereen (team, stakeholders, management) kan de status van het werk bekijken.'
   },
   {
-    scenario: 'De Product Owner bekijkt het opgeleverde increment op kwaliteit en volledigheid.',
+    scenario: 'Aan het einde van de Sprint vergelijkt het team hoeveel werk het gepland had met hoeveel er echt af raakte.',
     correct: 'I',
-    hint: 'De Product Owner beoordeelt hier het resultaat. Is dit controleren, delen, of aanpassen?',
-    explanation: 'Het increment beoordelen op kwaliteit is <strong>inspectie</strong>: de Product Owner controleert of het werk voldoet aan de verwachtingen en acceptatiecriteria.'
-  },
-  {
-    scenario: 'Het team voert een procesverbetering door die in de Retrospective was afgesproken.',
-    correct: 'A',
-    hint: 'Een eerder gemaakte afspraak wordt nu daadwerkelijk doorgevoerd. Wat verandert er?',
-    explanation: 'Een procesverbetering implementeren is <strong>aanpassing</strong>: het team past hun werkwijze aan om effectiever te worden in de volgende Sprint.'
+    hint: 'Er wordt hier een vergelijking gemaakt tussen plan en realiteit. Dat klinkt als...',
+    explanation: 'Plan en realiteit vergelijken is <strong>inspectie</strong>: het team controleert of zijn inschattingen klopten en zoekt naar afwijkingen.'
   }
 ];
 
@@ -1554,7 +1523,7 @@ function empirSelect(idx, scroll) {
 function empirAnswer(btn, actual, answer) {
   var key = empirActive + '-' + actual;
   if (answer !== actual) {
-    empirMarkWrong(btn, 'empir-fb-' + key, 'Kijk naar wat er gebeurt: wordt er iets zichtbaar gemaakt, beoordeeld of veranderd?');
+    empirMarkWrong(btn, 'empir-fb-' + key, EMPIR_HINTS[answer + actual]);
     return;
   }
   empirSolved.add(key);
@@ -1654,7 +1623,7 @@ function scenarioShowSummary() {
   var pct = Math.round(scenarioScore / EMPIR_SCENARIOS.length * 100);
   el.innerHTML = '<h4>Alle scenario\'s beantwoord!</h4>' +
     '<p><strong>' + scenarioScore + ' van de ' + EMPIR_SCENARIOS.length + '</strong> scenario\'s correct bij de eerste poging (' + pct + '%).</p>' +
-    '<p>De drie pijlers zitten overal in Scrum. Hoe beter je ze herkent, hoe beter je begrijpt <em>waarom</em> elk Scrum Event bestaat. Na de Sprint zoek je ze zelf terug in elk event.</p>';
+    '<p>De pijlers zitten niet alleen in de events, maar ook in de hulpmiddelen van het team: het Scrum Board, de burndown chart en de afspraken over wanneer iets echt af is.</p>';
   el.classList.add('visible');
 }
 
